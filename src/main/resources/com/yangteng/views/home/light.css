@@ -1,0 +1,13 @@
+.menu:hover {
+    -fx-text-fill: white;
+    -fx-background-color: #3498db;
+}
+
+.menu {
+    -fx-text-fill: #ffff;
+    -fx-font-size: 15px;
+}
+
+.embedded-prompt {
+    -fx-text-fill: #95a5a6;
+}
