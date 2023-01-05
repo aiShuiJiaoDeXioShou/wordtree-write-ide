@@ -1,4 +1,4 @@
-package com.yangteng.component;
+package com.yangteng.views.main.component;
 
 
 import javafx.geometry.Insets;

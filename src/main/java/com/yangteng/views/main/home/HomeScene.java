@@ -1,4 +1,4 @@
-package com.yangteng.views.home;
+package com.yangteng.views.main.home;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -6,7 +6,7 @@ import javafx.scene.layout.HBox;
 
 import java.util.Objects;
 
-public class HomeView extends Scene {
+public class HomeScene extends Scene {
     public final static HBox center = new HBox();
     static {
         var leftMenus = LeftMenusView.INTER;
@@ -15,10 +15,10 @@ public class HomeView extends Scene {
         center.setPrefHeight(700);
     }
 
-    public final static HomeView INTER =  new HomeView(center);
+    public final static HomeScene INTER =  new HomeScene(center);
 
-    public HomeView(Parent parent) {
+    public HomeScene(Parent parent) {
         super(parent);
-        this.getStylesheets().add(Objects.requireNonNull(HomeView.class.getResource("light.css")).toExternalForm());
+        this.getStylesheets().add(Objects.requireNonNull(HomeScene.class.getResource("light.css")).toExternalForm());
     }
 }

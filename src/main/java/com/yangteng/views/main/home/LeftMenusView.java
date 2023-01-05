@@ -1,9 +1,9 @@
-package com.yangteng.views.home;
+package com.yangteng.views.main.home;
 
-import com.yangteng.component.Menu;
-import com.yangteng.views.library.LibraryView;
-import com.yangteng.views.setting.SettingView;
-import com.yangteng.views.tools.ToolsView;
+import com.yangteng.views.main.component.Menu;
+import com.yangteng.views.main.library.LibraryView;
+import com.yangteng.views.main.setting.SettingView;
+import com.yangteng.views.main.tools.ToolsView;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;

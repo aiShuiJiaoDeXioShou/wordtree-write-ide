@@ -1,7 +1,8 @@
-package com.yangteng.component;
+package com.yangteng.views.main.component;
 
 
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,7 @@ public class ToolsLabel extends Label {
         this.setPadding(new Insets(10));
         this.setPrefWidth(150);
         this.setPrefHeight(50);
+        this.setCursor(Cursor.HAND);
         this.setStyle("""
              -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
              -fx-background-color: white;

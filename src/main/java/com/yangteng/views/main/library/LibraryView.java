@@ -1,6 +1,5 @@
-package com.yangteng.views.library;
+package com.yangteng.views.main.library;
 
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class LibraryView extends HBox {

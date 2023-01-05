@@ -1,4 +1,4 @@
-package com.yangteng.views.home;
+package com.yangteng.views.main.home;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
