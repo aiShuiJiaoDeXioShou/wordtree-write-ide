@@ -37,16 +37,6 @@ dependencies {
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
-    implementation('net.synedra:validatorfx:0.3.1') {
-        exclude(group: 'org.openjfx')
-    }
-    implementation('eu.hansolo:tilesfx:17.1.9') {
-        exclude(group: 'org.openjfx')
-    }
-    implementation('com.github.almasb:fxgl:17.1') {
-        exclude(group: 'org.openjfx')
-    }
-
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
@@ -61,6 +51,10 @@ jlink {
     launcher {
         name = 'app'
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
 }
 
 jlinkZip {
