@@ -4,9 +4,9 @@ import javafx.scene.control.TabPane;
 
 public class TabMenuBarView {
 
-    public static final TabPane INTER = new TabPane();
+    public static final TabPane INSTANCE = new TabPane();
     static {
-        INTER.setPrefSize(800, 700);
+        INSTANCE.setPrefSize(800, 700);
     }
 
 }

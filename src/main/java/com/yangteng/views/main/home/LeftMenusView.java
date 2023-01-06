@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class LeftMenusView extends VBox {
 
-    public static final LeftMenusView INTER = new LeftMenusView();
+    public static final LeftMenusView INSTANCE = new LeftMenusView();
     public static List<Map<Menu, Pane>> router;
     private Integer onMenuClickIndex = -1;
     public LeftMenusView() {
@@ -28,10 +28,10 @@ public class LeftMenusView extends VBox {
         var tools = new Menu(this, "工具箱", "icon/tools.png");
         var setting = new Menu(this, "设置", "icon/setting.png");
         router = Arrays.asList(
-                Map.of(index, IndexView.INTER),
-                Map.of(lib, LibraryView.INTER),
-                Map.of(tools, ToolsView.INTER),
-                Map.of(setting, SettingView.INTER)
+                Map.of(index, IndexView.INSTANCE),
+                Map.of(lib, LibraryView.INSTANCE),
+                Map.of(tools, ToolsView.INSTANCE),
+                Map.of(setting, SettingView.INSTANCE)
         );
 
         rotation(router);
@@ -43,7 +43,7 @@ public class LeftMenusView extends VBox {
             int finalI = i;
             view.forEach((menu, pane) -> {
                 menu.setOnMouseClicked(mouseEvent -> {
-                    ObservableList<Node> children = RightShowViwe.INTER.getChildren();
+                    ObservableList<Node> children = RightShowViwe.INSTANCE.getChildren();
                     if (children.size() > 0) {
                         children.remove(0);
                         children.add(pane);

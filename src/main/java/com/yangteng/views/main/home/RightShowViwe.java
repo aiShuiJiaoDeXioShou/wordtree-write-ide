@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 
 public class RightShowViwe extends VBox {
 
-    public static final RightShowViwe INTER = new RightShowViwe();
+    public static final RightShowViwe INSTANCE = new RightShowViwe();
 
     public RightShowViwe() {
         this.setPrefWidth(800);

@@ -10,7 +10,7 @@ public class Index extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        primaryStage.setScene(NoteBookScene.INTER);
+        primaryStage.setScene(NoteBookScene.INSTANCE);
         primaryStage.setTitle("Learn");
         primaryStage.getIcons().add(new Image("icon/图书馆.png"));
         primaryStage.show();

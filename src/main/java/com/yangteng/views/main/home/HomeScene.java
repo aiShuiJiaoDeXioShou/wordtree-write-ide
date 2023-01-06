@@ -9,13 +9,13 @@ import java.util.Objects;
 public class HomeScene extends Scene {
     public final static HBox center = new HBox();
     static {
-        var leftMenus = LeftMenusView.INTER;
-        var rightShowView = RightShowViwe.INTER;
+        var leftMenus = LeftMenusView.INSTANCE;
+        var rightShowView = RightShowViwe.INSTANCE;
         center.getChildren().addAll(leftMenus, rightShowView);
         center.setPrefHeight(700);
     }
 
-    public final static HomeScene INTER =  new HomeScene(center);
+    public final static HomeScene INSTANCE =  new HomeScene(center);
 
     public HomeScene(Parent parent) {
         super(parent);

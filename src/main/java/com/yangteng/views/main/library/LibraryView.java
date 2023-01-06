@@ -4,7 +4,7 @@ import javafx.scene.layout.HBox;
 
 public class LibraryView extends HBox {
 
-    public static final LibraryView INTER = new LibraryView();
+    public static final LibraryView INSTANCE = new LibraryView();
 
     public LibraryView() {
 

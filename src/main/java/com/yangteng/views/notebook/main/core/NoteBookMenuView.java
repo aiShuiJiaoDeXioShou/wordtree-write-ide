@@ -9,10 +9,10 @@ import javafx.stage.DirectoryChooser;
 import java.io.File;
 
 public class NoteBookMenuView extends MenuBar {
-    public static final NoteBookMenuView INTER = new NoteBookMenuView();
+    public static final NoteBookMenuView INSTANCE = new NoteBookMenuView();
     public MenuItem openFile;
     public Menu file;
-    private LeftNoteBookFileTreeView lnbf = LeftNoteBookFileTreeView.INTER;
+    private LeftNoteBookFileTreeView lnbf = LeftNoteBookFileTreeView.INSTANCE;
 
     public NoteBookMenuView() {
         openFile = new MenuItem("打开工作区间");

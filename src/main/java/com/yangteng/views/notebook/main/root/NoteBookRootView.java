@@ -4,8 +4,8 @@ import com.yangteng.views.notebook.main.core.NoteCoreView;
 import javafx.scene.layout.HBox;
 
 public class NoteBookRootView extends HBox {
-    public final static NoteBookRootView INTER = new NoteBookRootView();
+    public final static NoteBookRootView INSTANCE = new NoteBookRootView();
     public NoteBookRootView() {
-        this.getChildren().addAll(NoteLeftButtonBarView.INTER, NoteCoreView.INTER);
+        this.getChildren().addAll(NoteLeftButtonBarView.INSTANCE, NoteCoreView.INSTANCE);
     }
 }
