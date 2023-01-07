@@ -1,5 +1,4 @@
-import com.yangteng.utils.FileUtils;
-import javafx.scene.control.Label;
+import com.yangteng.library.utils.ConfigUtils;
 import javafx.scene.control.TreeItem;
 import javafx.scene.text.Text;
 import org.junit.jupiter.api.Test;
@@ -153,6 +152,13 @@ public class Test1 {
         var filesUtil = new FilesUtil(new File("D:/wordtree"));
         var files = filesUtil.getTree();
         System.out.println(files);
+    }
+
+    @Test
+    public void test4() {
+        var file = ConfigUtils.getPath().getFile();
+        System.out.println(file);
+
     }
 
 }

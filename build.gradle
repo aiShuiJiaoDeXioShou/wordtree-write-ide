@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.yangteng.library'
-    mainClass = 'com.yangteng.library.HelloApplication'
+    mainClass = 'com.yangteng.library.Main'
 }
 
 javafx {
@@ -50,6 +50,19 @@ jlink {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'app'
+    }
+}
+
+// 资源目录所在地
+task cpStatic {
+    doLast {
+        def p = "D:/ytjava/ideayt/library-javafx-gui"
+        def buildPath = "${p}/build/image/bin"
+        def res = "${p}/src/main/resources"
+        copy {
+            from res
+            into buildPath
+        }
     }
 }
 
