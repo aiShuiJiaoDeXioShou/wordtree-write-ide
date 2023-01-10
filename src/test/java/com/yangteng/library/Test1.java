@@ -1,4 +1,6 @@
-import com.yangteng.library.utils.ConfigUtils;
+package com.yangteng.library;
+
+import javafx.application.Application;
 import javafx.scene.control.TreeItem;
 import javafx.scene.text.Text;
 import org.junit.jupiter.api.Test;
@@ -156,9 +158,12 @@ public class Test1 {
 
     @Test
     public void test4() {
-        var file = ConfigUtils.getPath().getFile();
-        System.out.println(file);
 
+    }
+
+    @Test
+    public void test5() {
+        Application.launch(JavaCoder.class);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.yangteng.library.comm;
 
-public class Config {
+public interface Config {
 
-    public enum THEME {
+    enum THEME {
         THEME_LIGHT(0),  THEME_DART(1);
         public Integer value = 0;
 

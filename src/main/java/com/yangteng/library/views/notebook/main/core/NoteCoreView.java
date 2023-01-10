@@ -8,9 +8,11 @@ public class NoteCoreView {
     static {
         INSTANCE.setTop(NoteBookMenuView.INSTANCE);
         INSTANCE.setCenter(TabMenuBarView.INSTANCE);
+        INSTANCE.setRight(RightToolkitsView.INSTANCE);
         var menus = LeftNoteBookFileTreeView.INSTANCE;{
             INSTANCE.setLeft(menus);
         }
+        INSTANCE.setBottom(BottomStateView.INSTANCE);
 
     }
 }

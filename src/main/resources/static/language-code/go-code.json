@@ -1,0 +1,30 @@
+{
+  "fileName": "go",
+  "code": [
+    "import",
+    "package",
+    "chan",
+    "const",
+    "func",
+    "interface",
+    "map",
+    "struct",
+    "type",
+    "var",
+    "break",
+    "case",
+    "continue",
+    "default",
+    "defer",
+    "else",
+    "fallthrough",
+    "for",
+    "go",
+    "goto",
+    "if",
+    "range",
+    "return",
+    "select",
+    "switch"
+  ]
+}

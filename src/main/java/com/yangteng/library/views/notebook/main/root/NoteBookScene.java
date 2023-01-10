@@ -1,11 +1,11 @@
 package com.yangteng.library.views.notebook.main.root;
 
 import com.yangteng.library.views.main.home.HomeScene;
+import com.yangteng.library.views.notebook.component.MyCode;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.text.Text;
@@ -33,7 +33,7 @@ public class NoteBookScene extends Scene {
             // 保存编辑区的文本内容
             var inter = TabMenuBarView.INSTANCE;
             Tab nowTab = inter.getSelectionModel().getSelectedItem();
-            TextArea content = (TextArea)nowTab.getContent();
+            MyCode content = (MyCode)nowTab.getContent();
             if (content.isHover()) {
                 try {
                     // 保存文件

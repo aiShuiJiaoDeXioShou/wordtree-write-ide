@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 
 public class NoteLeftButtonItem extends Label {
     public NoteLeftButtonItem(String iconPath,String tooltipText) {
-        Image image = new Image(iconPath, 25,25,true,true);
+        Image image = new Image(iconPath);
         this.setGraphic(new ImageView(image));
         this.getStyleClass().add("note-left-button-item");
         var tooltip = new Tooltip(tooltipText);

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 编辑指定文件指定行数的工具类，用于编写config文件
  */
-public class FileLinesUtils {
+public interface FileLinesUtils {
 
     /**
      * 1.根据指定行读数据
@@ -21,7 +21,7 @@ public class FileLinesUtils {
      * @param lineNumber
      * @param path  读取文件的文件路径
      */
-    public static String readAppointedLineNumber(int lineNumber,String path) {
+    static String readAppointedLineNumber(int lineNumber,String path) {
         String appointedLine = "";
         FileReader in = null;
         LineNumberReader reader = null;
@@ -62,7 +62,7 @@ public class FileLinesUtils {
      * @param in
      * @param reader
      */
-    public static void closeResource(FileReader in, LineNumberReader reader) {
+    static void closeResource(FileReader in, LineNumberReader reader) {
         try {
             if (reader != null) {
                 reader.close();
@@ -82,7 +82,7 @@ public class FileLinesUtils {
      * @param data       要存储的数据
      * @param filePath   要储存的文件路径
      */
-    public static void setAppointedLineNumber(String filePath, int lineNumber, String data) throws Exception {
+    static void setAppointedLineNumber(String filePath, int lineNumber, String data) throws Exception {
         Path path = Paths.get(filePath);
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
         lines.set(lineNumber - 1, data);

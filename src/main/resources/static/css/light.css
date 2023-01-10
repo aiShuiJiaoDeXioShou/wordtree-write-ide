@@ -1,6 +1,6 @@
 .menu:hover {
     -fx-text-fill: white;
-    -fx-background-color: #3498db;
+    -fx-background-color: #d0bfff;
 }
 
 .menu {
@@ -24,4 +24,40 @@
     -fx-border-color: #e9ecef;
     -fx-background-color: rgba(0, 0, 0, 0.2);
     -fx-background-radius: 5px;
+}
+
+/*代码编辑器高亮部分*/
+.keyword {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
+.semicolon {
+    -fx-font-weight: bold;
+}
+.paren {
+    -fx-fill: firebrick;
+    -fx-font-weight: bold;
+}
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+.brace {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+.string {
+    -fx-fill: skyblue;
+}
+
+.comment {
+    -fx-fill: cadetblue;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #f2f9fc;
+}
+
+.code {
+    -fx-font-size: 20px;
 }

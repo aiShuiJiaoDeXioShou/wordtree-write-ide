@@ -1,5 +1,6 @@
 package com.yangteng.library;
 
+import com.yangteng.library.views.main.home.HomeScene;
 import com.yangteng.library.views.notebook.main.root.NoteBookScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
