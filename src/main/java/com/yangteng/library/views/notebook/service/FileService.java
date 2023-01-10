@@ -13,10 +13,8 @@ import javafx.scene.input.DataFormat;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface FileService {
 
@@ -47,7 +45,7 @@ public interface FileService {
         return false;
     }
 
-    default List<String> paste(String target) {
+    default List<File> paste(String target) {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         var sourceFiles = clipboard.getFiles();
         System.out.println(sourceFiles);
@@ -55,10 +53,10 @@ public interface FileService {
         if (targetFile.isFile()) {
             targetFile = targetFile.getParentFile();
         }
-        var files = new ArrayList<String>();
+        var files = new ArrayList<File>();
         for (File sourceFile : sourceFiles) {
             String newFilePath = targetFile.getPath() + "\\" + sourceFile.getName();
-            files.add(newFilePath);
+            files.add(new File(newFilePath));
             containsFile(sourceFile, newFilePath);
         }
         return files;

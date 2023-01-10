@@ -1,12 +1,12 @@
 package com.yangteng.library.views.notebook.main.core;
 
 import com.yangteng.library.utils.ConfigUtils;
-import com.yangteng.library.utils.MyFileUtils;
 import com.yangteng.library.utils.FxAlertUtils;
+import com.yangteng.library.utils.MyFileUtils;
 import com.yangteng.library.views.notebook.component.MyCode;
+import com.yangteng.library.views.notebook.dao.WorkSpaceMapper;
 import com.yangteng.library.views.notebook.entity.RecentFiles;
 import com.yangteng.library.views.notebook.main.bookrack.BookRackView;
-import com.yangteng.library.views.notebook.dao.WorkSpaceMapper;
 import com.yangteng.library.views.notebook.service.FileService;
 import com.yangteng.library.views.notebook.service.impl.FileServiceImpl;
 import io.vertx.core.Vertx;
@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 public class LeftNoteBookFileTreeView extends TreeView<Text> {
@@ -49,135 +48,9 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
         }
     }
 
-    private void controller() {
-        // 为文件树添加点击事件,为文件树中的文件添加点击事件
-        myFiles.getFileList().forEach(this::treeItemClick);
-        // 为文件树中的文件夹添加右击事件
-        myFiles.getDirList().forEach(fileTree ->
-            fileTree.getValue().setOnMouseClicked(event -> {
-                    if (event.getButton().name().equals(MouseButton.SECONDARY.name())) {
-                        // 为文件树添加右键事件
-                        fileMenuAddContextMenu(fileTree);
-                    }
-                }
-            )
-        );
-    }
-
-    private void treeItemClick(@NotNull TreeItem<Text> fileTree) {
-        fileTree.getValue().setOnMouseClicked(event -> {
-            // 为文件树添加右键事件
-            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) fileMenuAddContextMenu(fileTree);
-            // 双击事件
-            if (event.getClickCount() < 2) this.menuDoubleClick(fileTree);
-        });
-    }
-
-    private void menuDoubleClick(TreeItem<Text> fileTree) {
-        ObservableList<Tab> tabs = TabMenuBarView.INSTANCE.getTabs();
-        FilteredList<Tab> filtered = tabs.filtered(tab -> tab.getId().equals(fileTree.getValue().getId()));
-        if (filtered.size() > 0) {
-            Tab tab = filtered.get(0);
-            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
-        } else {
-            addTab(fileTree);
-        }
-    }
-
-    /**
-     * 为文件树中的文件添加右键菜单，极其响应事件
-     *
-     * @param fileTree
-     */
-    private void fileMenuAddContextMenu(@NotNull TreeItem<Text> fileTree) {
-        FileService fileService = new FileServiceImpl();
-        var target = fileTree.getValue();
-        var contextMenu = new ContextMenu();
-
-        var cp = new MenuItem("复制");
-        cp.setOnAction(e -> {
-            fileService.copy(target.getId());
-        });
-
-        var cv = new MenuItem("粘贴");
-        cv.setOnAction(e -> {
-            var paste = fileService.paste(target.getId());
-            // 刷新文件夹节点
-        });
-
-        var del = new MenuItem("删除");
-        menuDelFunction(fileTree, fileService, target, del);
-
-        var newFile = new MenuItem("新建文件");
-        newFile.setOnAction(e -> {
-            newFileOrFolder(fileTree, fileService, target, e,0);
-        });
-
-        var newFolder = new MenuItem("新建文件夹");
-        newFolder.setOnAction(e -> {
-            newFileOrFolder(fileTree, fileService, target, e,1);
-        });
-
-        var openFileDir = new MenuItem("打开文件所在位置");
-        openFileDir.setOnAction(e -> {
-            fileService.openFileDir(target.getId());
-        });
-
-        var rename = new MenuItem("重命名");
-        rename(fileTree, fileService, target, rename);
-
-        var upload = new MenuItem("重新刷新");
-        upload.setOnAction(e -> {
-            this.toggleFile(nowFile);
-        });
-
-        contextMenu.getItems().addAll(cp, cv, del, openFileDir, newFile, newFolder, rename, upload);
-        contextMenu.show(target, Side.BOTTOM, 0, 0);
-    }
-
-    /**
-     * 新建文件夹
-     * @param fileTree
-     * @param fileService
-     * @param target
-     * @param e
-     */
-    private void newFileOrFolder(TreeItem<Text> fileTree, FileService fileService, @NotNull Text target, ActionEvent e, int type) {
-        var bool = new File(target.getId()).isFile();
-        TreeItem<Text> parent;
-        if (bool) {
-            parent = fileTree.getParent();
-        } else {
-            parent = fileTree;
-        }
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("新建");
-        var textField = new TextField();
-        // 文本框设置聚焦
-        Platform.runLater(textField::requestFocus);
-        alert.setGraphic(textField);
-        var buttonType = alert.showAndWait();
-        if (buttonType.get() == ButtonType.OK) {
-            var idStr = parent.getValue().getId() + "/" + textField.getText();
-            var treeItem = new TreeItem<Text>();
-            var text = new Text(textField.getText());
-            text.setId(idStr);
-            text.setText(textField.getText());
-            text.prefWidth(250);
-            treeItem.setValue(text);
-            var b = type==0?fileService.createFile(idStr):fileService.createFolder(idStr);
-            if (b) {
-                parent.getChildren().add(treeItem);
-                // 为节点添加事件
-                this.treeItemClick(treeItem);
-            }
-        } else {
-            e.consume();
-        }
-    }
-
     /**
      * 重命名
+     *
      * @param fileTree
      * @param fileService
      * @param target
@@ -208,8 +81,29 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
         });
     }
 
+    private void treeItemClick(@NotNull TreeItem<Text> fileTree) {
+        fileTree.getValue().setOnMouseClicked(event -> {
+            // 为文件树添加右键事件
+            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) fileMenuAddContextMenu(fileTree);
+            // 双击事件
+            if (event.getClickCount() < 2) this.menuDoubleClick(fileTree);
+        });
+    }
+
+    private void menuDoubleClick(TreeItem<Text> fileTree) {
+        ObservableList<Tab> tabs = TabMenuBarView.INSTANCE.getTabs();
+        FilteredList<Tab> filtered = tabs.filtered(tab -> tab.getId().equals(fileTree.getValue().getId()));
+        if (filtered.size() > 0) {
+            Tab tab = filtered.get(0);
+            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
+        } else {
+            addTab(fileTree);
+        }
+    }
+
     /**
      * 重命名循环方法
+     *
      * @param fileTree
      * @param oldId
      * @param str
@@ -233,6 +127,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
 
     /**
      * 删除方法
+     *
      * @param fileTree
      * @param fileService
      * @param target
@@ -252,6 +147,121 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
                 FxAlertUtils.show("文件删除失败");
             }
         });
+    }
+
+    private void controller() {
+        // 为文件树添加点击事件,为文件树中的文件添加点击事件
+        myFiles.getFileList().forEach(this::treeItemClick);
+        // 为文件树中的文件夹添加右击事件
+        myFiles.getDirList().forEach(fileTree ->
+                fileTree.getValue().setOnMouseClicked(event -> {
+                            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) {
+                                // 为文件树添加右键事件
+                                fileMenuAddContextMenu(fileTree);
+                            }
+                        }
+                )
+        );
+    }
+
+    /**
+     * 为文件树中的文件添加右键菜单，极其响应事件
+     *
+     * @param fileTree
+     */
+    private void fileMenuAddContextMenu(@NotNull TreeItem<Text> fileTree) {
+        FileService fileService = new FileServiceImpl();
+        var target = fileTree.getValue();
+        var contextMenu = new ContextMenu();
+
+        var cp = new MenuItem("复制");
+        cp.setOnAction(e -> fileService.copy(target.getId()));
+
+        var cv = new MenuItem("粘贴");
+        cv.setOnAction(e -> {
+            var file = new File(target.getId());
+            // 对本地文件进行粘贴操作
+            var paste = fileService.paste(target.getId());
+            // 刷新复制之后的文件夹节点
+            paste.forEach(f -> {
+                var tree = new MyFileUtils(f);
+                tree.getTree().getChildren().forEach(this::treeItemClick);
+                if (file.isDirectory())
+                    fileTree.getChildren().add(tree.getTree());
+                else fileTree.getParent().getChildren().add(tree.getTree());
+            });
+        });
+
+        var del = new MenuItem("删除");
+        menuDelFunction(fileTree, fileService, target, del);
+
+        var newFile = new MenuItem("新建文件");
+        newFile.setOnAction(e -> {
+            newFileOrFolder(fileTree, fileService, target, e, 0);
+        });
+
+        var newFolder = new MenuItem("新建文件夹");
+        newFolder.setOnAction(e -> {
+            newFileOrFolder(fileTree, fileService, target, e, 1);
+        });
+
+        var openFileDir = new MenuItem("打开文件所在位置");
+        openFileDir.setOnAction(e -> {
+            fileService.openFileDir(target.getId());
+        });
+
+        var rename = new MenuItem("重命名");
+        rename(fileTree, fileService, target, rename);
+
+        var upload = new MenuItem("重新刷新");
+        upload.setOnAction(e -> {
+            this.toggleFile(nowFile);
+        });
+
+        contextMenu.getItems().addAll(cp, cv, del, openFileDir, newFile, newFolder, rename, upload);
+        contextMenu.show(target, Side.BOTTOM, 0, 0);
+    }
+
+    /**
+     * 新建文件夹
+     *
+     * @param fileTree
+     * @param fileService
+     * @param target
+     * @param e
+     */
+    private void newFileOrFolder(TreeItem<Text> fileTree, FileService fileService, @NotNull Text target, ActionEvent e, int type) {
+        var bool = new File(target.getId()).isFile();
+        TreeItem<Text> parent;
+        if (bool) {
+            parent = fileTree.getParent();
+        } else {
+            parent = fileTree;
+        }
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("新建");
+        var textField = new TextField();
+        // 文本框设置聚焦
+        Platform.runLater(textField::requestFocus);
+        alert.setGraphic(textField);
+        var buttonType = alert.showAndWait();
+        if (buttonType.get() == ButtonType.OK) {
+            var idStr = parent.getValue().getId() + "/" + textField.getText();
+            var treeItem = new TreeItem<Text>();
+            var text = new Text(textField.getText());
+            text.setId(idStr);
+            text.setText(textField.getText());
+            text.prefWidth(250);
+            treeItem.setValue(text);
+            var b = type == 0 ? fileService.createFile(idStr) : fileService.createFolder(idStr);
+            if (b) {
+                parent.getChildren().add(treeItem);
+                // 为节点添加事件
+                this.treeItemClick(treeItem);
+            }
+        } else {
+            e.consume();
+        }
     }
 
     /**
