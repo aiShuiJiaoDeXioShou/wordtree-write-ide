@@ -4,12 +4,10 @@ import com.yangteng.library.utils.ConfigUtils;
 import com.yangteng.library.utils.FxAlertUtils;
 import com.yangteng.library.utils.MyFileUtils;
 import com.yangteng.library.views.notebook.component.MyCode;
-import com.yangteng.library.views.notebook.dao.WorkSpaceMapper;
 import com.yangteng.library.views.notebook.entity.RecentFiles;
 import com.yangteng.library.views.notebook.main.bookrack.BookRackView;
 import com.yangteng.library.views.notebook.service.FileService;
-import com.yangteng.library.views.notebook.service.impl.FileServiceImpl;
-import io.vertx.core.Vertx;
+import com.yangteng.library.views.notebook.service.WorkSpaceService;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -27,14 +25,16 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class LeftNoteBookFileTreeView extends TreeView<Text> {
+public class LeftNoteBookFileTreeView extends TreeView<Label> {
     public static final LeftNoteBookFileTreeView INSTANCE = new LeftNoteBookFileTreeView();
     private MyFileUtils myFiles;
-    private TreeItem<Text> tree;
+    public FileService fileService = new FileService() {
+    };
     public File nowFile;
+    private TreeItem<Label> tree;
 
     public LeftNoteBookFileTreeView() {
-        var recentFiles = WorkSpaceMapper.get();
+        var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
         toggleFile(new File(recentFiles.get(size - 1).filePath));
     }
@@ -56,7 +56,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      * @param target
      * @param rename
      */
-    private static void rename(TreeItem<Text> fileTree, FileService fileService, Text target, @NotNull MenuItem rename) {
+    private static void rename(TreeItem<Label> fileTree, FileService fileService, Label target, @NotNull MenuItem rename) {
         rename.setOnAction(e -> {
             var oldId = target.getId();
             var alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -81,26 +81,6 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
         });
     }
 
-    private void treeItemClick(@NotNull TreeItem<Text> fileTree) {
-        fileTree.getValue().setOnMouseClicked(event -> {
-            // 为文件树添加右键事件
-            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) fileMenuAddContextMenu(fileTree);
-            // 双击事件
-            if (event.getClickCount() < 2) this.menuDoubleClick(fileTree);
-        });
-    }
-
-    private void menuDoubleClick(TreeItem<Text> fileTree) {
-        ObservableList<Tab> tabs = TabMenuBarView.INSTANCE.getTabs();
-        FilteredList<Tab> filtered = tabs.filtered(tab -> tab.getId().equals(fileTree.getValue().getId()));
-        if (filtered.size() > 0) {
-            Tab tab = filtered.get(0);
-            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
-        } else {
-            addTab(fileTree);
-        }
-    }
-
     /**
      * 重命名循环方法
      *
@@ -108,7 +88,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      * @param oldId
      * @param str
      */
-    private static void reaname0(@NotNull TreeItem<Text> fileTree, String oldId, String str) {
+    private static void reaname0(@NotNull TreeItem<Label> fileTree, String oldId, String str) {
         // 判断是不是目录，如果是目录更改目录下面所有文件的属性
         if (fileTree.getChildren().size() > 0) {
             fileTree.getChildren().forEach(f -> {
@@ -133,7 +113,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      * @param target
      * @param del
      */
-    private static void menuDelFunction(TreeItem<Text> fileTree, FileService fileService, Text target, @NotNull MenuItem del) {
+    private static void menuDelFunction(TreeItem<Label> fileTree, FileService fileService, Label target, @NotNull MenuItem del) {
         del.setOnAction(e -> {
             // 默认删除到回收站
             var bool = fileService.del(target.getId());
@@ -149,15 +129,35 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
         });
     }
 
+    private void treeItemClick(@NotNull TreeItem<Label> fileTree) {
+        fileTree.getValue().setOnMouseClicked(event -> {
+            // 为文件树添加右键事件
+            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) fileMenuAddContextMenu(fileTree);
+            // 双击事件
+            if (event.getClickCount() >= 2) this.menuDoubleClick(fileTree);
+        });
+    }
+
+    private void menuDoubleClick(TreeItem<Label> fileTree) {
+        ObservableList<Tab> tabs = TabMenuBarView.INSTANCE.getTabs();
+        FilteredList<Tab> filtered = tabs.filtered(tab -> tab.getId().equals(fileTree.getValue().getId()));
+        if (filtered.size() > 0) {
+            Tab tab = filtered.get(0);
+            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
+        } else {
+            addTab(fileTree);
+        }
+    }
+
     private void controller() {
         // 为文件树添加点击事件,为文件树中的文件添加点击事件
         myFiles.getFileList().forEach(this::treeItemClick);
         // 为文件树中的文件夹添加右击事件
         myFiles.getDirList().forEach(fileTree ->
                 fileTree.getValue().setOnMouseClicked(event -> {
-                            if (event.getButton().name().equals(MouseButton.SECONDARY.name())) {
-                                // 为文件树添加右键事件
-                                fileMenuAddContextMenu(fileTree);
+                    if (event.getButton().name().equals(MouseButton.SECONDARY.name())) {
+                        // 为文件树添加右键事件
+                        fileMenuAddContextMenu(fileTree);
                             }
                         }
                 )
@@ -169,8 +169,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      *
      * @param fileTree
      */
-    private void fileMenuAddContextMenu(@NotNull TreeItem<Text> fileTree) {
-        FileService fileService = new FileServiceImpl();
+    private void fileMenuAddContextMenu(@NotNull TreeItem<Label> fileTree) {
         var target = fileTree.getValue();
         var contextMenu = new ContextMenu();
 
@@ -184,11 +183,12 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
             var paste = fileService.paste(target.getId());
             // 刷新复制之后的文件夹节点
             paste.forEach(f -> {
-                var tree = new MyFileUtils(f);
-                tree.getTree().getChildren().forEach(this::treeItemClick);
+                var tree = new MyFileUtils(f).getTree();
+                if (tree.getChildren().size() > 0) tree.getChildren().forEach(this::treeItemClick);
+                this.treeItemClick(tree);
                 if (file.isDirectory())
-                    fileTree.getChildren().add(tree.getTree());
-                else fileTree.getParent().getChildren().add(tree.getTree());
+                    fileTree.getChildren().add(tree);
+                else fileTree.getParent().getChildren().add(tree);
             });
         });
 
@@ -230,9 +230,9 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      * @param target
      * @param e
      */
-    private void newFileOrFolder(TreeItem<Text> fileTree, FileService fileService, @NotNull Text target, ActionEvent e, int type) {
+    private void newFileOrFolder(TreeItem<Label> fileTree, FileService fileService, @NotNull Label target, ActionEvent e, int type) {
         var bool = new File(target.getId()).isFile();
-        TreeItem<Text> parent;
+        TreeItem<Label> parent;
         if (bool) {
             parent = fileTree.getParent();
         } else {
@@ -247,8 +247,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
         var buttonType = alert.showAndWait();
         if (buttonType.get() == ButtonType.OK) {
             var idStr = parent.getValue().getId() + "/" + textField.getText();
-            var treeItem = new TreeItem<Text>();
-            var text = new Text(textField.getText());
+            var treeItem = new TreeItem<Label>();
+            var text = new Label(textField.getText());
             text.setId(idStr);
             text.setText(textField.getText());
             text.prefWidth(250);
@@ -269,7 +269,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
      *
      * @param fileTree
      */
-    private void addTab(@NotNull TreeItem<Text> fileTree) {
+    private void addTab(@NotNull TreeItem<Label> fileTree) {
         var value = fileTree.getValue();
         String filePath = value.getId();
         var code = new MyCode(new File(filePath));
@@ -309,7 +309,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
 
     public void toggleFile(File file) {
         this.nowFile = file;
-        Vertx.vertx().runOnContext(e -> {
+        new Thread(() -> {
             Platform.runLater(() -> {
                 // 回收垃圾保存内存不溢出
                 this.gc();
@@ -319,8 +319,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
                 this.setRoot(this.tree);
             });
             System.gc();
-        });
-        Vertx.vertx().runOnContext(e -> {
+        }).start();
+        new Thread(() -> {
             var recentFiles = BookRackView.INSTANCE.recentFiles;
             var filesStream = recentFiles.stream().filter(re -> re.filePath.equals(file.getPath())).toList();
             if (filesStream.size() == 0) {
@@ -331,19 +331,17 @@ public class LeftNoteBookFileTreeView extends TreeView<Text> {
                     recent.userName = ConfigUtils.getProperties("username");
                 }
                 recentFiles.add(recent);
-                WorkSpaceMapper.save(recentFiles);
+                WorkSpaceService.save(recentFiles);
             } else {
                 var recentList = recentFiles.stream().peek(re -> {
                     if (re.filePath.equals(file.getPath())) {
                         re.time = LocalDateTime.now();
                     }
                 }).toList();
-                WorkSpaceMapper.save(recentList);
+                WorkSpaceService.save(recentList);
             }
-        });
-        Vertx.vertx().runOnContext(e -> {
-            // 刷新BookRackView的UI状态
-            BookRackView.INSTANCE.update();
-        });
+        }).start();
+        // 刷新BookRackView的UI状态
+        new Thread(BookRackView.INSTANCE::update).start();
     }
 }

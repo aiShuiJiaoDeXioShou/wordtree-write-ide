@@ -19,6 +19,6 @@ public class HomeScene extends Scene {
 
     public HomeScene(Parent parent) {
         super(parent);
-        this.getStylesheets().add(Objects.requireNonNull(HomeScene.class.getClassLoader().getResource("static/css/light.css")).toExternalForm());
+        this.getStylesheets().add(Objects.requireNonNull(HomeScene.class.getClassLoader().getResource("static/css/app.css")).toExternalForm());
     }
 }

@@ -1,6 +1,5 @@
 package com.yangteng.library.views.notebook.main.root;
 
-import com.yangteng.library.views.main.home.HomeScene;
 import com.yangteng.library.views.notebook.component.MyCode;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
 import javafx.scene.Parent;
@@ -13,13 +12,11 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 
 public class NoteBookScene extends Scene {
     public final static NoteBookScene INSTANCE = new NoteBookScene(NoteBookRootView.INSTANCE);
     public NoteBookScene(Parent root) {
         super(root);
-        this.getStylesheets().add(Objects.requireNonNull(HomeScene.class.getClassLoader().getResource("static/css/light.css")).toExternalForm());
         this.keyMap();
     }
 

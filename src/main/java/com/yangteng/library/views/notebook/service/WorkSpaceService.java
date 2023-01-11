@@ -1,22 +1,22 @@
-package com.yangteng.library.views.notebook.dao;
+package com.yangteng.library.views.notebook.service;
 
+import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
 import com.yangteng.library.utils.ClassLoaderUtils;
 import com.yangteng.library.views.notebook.entity.RecentFiles;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 
-public interface WorkSpaceMapper {
+public interface WorkSpaceService {
 
     static void save(List<RecentFiles> recentFiles) {
         try {
-            var resource = ClassLoader.getSystemClassLoader().getResource("static/config/workspace.json");
-            assert resource != null;
-            Files.write(Path.of(resource.toURI()), JSON.toJSONBytes(recentFiles, JSONWriter.Feature.PrettyFormat));
+            FileUtil.writeBytes(
+                    JSON.toJSONBytes(recentFiles, JSONWriter.Feature.PrettyFormat),
+                    WorkSpaceService.class.getClassLoader().getResource("static/config/workspace.json").toURI().getPath()
+            );
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

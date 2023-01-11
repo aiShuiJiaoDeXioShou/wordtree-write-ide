@@ -1,7 +1,7 @@
 package com.yangteng.library.utils;
 
+import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,9 +15,9 @@ import java.util.Objects;
 public class MyFileUtils {
     private List<File> files;
     private File root;
-    private TreeItem<Text> treeRoot;
-    private List<TreeItem<Text>> dirList = null;
-    private List<TreeItem<Text>> fileList = null;
+    private TreeItem<Label> treeRoot;
+    private List<TreeItem<Label>> dirList = null;
+    private List<TreeItem<Label>> fileList = null;
 
     public MyFileUtils(File root) {
         this.root = root;
@@ -29,38 +29,37 @@ public class MyFileUtils {
         return files;
     }
 
-    public TreeItem<Text> getTree() {
+    public TreeItem<Label> getTree() {
         dirList = new ArrayList<>();
         fileList = new ArrayList<>();
         treeRoot = new TreeItem<>();
         {
             dirList.add(treeRoot);
-            var text = new Text(root.getName());
+            var text = new Label(root.getName());
             text.setId(root.getPath());
             treeRoot.setValue(text);
-
         }
-        getFiles1(root, treeRoot);
+        if (root.isDirectory()) getFiles1(root, treeRoot);
         return treeRoot;
     }
 
-    public List<TreeItem<Text>> getDirList() {
+    public List<TreeItem<Label>> getDirList() {
         if (dirList == null) throw new RuntimeException("你的先启用getTree方法");
         return dirList;
     }
 
-    public List<TreeItem<Text>> getFileList() {
+    public List<TreeItem<Label>> getFileList() {
         if (fileList == null) throw new RuntimeException("你的先启用getTree方法");
         return fileList;
     }
 
-    private void getFiles1(File file, TreeItem<Text> treeItem) {
+    private void getFiles1(File file, TreeItem<Label> treeItem) {
         File[] listFiles = file.listFiles();
         assert listFiles != null;
         for (File f : Arrays.stream(listFiles).sorted().toList()) {
-            var item = new TreeItem<Text>();
+            var item = new TreeItem<Label>();
             {
-                var text = new Text(f.getName());
+                var text = new Label(f.getName());
                 {
                     text.setId(f.getPath());
                     text.prefWidth(250);

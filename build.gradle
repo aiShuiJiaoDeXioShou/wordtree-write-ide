@@ -1,87 +1,60 @@
 plugins {
-    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.beryx.jlink' version '2.25.0'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.beryx.runtime' version '1.12.5'
 }
-
-group 'com.yangteng'
-version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-    maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-    }
-}
-
-ext {
-    junitVersion = '5.9.1'
-}
-
-sourceCompatibility = '17'
-targetCompatibility = '17'
-
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
-
-application {
-    mainModule = 'com.yangteng.library'
-    mainClass = 'com.yangteng.library.Main'
-}
-
-javafx {
-    version = '17.0.2'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.media']
 }
 
 dependencies {
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
-    implementation ('org.fxmisc.richtext:richtextfx:0.11.0')
-    implementation ('com.alibaba.fastjson2:fastjson2-adapter:2.0.22')
-    implementation ('io.vertx:vertx-core:4.3.7')
-    implementation ('org.xerial:sqlite-jdbc:3.34.0')
-    implementation ('org.mybatis:mybatis:3.5.10')
-    implementation ('com.alibaba:druid:1.2.15')
-    implementation ('org.slf4j:slf4j-log4j12:1.7.30')
-    implementation ('net.java.dev.jna:jna-platform:4.0.0')
-    implementation 'org.jetbrains:annotations:20.1.0'
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    // 文本编辑器组件
+    implementation('org.fxmisc.richtext:richtextfx:0.11.0')
+    // json解析
+    implementation('com.alibaba.fastjson2:fastjson2-adapter:2.0.22')
+    // 使用sqlite数据库要用到的
+    implementation('org.xerial:sqlite-jdbc:3.34.0')
+    implementation('org.mybatis:mybatis:3.5.10')
+    implementation('org.jfxtras:jmetro:11.6.14')
+    // 删除到回收站操作
+    implementation('net.java.dev.jna:jna-platform:4.0.0')
+    // 空判断
+    implementation('org.jetbrains:annotations:20.1.0')
+    // 引入工具
+    implementation('cn.hutool:hutool-core:5.6.3')
 }
 
-test {
-    useJUnitPlatform()
+javafx {
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
-jlink {
-    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+application {
+    mainClass = "com.yangteng.library.Launcher"
+    applicationName = 'library'
+}
+
+runtime {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
-        name = 'app'
+        noConsole = true
     }
-}
+    jpackage {
+        def currentOs = org.gradle.internal.os.OperatingSystem.current()
+        def imgType = currentOs.windows ? 'ico' : currentOs.macOsX ? 'icns' : 'png'
+        imageOptions += ['--icon', "src/main/resources/icon.$imgType"]
+        installerOptions += ['--resource-dir', "src/main/resources"]
+        installerOptions += ['--vendor', 'Acme Corporation']
 
-// 资源目录所在地
-task cpStatic {
-    doLast {
-        def p = "D:/ytjava/ideayt/library-javafx-gui"
-        def buildPath = "${p}/build/image/bin"
-        def res = "${p}/src/main/resources"
-        copy {
-            from res
-            into buildPath
+        if (currentOs.windows) {
+            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
+        } else if (currentOs.linux) {
+            installerOptions += ['--linux-package-name', 'library', '--linux-shortcut']
+        } else if (currentOs.macOsX) {
+            installerOptions += ['--mac-package-name', 'library']
         }
     }
-}
-
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
-}
-
-jlinkZip {
-    group = 'distribution'
 }

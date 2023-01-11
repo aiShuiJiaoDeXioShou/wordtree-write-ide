@@ -1,42 +1,25 @@
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# directory names ending with / will be excluded from all IDEA modules (see ide.gradle)
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+gradle-local.properties
+gpg/
+.gradle/
+build/
+*.class
+*.log
+*.settings.xml
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IDEA
 *.iml
 *.ipr
+*.iws
+.idea/
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
-.DS_Store
+hs_err_pid*
+_ignore*

@@ -4,10 +4,13 @@ import com.yangteng.library.views.notebook.entity.RecentFiles;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
 import com.yangteng.library.views.notebook.main.core.NoteCoreView;
 import com.yangteng.library.views.notebook.main.root.NoteBookRootView;
-import com.yangteng.library.views.notebook.dao.WorkSpaceMapper;
+import com.yangteng.library.views.notebook.service.WorkSpaceService;
 import javafx.geometry.Insets;
 import javafx.geometry.Side;
-import javafx.scene.control.*;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -15,7 +18,6 @@ import javafx.scene.text.Text;
 import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 
 public class BookRackView extends BorderPane {
 
@@ -48,7 +50,7 @@ public class BookRackView extends BorderPane {
         }
         bookHistoryList = new ListView<>();
         // 获取工作空间的历史所有数据
-        recentFiles = WorkSpaceMapper.get();
+        recentFiles = WorkSpaceService.get();
         for (RecentFiles recentFile : recentFiles) {
             var label = new Label(recentFile.filePath);
             label.setGraphic(new Text(recentFile.time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
@@ -91,7 +93,7 @@ public class BookRackView extends BorderPane {
                 bookHistoryList.getItems().remove(label);
                 // 更新文件
                 recentFiles.remove(bookHistoryList.getItems().indexOf(label));
-                WorkSpaceMapper.save(recentFiles);
+                WorkSpaceService.save(recentFiles);
             });
             details.setOnAction(e->{
 

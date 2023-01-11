@@ -1,6 +1,6 @@
 package com.yangteng.library.views.notebook.main.core;
 
-import com.yangteng.library.Index;
+import com.yangteng.library.App;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -43,7 +43,7 @@ public class NoteBookMenuView extends MenuBar {
         file.setOnAction(event -> {
             DirectoryChooser fileChooser = new DirectoryChooser();
             fileChooser.setTitle("请选择您的工作空间！");
-            File file = fileChooser.showDialog(Index.primaryStage);
+            File file = fileChooser.showDialog(App.primaryStage);
             var alert = new Alert(Alert.AlertType.WARNING);{
                 alert.setTitle("请不要选择重复的工作空间！");
             }
@@ -53,7 +53,9 @@ public class NoteBookMenuView extends MenuBar {
                 alert.setTitle("该文件路径不能为空！");
                 alert.show();
             } else {
-                lnbf.toggleFile(file);
+                new Thread(() -> {
+                    lnbf.toggleFile(file);
+                }).start();
             }
         });
     }
