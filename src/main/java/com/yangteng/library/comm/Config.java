@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public interface Config {
-
     // 用户主目录
     String APP_CONFIG_DIR = System.getProperty("user.home") + "/" + ".wordtree";
 

@@ -1,9 +1,9 @@
 package com.yangteng.library.views.notebook.component;
 
 import com.yangteng.library.utils.ConfigUtils;
-import com.yangteng.library.utils.MyFileUtils;
 import com.yangteng.library.utils.FxStyleUtils;
 import com.yangteng.library.utils.LoadingLanguageUtils;
+import com.yangteng.library.utils.MyFileUtils;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
@@ -47,10 +47,11 @@ public class MyCode extends CodeArea {
 
     public MyCode(File file) {
         this.file = file;
+        this.moveTo(10);
         // 初始化语言构造工厂
         this.initLanguageFactory();
         this.setPrefWidth(500);
-        this.setPrefHeight(600);
+        this.setPrefHeight(700);
         this.setPadding(new Insets(5, 5, 5, 5));
         this.setWrapText(true);
         styleMap.put("-fx-font-size", ConfigUtils.getProperties("codeFont"));
@@ -60,7 +61,13 @@ public class MyCode extends CodeArea {
     }
 
     private void initLanguageFactory() {
-        KEYWORDS = LoadingLanguageUtils.load(MyFileUtils.lastName(file)).code;
+        String[] code;
+        try {
+            code = LoadingLanguageUtils.load(MyFileUtils.lastName(file)).code;
+        } catch (NullPointerException e) {
+            code = new String[]{};
+        }
+        KEYWORDS = code;
         KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
         PAREN_PATTERN = "\\(|\\)";
         BRACE_PATTERN = "\\{|\\}";

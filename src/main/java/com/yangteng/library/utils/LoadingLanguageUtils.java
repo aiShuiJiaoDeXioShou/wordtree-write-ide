@@ -10,8 +10,8 @@ import java.io.InputStream;
 
 public interface LoadingLanguageUtils {
     static LanguageConfig load(String languageCode) {
-        LanguageConfig languageConfig = null;
-        InputStream load = null;
+        LanguageConfig languageConfig;
+        InputStream load;
         try {
             String path = Config.LANGUAGE_CODE_PATH + "/" + languageCode + "-code.json";
             load = new FileInputStream(path);
@@ -21,7 +21,7 @@ public interface LoadingLanguageUtils {
             languageConfig = JSON.parseObject(load.readAllBytes(), LanguageConfig.class);
             load.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
         }
         return languageConfig;
     }

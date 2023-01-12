@@ -1,6 +1,7 @@
 package com.yangteng.library;
 
 import com.yangteng.library.comm.Config;
+import com.yangteng.library.utils.ConfigUtils;
 import com.yangteng.library.views.main.home.HomeScene;
 import com.yangteng.library.views.notebook.main.root.NoteBookScene;
 import javafx.application.Application;
@@ -37,7 +38,10 @@ public class App extends Application {
     }
 
     private void setStyle() {
-        JMetro metro = new JMetro(Style.LIGHT);
+        JMetro metro;
+        if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
+            metro = new JMetro(Style.LIGHT);
+        } else metro = new JMetro(Style.DARK);
         metro.setScene(scene);
         metro.getOverridingStylesheets().addAll(getStyle("static/css/base.css"), getStyle("static/css/app.css"));
     }

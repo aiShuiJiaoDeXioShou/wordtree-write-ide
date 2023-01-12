@@ -145,7 +145,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             Tab tab = filtered.get(0);
             TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
         } else {
-            addTab(fileTree);
+            this.addTab(fileTree);
         }
     }
 
@@ -295,7 +295,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
         }
         try {
             String context = Files.readString(Path.of(filePath));
-            code.replaceText(context);
+            code.appendText(context);
             // 只要文本发生了改变，改变tab标签的ui状态
             code.textProperty().addListener((observable, oldValue, newValue) -> {
                 tab.setGraphic(new Text("*"));
@@ -320,6 +320,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             });
             System.gc();
         }).start();
+        // 对工作空间的保存操作
         new Thread(() -> {
             var recentFiles = BookRackView.INSTANCE.recentFiles;
             var filesStream = recentFiles.stream().filter(re -> re.filePath.equals(file.getPath())).toList();
