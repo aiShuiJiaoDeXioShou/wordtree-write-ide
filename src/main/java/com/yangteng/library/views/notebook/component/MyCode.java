@@ -47,7 +47,6 @@ public class MyCode extends CodeArea {
 
     public MyCode(File file) {
         this.file = file;
-        this.moveTo(10);
         // 初始化语言构造工厂
         this.initLanguageFactory();
         this.setPrefWidth(500);

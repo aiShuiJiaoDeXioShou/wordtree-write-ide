@@ -18,11 +18,9 @@ Text {
 }
 
 .label.header, .label.header .text {
-    -fx-font-size: 3.5em;
     -fx-font-family: "Microsoft YaHei UI";
 }
 
 .label.item-title, .label.item-title .text {
-    -fx-font-size: 1em;
     -fx-font-family: "Microsoft YaHei UI";
 }

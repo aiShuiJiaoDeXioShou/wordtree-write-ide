@@ -24,7 +24,7 @@ dependencies {
     implementation('net.java.dev.jna:jna-platform:4.0.0')
     // 空判断
     implementation('org.jetbrains:annotations:20.1.0')
-    // 引入工具
+    // 引入工具箱
     implementation('cn.hutool:hutool-core:5.6.3')
 }
 

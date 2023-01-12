@@ -6,6 +6,6 @@ public class BottomStateView extends HBox {
     public static final BottomStateView INSTANCE = new BottomStateView();
 
     public BottomStateView() {
-        this.setPrefHeight(40);
+        this.setPrefHeight(35);
     }
 }

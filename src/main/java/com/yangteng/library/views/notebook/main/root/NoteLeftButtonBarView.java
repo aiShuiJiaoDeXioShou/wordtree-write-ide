@@ -5,28 +5,43 @@ import com.yangteng.library.views.notebook.main.bookrack.BookRackView;
 import com.yangteng.library.views.notebook.main.core.NoteCoreView;
 import com.yangteng.library.views.notebook.main.setting.SettingView;
 import javafx.geometry.Insets;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
-public class NoteLeftButtonBarView extends VBox {
+public class NoteLeftButtonBarView extends HBox {
 
     public static final NoteLeftButtonBarView INSTANCE = new NoteLeftButtonBarView();
-    private  NoteLeftButtonItem fliesItem,writeItem,setting;
+    private ListView<NoteLeftButtonItem> listView;
 
     public NoteLeftButtonBarView() {
-        this.setPrefWidth(30);
-        this.setPadding(new Insets(10));
-        fliesItem = new NoteLeftButtonItem("static/icon/flies.png", "书籍管理");
-        writeItem = new NoteLeftButtonItem("static/icon/write.png", "写作");
-        setting = new NoteLeftButtonItem("static/icon/setting.png", "设置");
-        this.setSpacing(10);
-        this.getChildren().addAll(fliesItem, writeItem, setting);
+        this.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 0))));
+        NoteLeftButtonItem fliesItem, writeItem, setting;
+        fliesItem = new NoteLeftButtonItem("\uE74C", "书籍管理");
+        writeItem = new NoteLeftButtonItem("\uE70F", "写作");
+        setting = new NoteLeftButtonItem("\uE713", "设置");
+        listView = new ListView<>();
+        {
+            listView.getItems().addAll(fliesItem, writeItem, setting);
+            listView.getSelectionModel().select(1);
+            listView.setPrefWidth(45);
+            listView.setPadding(new Insets(10));
+        }
+        this.getChildren().addAll(listView);
         this.controller();
     }
 
     private void controller() {
-        fliesItem.setOnMouseClicked(e-> NoteBookRootView.INSTANCE.setCenter(BookRackView.INSTANCE));
-        writeItem.setOnMouseClicked(e-> NoteBookRootView.INSTANCE.setCenter(NoteCoreView.INSTANCE));
-        setting.setOnMouseClicked(e-> NoteBookRootView.INSTANCE.setCenter(SettingView.INSTANCE));
+        listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            switch (newValue.getId()) {
+                case "书籍管理" -> {
+                    NoteBookRootView.INSTANCE.setCenter(BookRackView.INSTANCE);
+                    BookRackView.INSTANCE.update();
+                }
+                case "写作" -> NoteBookRootView.INSTANCE.setCenter(NoteCoreView.INSTANCE);
+                case "设置" -> NoteBookRootView.INSTANCE.setCenter(SettingView.INSTANCE);
+            }
+        });
     }
 
 }

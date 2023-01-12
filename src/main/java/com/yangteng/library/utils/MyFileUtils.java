@@ -62,7 +62,6 @@ public class MyFileUtils {
                 var text = new Label(f.getName());
                 {
                     text.setId(f.getPath());
-                    text.prefWidth(250);
                 }
                 item.setValue(text);
             }

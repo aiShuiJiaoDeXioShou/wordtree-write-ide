@@ -1,5 +1,6 @@
 package com.yangteng.library.views.notebook.main.core;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.App;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
@@ -53,9 +54,9 @@ public class NoteBookMenuView extends MenuBar {
                 alert.setTitle("该文件路径不能为空！");
                 alert.show();
             } else {
-                new Thread(() -> {
+                ThreadUtil.execute(() -> {
                     lnbf.toggleFile(file);
-                }).start();
+                });
             }
         });
     }

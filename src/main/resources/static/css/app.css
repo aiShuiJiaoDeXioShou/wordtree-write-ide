@@ -2,16 +2,6 @@
     -fx-font-family: "Microsoft YaHei UI";
 }
 
-.menu:hover {
-    -fx-text-fill: white;
-    -fx-background-color: #d0bfff;
-}
-
-.menu {
-    -fx-text-fill: #ffff;
-    -fx-font-size: 15px;
-}
-
 .embedded-prompt {
     -fx-text-fill: #95a5a6;
 }
@@ -20,14 +10,6 @@
     -fx-border-radius: 5px;
     -fx-border-width: 1px;
     -fx-border-color: white;
-}
-
-.note-left-button-item:hover {
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-border-color: #e9ecef;
-    -fx-background-color: rgba(0, 0, 0, 0.2);
-    -fx-background-radius: 5px;
 }
 
 /*代码编辑器高亮部分*/
@@ -51,17 +33,19 @@
     -fx-font-weight: bold;
 }
 .string {
-    -fx-fill: skyblue;
+    -fx-fill: black;
 }
 
 .comment {
     -fx-fill: cadetblue;
 }
 
-.paragraph-box:has-caret {
+.paragraph-box {
     -fx-background-color: #f2f9fc;
 }
 
-.code {
-    -fx-font-size: 20px;
+/*覆盖tree-cell的形状*/
+.tree-cell > .tree-disclosure-node > .arrow {
+    -fx-shape: "M461.024 665.856c-17.696 14.08-45.024 2.4-45.024-19.2v-269.312c0-21.6 27.328-33.28 45.024-19.2l169.44 134.656a24.096 24.096 0 0 1 0 38.4l-169.44 134.656z";
+    -fx-background-color: #8997B2;
 }

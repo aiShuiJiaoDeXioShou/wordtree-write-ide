@@ -1,5 +1,6 @@
 package com.yangteng.library.views.notebook.main.core;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.utils.ConfigUtils;
 import com.yangteng.library.utils.FxAlertUtils;
 import com.yangteng.library.utils.MyFileUtils;
@@ -36,7 +37,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
     public LeftNoteBookFileTreeView() {
         var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
-        toggleFile(new File(recentFiles.get(size - 1).filePath));
+        this.nowFile = new File(recentFiles.get(size - 1).filePath);
+        toggleFile(this.nowFile);
     }
 
     private void gc() {
@@ -309,7 +311,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
 
     public void toggleFile(File file) {
         this.nowFile = file;
-        new Thread(() -> {
+        // 执行垃圾回收机制
+        ThreadUtil.execute(() -> {
             Platform.runLater(() -> {
                 // 回收垃圾保存内存不溢出
                 this.gc();
@@ -319,11 +322,12 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
                 this.setRoot(this.tree);
             });
             System.gc();
-        }).start();
+        });
         // 对工作空间的保存操作
-        new Thread(() -> {
+        ThreadUtil.execute(() -> {
             var recentFiles = BookRackView.INSTANCE.recentFiles;
             var filesStream = recentFiles.stream().filter(re -> re.filePath.equals(file.getPath())).toList();
+            // 判断打开的工作空间是否存在
             if (filesStream.size() == 0) {
                 var recent = new RecentFiles();
                 {
@@ -341,8 +345,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
                 }).toList();
                 WorkSpaceService.save(recentList);
             }
-        }).start();
+        });
         // 刷新BookRackView的UI状态
-        new Thread(BookRackView.INSTANCE::update).start();
+        ThreadUtil.execute(BookRackView.INSTANCE::update);
     }
 }

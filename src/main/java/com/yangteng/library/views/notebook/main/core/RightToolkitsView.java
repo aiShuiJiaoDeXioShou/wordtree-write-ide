@@ -6,6 +6,6 @@ import javafx.scene.control.ScrollPane;
 public class RightToolkitsView extends ScrollPane {
     public static final RightToolkitsView INSTANCE = new RightToolkitsView();
     public RightToolkitsView() {
-        this.setPrefSize(250, 600);
+        this.setPrefSize(NoteCoreView.WIDTH * 0.17, NoteCoreView.HEIGHT);
     }
 }

@@ -47,8 +47,9 @@ public class BookRackView extends BorderPane {
         if (bookHistoryList != null) {
             bookHistoryList.getItems().remove(0, bookHistoryList.getItems().size());
             System.gc();
+        } else {
+            bookHistoryList = new ListView<>();
         }
-        bookHistoryList = new ListView<>();
         // 获取工作空间的历史所有数据
         recentFiles = WorkSpaceService.get();
         for (RecentFiles recentFile : recentFiles) {

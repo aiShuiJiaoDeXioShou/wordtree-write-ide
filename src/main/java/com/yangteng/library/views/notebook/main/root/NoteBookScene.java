@@ -30,6 +30,7 @@ public class NoteBookScene extends Scene {
             // 保存编辑区的文本内容
             var inter = TabMenuBarView.INSTANCE;
             Tab nowTab = inter.getSelectionModel().getSelectedItem();
+            if (nowTab == null) return;
             MyCode content = (MyCode)nowTab.getContent();
             if (content.isHover()) {
                 try {
