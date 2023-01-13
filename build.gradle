@@ -2,6 +2,11 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'org.beryx.runtime' version '1.12.5'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+
+shadowJar {
+    mergeServiceFiles()
 }
 
 repositories {
@@ -26,6 +31,9 @@ dependencies {
     implementation('org.jetbrains:annotations:20.1.0')
     // 引入工具箱
     implementation('cn.hutool:hutool-core:5.6.3')
+    // 引入图标库
+    implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
+    implementation('org.kordamp.ikonli:ikonli-fontawesome5-pack:12.3.1')
 }
 
 javafx {
