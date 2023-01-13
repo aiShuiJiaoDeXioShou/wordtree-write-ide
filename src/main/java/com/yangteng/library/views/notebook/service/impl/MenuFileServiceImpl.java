@@ -1,8 +1,10 @@
-package com.yangteng.library.views.notebook.entity;
+package com.yangteng.library.views.notebook.service.impl;
 
 import com.yangteng.library.views.notebook.component.FileMenu;
+import com.yangteng.library.views.notebook.service.MenuFileService;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,26 +12,34 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MenuFile {
+public class MenuFileServiceImpl implements MenuFileService {
     private List<File> files;
     private File root;
     private TreeItem<Label> treeRoot;
     private List<TreeItem<Label>> dirList = null;
     private List<TreeItem<Label>> fileList = null;
 
-    public MenuFile(File root) {
+    public MenuFileServiceImpl(File root) {
         this.root = root;
     }
 
 
-    private void getFiles1(File file, TreeItem<Label> treeItem) {
+    private void dirFileTreeItem(@NotNull File file, TreeItem<Label> treeItem) {
         File[] listFiles = file.listFiles();
         assert listFiles != null;
-        for (File f : Arrays.stream(listFiles).sorted().toList()) {
+        for (File f : Arrays.stream(listFiles).sorted((o1, o2) -> {
+            if (o1.isDirectory() == o2.isDirectory()) {
+                return o1.compareTo(o2);
+            } else {
+                if (o1.isDirectory()) {
+                    return -1;
+                } else return 0;
+            }
+        }).toList()) {
             var item = new FileMenu(f);
             if (f.isDirectory()) {
                 dirList.add(item);
-                getFiles1(f, item);
+                dirFileTreeItem(f, item);
             } else {
                 fileList.add(item);
             }
@@ -37,10 +47,10 @@ public class MenuFile {
         }
     }
 
-    private void getFiles0(File file) {
+    private void dirFiles(@NotNull File file) {
         for (File f : Objects.requireNonNull(file.listFiles())) {
             if (f.isDirectory()) {
-                getFiles0(f);
+                dirFiles(f);
             } else {
                 files.add(f);
             }
@@ -49,7 +59,7 @@ public class MenuFile {
 
     public List<File> getFiles() {
         files = new ArrayList<>();
-        getFiles0(root);
+        dirFiles(root);
         return files;
     }
 
@@ -57,7 +67,7 @@ public class MenuFile {
         dirList = new ArrayList<>();
         fileList = new ArrayList<>();
         treeRoot = new FileMenu(root);
-        if (root.isDirectory()) getFiles1(root, treeRoot);
+        if (root.isDirectory()) dirFileTreeItem(root, treeRoot);
         return treeRoot;
     }
 

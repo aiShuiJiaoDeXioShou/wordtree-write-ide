@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 public class NoteLeftButtonBarView extends HBox {
 
     public static final NoteLeftButtonBarView INSTANCE = new NoteLeftButtonBarView();
-    private ListView<NoteLeftButtonItem> listView;
+    public ListView<NoteLeftButtonItem> listView;
 
     public NoteLeftButtonBarView() {
         this.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 0))));

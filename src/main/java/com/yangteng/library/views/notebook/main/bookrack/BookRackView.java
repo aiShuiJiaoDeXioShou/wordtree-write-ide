@@ -16,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
 import java.io.File;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BookRackView extends BorderPane {
@@ -53,8 +52,9 @@ public class BookRackView extends BorderPane {
         // 获取工作空间的历史所有数据
         recentFiles = WorkSpaceService.get();
         for (RecentFiles recentFile : recentFiles) {
-            var label = new Label(recentFile.filePath);
-            label.setGraphic(new Text(recentFile.time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+            var label = new Label();
+            label.setGraphic(new Text(recentFile.workspaceName()));
+            label.setId(recentFile.filePath());
             bookHistoryList.getItems().add(label);
         }
     }
@@ -105,9 +105,9 @@ public class BookRackView extends BorderPane {
     // 跳转到IDE区域
     private void jump(Label label) {
         NoteBookRootView.INSTANCE.setCenter(NoteCoreView.INSTANCE);
-        if (label.getText().equals(LeftNoteBookFileTreeView.INSTANCE.nowFile.getPath())) {
+        if (label.getId().equals(LeftNoteBookFileTreeView.INSTANCE.nowFile.getPath())) {
             return;
         }
-        LeftNoteBookFileTreeView.INSTANCE.toggleFile(new File(label.getText()));
+        LeftNoteBookFileTreeView.INSTANCE.toggleFile(new File(label.getId()));
     }
 }

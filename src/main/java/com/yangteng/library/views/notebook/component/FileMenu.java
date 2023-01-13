@@ -1,10 +1,10 @@
 package com.yangteng.library.views.notebook.component;
 
 import com.yangteng.library.utils.FxAlertUtils;
-import com.yangteng.library.views.notebook.entity.MenuFile;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
 import com.yangteng.library.views.notebook.service.FileService;
+import com.yangteng.library.views.notebook.service.impl.MenuFileServiceImpl;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,13 +22,9 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 public class FileMenu extends TreeItem<Label> {
-
     private final File file;
-
     private final FileService fileService = LeftNoteBookFileTreeView.INSTANCE.fileService;
-
     private final Label label;
-
     public FileMenu(File file) {
         this.file = file;
         label = new Label();
@@ -82,7 +78,7 @@ public class FileMenu extends TreeItem<Label> {
             var paste = fileService.paste(target.getId());
             // 刷新复制之后的文件夹节点
             paste.forEach(f -> {
-                var tree = new MenuFile(f).getTree();
+                var tree = new MenuFileServiceImpl(f).getTree();
                 if (file.isDirectory())
                     fileTree.getChildren().add(tree);
                 else fileTree.getParent().getChildren().add(tree);
