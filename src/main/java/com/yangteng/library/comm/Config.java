@@ -1,6 +1,8 @@
 package com.yangteng.library.comm;
 
 import com.yangteng.library.utils.ClassLoaderUtils;
+import com.yangteng.library.utils.FxAlertUtils;
+import javafx.application.Platform;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +10,46 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public interface Config {
+    // 初始化写作工作空间项目
+    static void initWriteWorkSpace(File file) {
+        file.mkdirs();
+
+        var outline = new File(file.getPath() + "\\大纲");
+        var figure = new File(outline.getPath() + "\\人物.json");
+        var map = new File(outline.getPath() + "\\地图.json");
+
+        var originalText = new File(file.getPath() + "\\原文");
+        var material = new File(file.getPath() + "\\素材");
+
+        var wt = new File(file.getPath() + "\\.wordtree");
+        var wtInit = new File(wt.getPath() + "\\.init.json");
+        // 批量创建文件夹
+        for (File f : new File[]{
+                wt, outline, originalText, material
+        }) {
+            f.mkdirs();
+        }
+        // 批量创建文件
+        for (File f : new File[]{
+                wtInit, figure, map
+        }) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                Platform.runLater(() -> FxAlertUtils.show("初始化工作空间失败,在创建名为" + f.getName() + "文件的时候发生错误！"));
+            }
+        }
+    }
+
+    enum THEME {
+        THEME_LIGHT(0), THEME_DART(1);
+        public Integer value = 0;
+
+        THEME(Integer value) {
+            this.value = value;
+        }
+    }
+
     // 用户主目录
     String APP_CONFIG_DIR = System.getProperty("user.home") + "/" + ".wordtree";
 
@@ -89,12 +131,7 @@ public interface Config {
         }
     }
 
-    enum THEME {
-        THEME_LIGHT(0), THEME_DART(1);
-        public Integer value = 0;
-
-        THEME(Integer value) {
-            this.value = value;
-        }
+    enum CodeMode {
+        EDITE, WT
     }
 }

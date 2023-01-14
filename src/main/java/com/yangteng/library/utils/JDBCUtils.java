@@ -27,8 +27,8 @@ public class JDBCUtils {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment environment = new Environment("development", transactionFactory, dataSource);
         Configuration configuration = new Configuration(environment);
-        configuration.addMappers("com.yangteng.library.views.main.dao");
-        configuration.addMappers("com.yangteng.library.views.notebook.dao");
+        configuration.addMappers("com.yangteng.library.views.main.mapper");
+        configuration.addMappers("com.yangteng.library.views.notebook.mapper");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
     }
 

@@ -1,5 +1,7 @@
 package com.yangteng.library.views.notebook.component;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.utils.FxAlertUtils;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
@@ -16,15 +18,14 @@ import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 public class FileMenu extends TreeItem<Label> {
     private final File file;
     private final FileService fileService = LeftNoteBookFileTreeView.INSTANCE.fileService;
     private final Label label;
+
     public FileMenu(File file) {
         this.file = file;
         label = new Label();
@@ -196,18 +197,14 @@ public class FileMenu extends TreeItem<Label> {
                 TabMenuBarView.INSTANCE.getTabs().remove(tab);
             });
         }
-        try {
-            String context = Files.readString(Path.of(this.label.getId()));
-            code.appendText(context);
-            // 只要文本发生了改变，改变tab标签的ui状态
-            code.textProperty().addListener((observable, oldValue, newValue) -> {
-                tab.setGraphic(new Text("*"));
-            });
-            TabMenuBarView.INSTANCE.getTabs().add(tab);
-            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        String context = FileUtil.readString(this.label.getId(), StandardCharsets.UTF_8);
+        code.appendText(context);
+        // 只要文本发生了改变，改变tab标签的ui状态
+        code.textProperty().addListener((observable, oldValue, newValue) -> {
+            tab.setGraphic(new Text("*"));
+        });
+        TabMenuBarView.INSTANCE.getTabs().add(tab);
+        TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
     }
 
     /**
@@ -278,16 +275,18 @@ public class FileMenu extends TreeItem<Label> {
     private void menuDelFunction(TreeItem<Label> fileTree, FileService fileService, Label target, @NotNull MenuItem del) {
         del.setOnAction(e -> {
             // 默认删除到回收站
-            var bool = fileService.del(target.getId());
-            if (bool) {
-                // 更新节点
-                var parent = fileTree.getParent();
-                if (parent != null) {
-                    fileTree.getParent().getChildren().remove(fileTree);
-                } else FxAlertUtils.show("错误: 这是根节点您不能删除", Alert.AlertType.ERROR);
-            } else {
-                FxAlertUtils.show("文件删除失败");
-            }
+            ThreadUtil.execAsync(() -> {
+                var bool = fileService.del(target.getId());
+                if (bool) {
+                    // 更新节点
+                    var parent = fileTree.getParent();
+                    if (parent != null) {
+                        fileTree.getParent().getChildren().remove(fileTree);
+                    } else FxAlertUtils.show("错误: 这是根节点您不能删除", Alert.AlertType.ERROR);
+                } else {
+                    FxAlertUtils.show("文件删除失败");
+                }
+            });
         });
     }
 

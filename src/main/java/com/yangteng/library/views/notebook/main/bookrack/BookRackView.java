@@ -1,11 +1,14 @@
 package com.yangteng.library.views.notebook.main.bookrack;
 
+import com.yangteng.library.utils.JDBCUtils;
 import com.yangteng.library.views.notebook.entity.RecentFiles;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
 import com.yangteng.library.views.notebook.main.core.NoteCoreView;
 import com.yangteng.library.views.notebook.main.root.NoteBookRootView;
+import com.yangteng.library.views.notebook.mapper.AuthorTaskMapper;
 import com.yangteng.library.views.notebook.service.WorkSpaceService;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -13,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -23,6 +27,7 @@ public class BookRackView extends BorderPane {
     public final static BookRackView INSTANCE = new BookRackView();;
     public List<RecentFiles> recentFiles;
     public ListView<Label> bookHistoryList;
+    private AuthorTaskMapper authorTaskMapper = JDBCUtils.getSqlSessionFactory().getMapper(AuthorTaskMapper.class);
 
     public BookRackView() {
         this.initWorkSpace();
@@ -38,8 +43,37 @@ public class BookRackView extends BorderPane {
 
     private void myLayout() {
         this.setPrefSize(700, 600);
-        this.setPadding(new Insets(0,0,10,0));
-        this.setLeft(bookHistoryList);
+        this.setPadding(new Insets(0, 0, 10, 0));
+        var vBox = new VBox();
+        {
+            var box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            box.setPadding(new Insets(6, 0, 6, 0));
+            box.getChildren().add(new Label("最近打开的项目"));
+            vBox.getChildren().add(box);
+        }
+        vBox.getChildren().add(bookHistoryList);
+        this.setLeft(vBox);
+        var centerBox = new VBox();
+        {
+            var title = new VBox();
+            title.getChildren().add(new Label("任务管理"));
+            title.setPadding(new Insets(0, 0, 10, 0));
+            var labelListView = new ListView<Label>();
+            {
+                labelListView.prefHeightProperty().bind(this.heightProperty());
+                // 查询该用户所有创建过的任务
+                var authorTasks = authorTaskMapper.selectAll();
+                authorTasks.forEach(authorTask -> {
+                    var label = new Label();
+                    label.setText(authorTask.getDescribe());
+                    label.setGraphic(new Text(authorTask.getNumber().toString()));
+                    labelListView.getItems().add(label);
+                });
+            }
+            centerBox.getChildren().addAll(title, labelListView);
+        }
+        this.setCenter(centerBox);
     }
 
     private void initWorkSpace() {
@@ -48,6 +82,9 @@ public class BookRackView extends BorderPane {
             System.gc();
         } else {
             bookHistoryList = new ListView<>();
+            {
+                bookHistoryList.prefHeightProperty().bind(this.heightProperty());
+            }
         }
         // 获取工作空间的历史所有数据
         recentFiles = WorkSpaceService.get();

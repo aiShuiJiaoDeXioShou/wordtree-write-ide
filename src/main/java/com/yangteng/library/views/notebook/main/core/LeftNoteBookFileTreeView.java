@@ -67,7 +67,6 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             var recent = new RecentFiles(LocalDateTime.now(), file.getPath(), ConfigUtils.getProperties("username"), file.getName());
             recentFiles.add(recent);
             recentFiles.sort((o1, o2) -> o1.time().isBefore(o2.time()) ? 0 : -1);
-            System.out.println(recentFiles);
             WorkSpaceService.save(recentFiles);
         });
         // 刷新BookRackView的UI状态

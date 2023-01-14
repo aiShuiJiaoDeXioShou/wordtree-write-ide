@@ -37,6 +37,28 @@ public class App extends Application {
         primaryStage.show();
     }
 
+    /**
+     * 在应用启动之前进行初始化操作
+     *
+     * @throws Exception
+     */
+    @Override
+    public void init() throws Exception {
+        super.init();
+    }
+
+    /**
+     * 应用结束的时候执行的操作
+     *
+     * @throws Exception
+     */
+    @Override
+    public void stop() throws Exception {
+        // 结束前的操作
+        super.stop();
+        // 结束后的操作
+    }
+
     private void setStyle() {
         JMetro metro;
         if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
