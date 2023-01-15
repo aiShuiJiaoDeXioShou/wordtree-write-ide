@@ -1,11 +1,16 @@
 package com.yangteng.library.views.notebook.entity;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class AuthorTask {
     private Integer id;
     // 开始时间
-    private String startDateTime;
+    private LocalDateTime startDateTime;
     // 结束时间
-    private String endDateTime;
+    private LocalDateTime endDateTime;
     // 作者名称
     private String authorName;
     // 任务描述
@@ -25,20 +30,20 @@ public class AuthorTask {
         this.id = id;
     }
 
-    public String getStartDateTime() {
+    public LocalDateTime getStartDateTime() {
         return startDateTime;
     }
 
     public void setStartDateTime(String startDateTime) {
-        this.startDateTime = startDateTime;
+        this.startDateTime = LocalDateTimeUtil.parse(startDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
     }
 
-    public String getEndDateTime() {
+    public LocalDateTime getEndDateTime() {
         return endDateTime;
     }
 
     public void setEndDateTime(String endDateTime) {
-        this.endDateTime = endDateTime;
+        this.endDateTime = LocalDateTimeUtil.parse(endDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
     }
 
     public String getAuthorName() {

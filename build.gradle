@@ -2,15 +2,10 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'org.beryx.runtime' version '1.12.5'
-    id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
 ext {
     junitVersion = '5.9.1'
-}
-
-shadowJar {
-    mergeServiceFiles()
 }
 
 repositories {
@@ -39,9 +34,6 @@ dependencies {
     implementation('org.jetbrains:annotations:20.1.0')
     // 引入工具箱
     implementation('cn.hutool:hutool-core:5.6.3')
-    // 引入图标库
-    implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
-    implementation('org.kordamp.ikonli:ikonli-fontawesome5-pack:12.3.1')
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
@@ -56,6 +48,10 @@ application {
     applicationName = 'library'
 }
 
+test {
+    useJUnitPlatform()
+}
+
 runtime {
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
@@ -64,7 +60,7 @@ runtime {
     jpackage {
         def currentOs = org.gradle.internal.os.OperatingSystem.current()
         def imgType = currentOs.windows ? 'ico' : currentOs.macOsX ? 'icns' : 'png'
-        imageOptions += ['--icon', "src/main/resources/icon.$imgType"]
+        imageOptions += ['--icon', "src/main/resources/static/icon/icon.$imgType"]
         installerOptions += ['--resource-dir', "src/main/resources"]
         installerOptions += ['--vendor', 'Acme Corporation']
 

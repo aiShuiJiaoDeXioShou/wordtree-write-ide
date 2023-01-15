@@ -33,7 +33,7 @@ public class App extends Application {
         this.setStyle();
         primaryStage.setScene(scene);
         primaryStage.setTitle("Learn");
-        primaryStage.getIcons().add(new Image("icon.png"));
+        primaryStage.getIcons().add(new Image("static/icon/icon.png"));
         primaryStage.show();
     }
 
