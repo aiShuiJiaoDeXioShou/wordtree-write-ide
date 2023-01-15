@@ -1,28 +1,39 @@
 package com.yangteng.library;
 
+import impl.jfxtras.styles.jmetro.FluentButtonSkin;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.FlatDialog;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 public class Test4 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        var dialog = new Dialog<>();
+        JMetro metro = new JMetro(Style.LIGHT);
+
+        var flatDialog = new FlatDialog();
         var dialogPane = new DialogPane();
-        dialog.setDialogPane(dialogPane);
+        var hello = new Button("hello");
+        var buttonSkin = new FluentButtonSkin(hello);
+        dialogPane.setContent(hello);
+        dialogPane.getButtonTypes().add(ButtonType.CLOSE);
+        dialogPane.getButtonTypes().add(ButtonType.APPLY);
+        flatDialog.setDialogPane(dialogPane);
+
         var box = new VBox();
+        box.setPrefSize(800, 800);
         var button = new Button("打开");
-        var box1 = new VBox();
-        box1.getChildren().add(new Label("打不开"));
-        dialogPane.setContent(box1);
-        button.setOnMouseClicked(e -> dialog.show());
-        box.getChildren().add(button);
+        hello.setOnMouseClicked(e -> flatDialog.show());
+        box.getChildren().add(hello);
+
         var scene = new Scene(box);
+        metro.setScene(scene);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

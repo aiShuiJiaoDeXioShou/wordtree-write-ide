@@ -2,8 +2,8 @@ package com.yangteng.library.views.notebook.main.core;
 
 import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.App;
-import com.yangteng.library.comm.Config;
 import com.yangteng.library.utils.FxAlertUtils;
+import com.yangteng.library.views.notebook.main.dialog.NewProject;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -45,10 +45,8 @@ public class NoteBookMenuView extends MenuBar {
                 FxAlertUtils.show("该文件路径不能为空！");
             } else {
                 ThreadUtil.execute(() -> {
-                    // 初始化工作空间
-                    Config.initWriteWorkSpace(file);
-                    // 打开该工作空间
-                    lnbf.toggleFile(file);
+                    var newProject = new NewProject();
+                    newProject.show();
                 });
             }
         });

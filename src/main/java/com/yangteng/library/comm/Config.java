@@ -1,7 +1,11 @@
 package com.yangteng.library.comm;
 
+import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONWriter;
 import com.yangteng.library.utils.ClassLoaderUtils;
 import com.yangteng.library.utils.FxAlertUtils;
+import com.yangteng.library.views.notebook.entity.NovelProject;
 import javafx.application.Platform;
 
 import java.io.File;
@@ -11,7 +15,7 @@ import java.nio.file.Path;
 
 public interface Config {
     // 初始化写作工作空间项目
-    static void initWriteWorkSpace(File file) {
+    static void initWriteWorkSpace(File file, NovelProject novelProject) {
         file.mkdirs();
 
         var outline = new File(file.getPath() + "\\大纲");
@@ -23,6 +27,9 @@ public interface Config {
 
         var wt = new File(file.getPath() + "\\.wordtree");
         var wtInit = new File(wt.getPath() + "\\.init.json");
+        var wtProject = new File(wt.getPath() + "\\project.json");
+        // 初始化wtProject文件
+        FileUtil.writeBytes(JSON.toJSONBytes(novelProject, JSONWriter.Feature.PrettyFormat), wtProject);
         // 批量创建文件夹
         for (File f : new File[]{
                 wt, outline, originalText, material
@@ -31,7 +38,7 @@ public interface Config {
         }
         // 批量创建文件
         for (File f : new File[]{
-                wtInit, figure, map
+                wtInit, figure, map, wtProject
         }) {
             try {
                 f.createNewFile();
