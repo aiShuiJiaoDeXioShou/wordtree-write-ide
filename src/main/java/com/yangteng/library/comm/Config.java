@@ -3,8 +3,8 @@ package com.yangteng.library.comm;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
+import com.yangteng.library.component.WTFxAlert;
 import com.yangteng.library.utils.ClassLoaderUtils;
-import com.yangteng.library.utils.FxAlertUtils;
 import com.yangteng.library.views.notebook.entity.NovelProject;
 import javafx.application.Platform;
 
@@ -18,16 +18,16 @@ public interface Config {
     static void initWriteWorkSpace(File file, NovelProject novelProject) {
         file.mkdirs();
 
-        var outline = new File(file.getPath() + "\\大纲");
-        var figure = new File(outline.getPath() + "\\人物.json");
-        var map = new File(outline.getPath() + "\\地图.json");
+        var outline = new File(file.getPath() + "/大纲");
+        var figure = new File(outline.getPath() + "/人物.json");
+        var map = new File(outline.getPath() + "/地图.json");
 
-        var originalText = new File(file.getPath() + "\\原文");
-        var material = new File(file.getPath() + "\\素材");
+        var originalText = new File(file.getPath() + "/原文");
+        var material = new File(file.getPath() + "/素材");
 
-        var wt = new File(file.getPath() + "\\.wordtree");
-        var wtInit = new File(wt.getPath() + "\\.init.json");
-        var wtProject = new File(wt.getPath() + "\\project.json");
+        var wt = new File(file.getPath() + "/.wordtree");
+        var wtInit = new File(wt.getPath() + "/.init.json");
+        var wtProject = new File(wt.getPath() + "/project.json");
         // 初始化wtProject文件
         FileUtil.writeBytes(JSON.toJSONBytes(novelProject, JSONWriter.Feature.PrettyFormat), wtProject);
         // 批量创建文件夹
@@ -43,7 +43,7 @@ public interface Config {
             try {
                 f.createNewFile();
             } catch (IOException e) {
-                Platform.runLater(() -> FxAlertUtils.show("初始化工作空间失败,在创建名为" + f.getName() + "文件的时候发生错误！"));
+                Platform.runLater(() -> WTFxAlert.show("初始化工作空间失败,在创建名为" + f.getName() + "文件的时候发生错误！"));
             }
         }
     }

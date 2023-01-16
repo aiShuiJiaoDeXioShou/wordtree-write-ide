@@ -2,8 +2,8 @@ package com.yangteng.library.views.notebook.main.core;
 
 import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.App;
-import com.yangteng.library.utils.FxAlertUtils;
-import com.yangteng.library.views.notebook.main.dialog.NewProject;
+import com.yangteng.library.component.WTFxAlert;
+import com.yangteng.library.views.notebook.main.dialog.NewProjectDialogView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -36,19 +36,8 @@ public class NoteBookMenuView extends MenuBar {
 
     private void newWorkSpace() {
         newWorkSpace.setOnAction(e -> {
-            DirectoryChooser fileChooser = new DirectoryChooser();
-            fileChooser.setTitle("请选择您要新建的工作空间！");
-            File file = fileChooser.showDialog(App.primaryStage);
-            if (file.getPath().equals(lnbf.nowFile.getPath())) {
-                FxAlertUtils.show("请不要选择重复的工作空间!");
-            } else if (Objects.isNull(file)) {
-                FxAlertUtils.show("该文件路径不能为空！");
-            } else {
-                ThreadUtil.execute(() -> {
-                    var newProject = new NewProject();
-                    newProject.show();
-                });
-            }
+            var newProject = new NewProjectDialogView();
+            newProject.showAndWait();
         });
     }
 
@@ -61,9 +50,9 @@ public class NoteBookMenuView extends MenuBar {
             fileChooser.setTitle("请选择您的工作空间！");
             File file = fileChooser.showDialog(App.primaryStage);
             if (file.getPath().equals(lnbf.nowFile.getPath())) {
-                FxAlertUtils.show("请不要选择重复的工作空间!");
+                WTFxAlert.show("请不要选择重复的工作空间!");
             } else if (Objects.isNull(file)) {
-                FxAlertUtils.show("该文件路径不能为空！");
+                WTFxAlert.show("该文件路径不能为空！");
             } else {
                 ThreadUtil.execute(() -> {
                     lnbf.toggleFile(file);

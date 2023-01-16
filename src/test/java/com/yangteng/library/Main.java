@@ -4,6 +4,6 @@ import javafx.application.Application;
 
 public class Main {
     public static void main(String[] args) {
-        Application.launch(Test4.class);
+        Application.launch(Win.class);
     }
 }

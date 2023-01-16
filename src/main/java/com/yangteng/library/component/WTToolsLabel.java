@@ -1,4 +1,4 @@
-package com.yangteng.library.views.main.component;
+package com.yangteng.library.component;
 
 
 import javafx.geometry.Insets;
@@ -9,9 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
-public class ToolsLabel extends Label {
+public class WTToolsLabel extends Label {
 
-    public ToolsLabel(String text, String iconPath) {
+    public WTToolsLabel(String text, String iconPath) {
         super(text);
         var img = new Image(iconPath, 25, 25, true, true);
         var imageView = new ImageView(img);

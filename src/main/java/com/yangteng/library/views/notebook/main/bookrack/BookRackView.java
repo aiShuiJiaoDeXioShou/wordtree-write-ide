@@ -1,5 +1,6 @@
 package com.yangteng.library.views.notebook.main.bookrack;
 
+import cn.hutool.core.thread.ThreadUtil;
 import com.yangteng.library.utils.JDBCUtils;
 import com.yangteng.library.views.notebook.entity.RecentFiles;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
@@ -7,6 +8,7 @@ import com.yangteng.library.views.notebook.main.core.NoteCoreView;
 import com.yangteng.library.views.notebook.main.root.NoteBookRootView;
 import com.yangteng.library.views.notebook.mapper.AuthorTaskMapper;
 import com.yangteng.library.views.notebook.service.WorkSpaceService;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Side;
@@ -62,13 +64,17 @@ public class BookRackView extends BorderPane {
             var labelListView = new ListView<Label>();
             {
                 labelListView.prefHeightProperty().bind(this.heightProperty());
-                // 查询该用户所有创建过的任务
-                var authorTasks = authorTaskMapper.selectAll();
-                authorTasks.forEach(authorTask -> {
-                    var label = new Label();
-                    label.setText(authorTask.getDescribe());
-                    label.setGraphic(new Text(authorTask.getNumber().toString()));
-                    labelListView.getItems().add(label);
+                ThreadUtil.execAsync(()->{
+                    // 查询该用户所有创建过的任务
+                    var authorTasks = authorTaskMapper.selectAll();
+                    Platform.runLater(()->{
+                        authorTasks.forEach(authorTask -> {
+                            var label = new Label();
+                            label.setText(authorTask.getDescribe());
+                            label.setGraphic(new Text(authorTask.getNumber().toString()));
+                            labelListView.getItems().add(label);
+                        });
+                    });
                 });
             }
             centerBox.getChildren().addAll(title, labelListView);

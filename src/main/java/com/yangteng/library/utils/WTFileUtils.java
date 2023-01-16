@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 
-public class MyFileUtils {
+public class WTFileUtils {
 
     public static void copyFolder(String oldPath, String newPath) {
         try {

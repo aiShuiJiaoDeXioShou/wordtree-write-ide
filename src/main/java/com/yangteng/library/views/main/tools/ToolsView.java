@@ -1,7 +1,7 @@
 package com.yangteng.library.views.main.tools;
 
 import com.yangteng.library.App;
-import com.yangteng.library.views.main.component.ToolsLabel;
+import com.yangteng.library.component.WTToolsLabel;
 import com.yangteng.library.views.notebook.main.root.NoteBookScene;
 import javafx.scene.layout.VBox;
 
@@ -11,9 +11,9 @@ public class ToolsView extends VBox {
 
     public ToolsView() {
         this.setSpacing(20);
-        var notebook = new ToolsLabel("记事本！", "static/icon/note.png");
+        var notebook = new WTToolsLabel("记事本！", "static/icon/note.png");
         notebook.setOnMouseClicked(e -> App.primaryStage.setScene(NoteBookScene.INSTANCE));
-        var fictionAnalysis = new ToolsLabel("小说数据分析", "static/icon/note.png");
+        var fictionAnalysis = new WTToolsLabel("小说数据分析", "static/icon/note.png");
         this.getChildren().addAll(notebook, fictionAnalysis);
     }
 

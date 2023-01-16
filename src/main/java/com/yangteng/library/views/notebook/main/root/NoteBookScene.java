@@ -1,8 +1,8 @@
 package com.yangteng.library.views.notebook.main.root;
 
-import com.yangteng.library.views.notebook.component.MyCode;
+import com.yangteng.library.App;
+import com.yangteng.library.component.WTCode;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.input.KeyCode;
@@ -14,9 +14,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class NoteBookScene extends Scene {
-    public final static NoteBookScene INSTANCE = new NoteBookScene(NoteBookRootView.INSTANCE);
-    public NoteBookScene(Parent root) {
-        super(root);
+    public final static NoteBookScene INSTANCE = new NoteBookScene();
+    public NoteBookScene() {
+        super(App.rootPane);
+        App.rootPane.getChildren().clear();
+        App.rootPane.getChildren().add(NoteBookRootView.INSTANCE);
         this.keyMap();
     }
 
@@ -31,7 +33,7 @@ public class NoteBookScene extends Scene {
             var inter = TabMenuBarView.INSTANCE;
             Tab nowTab = inter.getSelectionModel().getSelectedItem();
             if (nowTab == null) return;
-            MyCode content = (MyCode)nowTab.getContent();
+            WTCode content = (WTCode)nowTab.getContent();
             if (content.isHover()) {
                 try {
                     // 保存文件

@@ -28,7 +28,7 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
     public LeftNoteBookFileTreeView() {
         var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
-        this.nowFile = new File(recentFiles.get(size - 1).filePath());
+        this.nowFile = new File(recentFiles.get(0).filePath());
         toggleFile(this.nowFile);
     }
 
@@ -69,7 +69,5 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             recentFiles.sort((o1, o2) -> o1.time().isBefore(o2.time()) ? 0 : -1);
             WorkSpaceService.save(recentFiles);
         });
-        // 刷新BookRackView的UI状态
-        ThreadUtil.execAsync(BookRackView.INSTANCE::update);
     }
 }

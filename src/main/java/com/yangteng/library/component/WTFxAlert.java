@@ -1,8 +1,8 @@
-package com.yangteng.library.utils;
+package com.yangteng.library.component;
 
 import javafx.scene.control.Alert;
 
-public interface FxAlertUtils {
+public interface WTFxAlert {
     static void show(String text,Alert.AlertType... alertType) {
         var alert = new Alert(Alert.AlertType.WARNING);
         if (alertType.length > 0) {

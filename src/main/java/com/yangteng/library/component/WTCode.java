@@ -1,9 +1,9 @@
-package com.yangteng.library.views.notebook.component;
+package com.yangteng.library.component;
 
 import com.yangteng.library.utils.ConfigUtils;
 import com.yangteng.library.utils.FxStyleUtils;
 import com.yangteng.library.utils.LoadingLanguageUtils;
-import com.yangteng.library.utils.MyFileUtils;
+import com.yangteng.library.utils.WTFileUtils;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MyCode extends CodeArea {
+public class WTCode extends CodeArea {
 
     public static final HashMap<String, String> styleMap = new HashMap<>();
 
@@ -45,7 +45,7 @@ public class MyCode extends CodeArea {
 
     private Pattern PATTERN;
 
-    public MyCode(File file) {
+    public WTCode(File file) {
         this.file = file;
         // 初始化语言构造工厂
         this.initLanguageFactory();
@@ -62,7 +62,7 @@ public class MyCode extends CodeArea {
     private void initLanguageFactory() {
         String[] code;
         try {
-            code = LoadingLanguageUtils.load(MyFileUtils.lastName(file)).code;
+            code = LoadingLanguageUtils.load(WTFileUtils.lastName(file)).code;
         } catch (NullPointerException e) {
             code = new String[]{};
         }

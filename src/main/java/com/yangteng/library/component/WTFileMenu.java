@@ -1,8 +1,7 @@
-package com.yangteng.library.views.notebook.component;
+package com.yangteng.library.component;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import com.yangteng.library.utils.FxAlertUtils;
 import com.yangteng.library.views.notebook.main.core.LeftNoteBookFileTreeView;
 import com.yangteng.library.views.notebook.main.core.TabMenuBarView;
 import com.yangteng.library.views.notebook.service.FileService;
@@ -21,12 +20,12 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
-public class FileMenu extends TreeItem<Label> {
+public class WTFileMenu extends TreeItem<Label> {
     private final File file;
     private final FileService fileService = LeftNoteBookFileTreeView.INSTANCE.fileService;
     private final Label label;
 
-    public FileMenu(File file) {
+    public WTFileMenu(File file) {
         this.file = file;
         label = new Label();
         label.setId(file.getPath());
@@ -159,7 +158,7 @@ public class FileMenu extends TreeItem<Label> {
             var idStr = parent.getValue().getId() + "/" + textField.getText();
             var b = type == 0 ? fileService.createFile(idStr) : fileService.createFolder(idStr);
             if (b) {
-                var treeItem = new FileMenu(new File(idStr));
+                var treeItem = new WTFileMenu(new File(idStr));
                 parent.getChildren().add(treeItem);
             }
         } else {
@@ -171,7 +170,7 @@ public class FileMenu extends TreeItem<Label> {
      * 每当双击该文件树的时候添加一个tab导航
      */
     private void addTab() {
-        var code = new MyCode(file);
+        var code = new WTCode(file);
         var tab = new Tab();
         {
             tab.setContent(code);
@@ -278,13 +277,15 @@ public class FileMenu extends TreeItem<Label> {
             ThreadUtil.execAsync(() -> {
                 var bool = fileService.del(target.getId());
                 if (bool) {
-                    // 更新节点
                     var parent = fileTree.getParent();
-                    if (parent != null) {
-                        fileTree.getParent().getChildren().remove(fileTree);
-                    } else FxAlertUtils.show("错误: 这是根节点您不能删除", Alert.AlertType.ERROR);
+                    Platform.runLater(()->{
+                       // 更新节点
+                       if (parent != null) {
+                           fileTree.getParent().getChildren().remove(fileTree);
+                       } else WTFxAlert.show("错误: 这是根节点您不能删除", Alert.AlertType.ERROR);
+                   });
                 } else {
-                    FxAlertUtils.show("文件删除失败");
+                    WTFxAlert.show("文件删除失败");
                 }
             });
         });

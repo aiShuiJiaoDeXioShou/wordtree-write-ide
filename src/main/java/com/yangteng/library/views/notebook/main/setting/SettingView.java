@@ -11,7 +11,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 public class SettingView extends StackPane {
-    public final static SettingView INSTANCE = new SettingView();
     public TreeView<Label> treeView;
     public BorderPane borderPane;
     public SettingService service = new SettingService() {

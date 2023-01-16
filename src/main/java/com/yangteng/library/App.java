@@ -7,6 +7,7 @@ import com.yangteng.library.views.notebook.main.root.NoteBookScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -14,6 +15,7 @@ import jfxtras.styles.jmetro.Style;
 import java.util.Objects;
 
 public class App extends Application {
+    public final static StackPane rootPane = new StackPane();
     static {
         // 应用程序启动前要进行初始化操作
         try {

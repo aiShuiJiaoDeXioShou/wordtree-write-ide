@@ -1,6 +1,6 @@
 package com.yangteng.library.views.notebook.service.impl;
 
-import com.yangteng.library.views.notebook.component.FileMenu;
+import com.yangteng.library.component.WTFileMenu;
 import com.yangteng.library.views.notebook.service.MenuFileService;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -36,7 +36,7 @@ public class MenuFileServiceImpl implements MenuFileService {
                 } else return 0;
             }
         }).toList()) {
-            var item = new FileMenu(f);
+            var item = new WTFileMenu(f);
             if (f.isDirectory()) {
                 dirList.add(item);
                 dirFileTreeItem(f, item);
@@ -66,7 +66,7 @@ public class MenuFileServiceImpl implements MenuFileService {
     public TreeItem<Label> getTree() {
         dirList = new ArrayList<>();
         fileList = new ArrayList<>();
-        treeRoot = new FileMenu(root);
+        treeRoot = new WTFileMenu(root);
         if (root.isDirectory()) dirFileTreeItem(root, treeRoot);
         return treeRoot;
     }

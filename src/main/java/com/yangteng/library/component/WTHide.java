@@ -1,4 +1,4 @@
-package com.yangteng.library.views.notebook.component;
+package com.yangteng.library.component;
 
 import com.yangteng.library.function.OrdinaryFunction;
 import com.yangteng.library.views.notebook.main.core.NoteCoreView;
@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
 
-public class HideComponent extends VBox {
+public class WTHide extends VBox {
     private OrdinaryFunction func;
     private Button show;
 
-    public HideComponent() {
+    public WTHide() {
         var borderHover = this;
         {
             borderHover.setPrefSize(10, NoteCoreView.HEIGHT);

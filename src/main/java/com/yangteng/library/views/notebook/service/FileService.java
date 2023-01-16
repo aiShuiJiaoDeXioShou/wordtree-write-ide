@@ -2,7 +2,7 @@ package com.yangteng.library.views.notebook.service;
 
 import com.sun.jna.platform.FileUtils;
 import com.yangteng.library.utils.ConfigUtils;
-import com.yangteng.library.utils.MyFileUtils;
+import com.yangteng.library.utils.WTFileUtils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -66,7 +66,7 @@ public interface FileService {
                 newFile = new File(newPath);
                 try {
                     // 对sourceFile文件进行复制到目标文件目录
-                    MyFileUtils.copyFolder(sourceFile.getPath(), newFile.getPath());
+                    WTFileUtils.copyFolder(sourceFile.getPath(), newFile.getPath());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
@@ -74,7 +74,7 @@ public interface FileService {
         } else {
             try {
                 // 对sourceFile文件进行复制到目标文件目录
-                MyFileUtils.copyFolder(sourceFile.getPath(), newFile.getPath());
+                WTFileUtils.copyFolder(sourceFile.getPath(), newFile.getPath());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

@@ -1,10 +1,10 @@
-package com.yangteng.library.views.notebook.component;
+package com.yangteng.library.component;
 
 import com.yangteng.library.function.OrdinaryFunction;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 
-public interface CoderMenuAction {
+public interface WTCoderMenuAction {
 
     /**
      * 按钮的双击事件，默认为打开文件

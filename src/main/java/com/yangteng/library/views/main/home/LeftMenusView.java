@@ -1,6 +1,6 @@
 package com.yangteng.library.views.main.home;
 
-import com.yangteng.library.views.main.component.Menu;
+import com.yangteng.library.component.WTMenu;
 import com.yangteng.library.views.main.library.LibraryView;
 import com.yangteng.library.views.main.setting.SettingView;
 import com.yangteng.library.views.main.tools.ToolsView;
@@ -17,16 +17,16 @@ import java.util.Map;
 public class LeftMenusView extends VBox {
 
     public static final LeftMenusView INSTANCE = new LeftMenusView();
-    public static List<Map<Menu, Pane>> router;
+    public static List<Map<WTMenu, Pane>> router;
     private Integer onMenuClickIndex = -1;
     public LeftMenusView() {
         this.setPrefWidth(200);
         this.setStyle("-fx-background-color: #34495e;");
         this.setPadding(new Insets(15));
-        var index = new Menu(this, "首页", "static/icon/home.png");
-        var lib = new Menu(this, "图书馆", "static/icon/lib.png");
-        var tools = new Menu(this, "工具箱", "static/icon/tools.png");
-        var setting = new Menu(this, "设置", "static/icon/setting.png");
+        var index = new WTMenu(this, "首页", "static/icon/home.png");
+        var lib = new WTMenu(this, "图书馆", "static/icon/lib.png");
+        var tools = new WTMenu(this, "工具箱", "static/icon/tools.png");
+        var setting = new WTMenu(this, "设置", "static/icon/setting.png");
         router = Arrays.asList(
                 Map.of(index, IndexView.INSTANCE),
                 Map.of(lib, LibraryView.INSTANCE),
@@ -37,9 +37,9 @@ public class LeftMenusView extends VBox {
         rotation(router);
     }
 
-    private void rotation(List<Map<Menu, Pane>> views) {
+    private void rotation(List<Map<WTMenu, Pane>> views) {
         for (int i =0; i < views.size(); i++) {
-            Map<Menu, Pane> view = views.get(i);
+            Map<WTMenu, Pane> view = views.get(i);
             int finalI = i;
             view.forEach((menu, pane) -> {
                 menu.setOnMouseClicked(mouseEvent -> {
@@ -53,7 +53,7 @@ public class LeftMenusView extends VBox {
 
                    menu.setBorder(new Border(new BorderStroke(Paint.valueOf("#3498db"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 0, 0, 4))));
                     if (onMenuClickIndex != -1){
-                        Map<Menu, Pane> oldView = views.get(onMenuClickIndex);
+                        Map<WTMenu, Pane> oldView = views.get(onMenuClickIndex);
                         oldView.forEach((oldMenu, oldPane) -> oldMenu.setBorder(Border.EMPTY));
                     }
                     onMenuClickIndex = finalI;

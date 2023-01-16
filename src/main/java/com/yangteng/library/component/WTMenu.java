@@ -1,4 +1,4 @@
-package com.yangteng.library.views.main.component;
+package com.yangteng.library.component;
 
 
 import javafx.geometry.Insets;
@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-public class Menu extends Label {
+public class WTMenu extends Label {
 
     private Pane pareNode;
 
-    public Menu(Pane pareNode, String name, String iconPath) {
+    public WTMenu(Pane pareNode, String name, String iconPath) {
         super(name);
         this.pareNode = pareNode;
         this.prefWidthProperty().bind(pareNode.widthProperty());

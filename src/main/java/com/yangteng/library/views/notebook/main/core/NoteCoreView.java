@@ -1,7 +1,7 @@
 package com.yangteng.library.views.notebook.main.core;
 
-import com.yangteng.library.views.notebook.component.HideComponent;
-import com.yangteng.library.views.notebook.component.SideBarComponent;
+import com.yangteng.library.component.WTHide;
+import com.yangteng.library.component.WTSideBarComponent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 
@@ -16,13 +16,13 @@ public class NoteCoreView extends BorderPane {
         this.setRight(RightToolkitsView.INSTANCE);
         var menus = LeftNoteBookFileTreeView.INSTANCE;
         {
-            HideComponent borderHover = new HideComponent();
-            var menusSide = new SideBarComponent(menus, () -> this.setLeft(borderHover));
+            WTHide borderHover = new WTHide();
+            var menusSide = new WTSideBarComponent(menus, () -> this.setLeft(borderHover));
             menusSide.setName("资源管理器");
             borderHover.setFunc(() -> this.setLeft(menusSide));
             this.setLeft(menusSide);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
-        this.setBottom(BottomStateView.INSTANCE);
+        this.setBottom(new BottomStateView());
     }
 }

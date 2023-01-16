@@ -1,4 +1,4 @@
-package com.yangteng.library.views.notebook.component;
+package com.yangteng.library.component;
 
 import com.yangteng.library.function.OrdinaryFunction;
 import com.yangteng.library.views.notebook.main.core.NoteCoreView;
@@ -11,11 +11,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
 
-public class SideBarComponent extends VBox {
+public class WTSideBarComponent extends VBox {
     private String name;
     private Label title = new Label(name);
 
-    public SideBarComponent(Region node, OrdinaryFunction action) {
+    public WTSideBarComponent(Region node, OrdinaryFunction action) {
         node.prefHeightProperty().bind(this.prefHeightProperty());
         var left = this;
         left.setPrefSize(NoteCoreView.WIDTH * 0.17, NoteCoreView.HEIGHT);
