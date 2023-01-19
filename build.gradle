@@ -36,18 +36,25 @@ dependencies {
     implementation('cn.hutool:hutool-all:5.6.3')
     // 引入日记
     implementation('org.slf4j:slf4j-log4j12:1.7.30')
+    // 引入vert.x框架编写服务器应用
+    implementation('io.vertx:vertx-core:4.3.4')
+    // 引入md文件解析器
+    implementation('com.vladsch.flexmark:flexmark-all:0.64.0')
+    implementation('com.jfoenix:jfoenix:9.0.10')
+    // 加载svg文件
+    implementation('org.apache.xmlgraphics:batik-all:1.14')
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
 javafx {
-    modules = ['javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web']
 }
 
 application {
-    mainClass = "com.yangteng.library.Launcher"
-    applicationName = 'library'
+    mainClass = "lh.wordtree.Launcher"
+    applicationName = 'wordtree'
 }
 
 test {
