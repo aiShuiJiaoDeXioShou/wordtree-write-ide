@@ -4,4 +4,8 @@
     -def-backgroud-color: #ffff;
     -def-text-fill: #ffff;
     -node-left-bgc: #333333;
+    -node-right-bgc: #ffffff;
+    -node-right-top-title: #007acc;
+    -node-left-top-bgc: #f5f5f9;
+    -def-bottom-coder-bgc: #007acc;
 }

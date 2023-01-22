@@ -2,6 +2,7 @@ package lh.wordtree.component;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.StrUtil;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -123,8 +124,8 @@ public class WTFileMenu extends TreeItem<Label> {
                     this.getChildren().add(menu);
                 }
             } else {
-                // 当文件树小于10的时候释放内存
-                if (this.getChildren().size() > 10) return;
+                // 当文件树小于100的时候释放内存
+                if (this.getChildren().size() > 100) return;
                 this.getChildren().clear();
                 this.getChildren().add(nullTree);
             }
@@ -220,23 +221,20 @@ public class WTFileMenu extends TreeItem<Label> {
         } else {
             parent = fileTree;
         }
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("新建");
-        var textField = new TextField();
-        // 文本框设置聚焦
-        Platform.runLater(textField::requestFocus);
-        alert.setGraphic(textField);
-        var buttonType = alert.showAndWait();
-        if (buttonType.get() == ButtonType.OK) {
+
+        var alert = new WTFxInputAlert("新建", alert1 -> {
+            var textField = alert1.textField;
             var idStr = parent.getValue().getId() + "/" + textField.getText();
             var b = type == 0 ? fileService.createFile(idStr) : fileService.createFolder(idStr);
             if (b) {
                 var treeItem = new WTFileMenu(new File(idStr));
                 parent.getChildren().add(treeItem);
             }
-        } else {
-            e.consume();
-        }
+        });
+        var textField = alert.textField;
+        // 文本框设置聚焦
+        Platform.runLater(textField::requestFocus);
+        alert.show();
     }
 
     /**
@@ -262,6 +260,7 @@ public class WTFileMenu extends TreeItem<Label> {
         }
         TabMenuBarView.INSTANCE.getTabs().add(tab);
         TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
+        tab.getContent().requestFocus();
     }
 
     private void addCode(Tab tab, WTWriterEditor code) {
@@ -285,7 +284,9 @@ public class WTFileMenu extends TreeItem<Label> {
             TabMenuBarView.INSTANCE.getTabs().remove(tab);
         });
         String context = FileUtil.readString(this.label.getId(), StandardCharsets.UTF_8);
-        code.appendText(context);
+        if (StrUtil.isBlank(context.trim())) {
+            code.appendText("\s\s\s\s" + context);
+        } else code.appendText(context);
         // 只要文本发生了改变，改变tab标签的ui状态
         code.textProperty().addListener((observable, oldValue, newValue) -> {
             tab.setGraphic(new Text("*"));
@@ -303,25 +304,23 @@ public class WTFileMenu extends TreeItem<Label> {
     private void rename(TreeItem<Label> fileTree, FileService fileService, Label target, @NotNull MenuItem rename) {
         rename.setOnAction(e -> {
             var oldId = target.getId();
-            var alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("重新命名您的文件");
-            var textField = new TextField();
-            textField.setText(target.getText());
-            // 文本框设置聚焦包过选中文本
-            Platform.runLater(() -> {
-                textField.requestFocus();
-                textField.selectRange(0, target.getText().length());
-            });
-            alert.setGraphic(textField);
-            var buttonType = alert.showAndWait();
-            if (buttonType.get() == ButtonType.OK) {
+            var alert = new WTFxInputAlert("重新命名您的文件", alert1 -> {
+                var textField = alert1.textField;
                 var str = fileService.rename(target.getId(), textField.getText());
                 if (str != null) {
                     target.textProperty().setValue(textField.getText());
                     target.idProperty().setValue(str);
                 }
                 reaname0(fileTree, oldId, str);
-            } else e.consume();
+            });
+            var textField = alert.textField;
+            textField.setText(target.getText());
+            // 文本框设置聚焦包过选中文本
+            Platform.runLater(() -> {
+                textField.requestFocus();
+                textField.selectRange(0, target.getText().length());
+            });
+            alert.show();
         });
     }
 

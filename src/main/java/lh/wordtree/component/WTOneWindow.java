@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lh.wordtree.comm.Config;
 import org.jetbrains.annotations.NotNull;
 
 public class WTOneWindow extends Stage {
@@ -28,10 +29,11 @@ public class WTOneWindow extends Stage {
     private double xOffset = 0, yOffset = 0;//自定义dialog移动横纵坐标
 
     private String myTitle;
+    protected Pane root = new VBox();
 
     private final Label label = new Label("");
-
-    private Pane root = new VBox();;
+    private Scene scene;
+    ;
 
     public String getMyTitle() {
         return myTitle;
@@ -60,8 +62,18 @@ public class WTOneWindow extends Stage {
         this.MIN_WIDTH = minWidth;
         this.MIN_HEIGHT = minHeight;
         this.root = root;
-        this.init();
+        this.initStyle(StageStyle.TRANSPARENT);
+        scene = new Scene(root, MIN_WIDTH, MIN_HEIGHT);
+        this.setScene(scene);
+        Config.setStyle(scene);
+        this.requestFocus();
+        // 添加聚焦事件，如果不聚焦在这个窗体上面，就退出应用窗口
+        this.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) this.close();
+        });
+        this.initEvent(this);
     }
+
 
     public WTOneWindow(double minWidth, double minHeight) {
         this.MIN_WIDTH = minWidth;
@@ -76,7 +88,8 @@ public class WTOneWindow extends Stage {
         StackPane.setAlignment(label, Pos.CENTER);
         top.setPadding(new Insets(10));
         root.getChildren().add(top);
-        var scene = new Scene(root, MIN_WIDTH, MIN_HEIGHT);
+        scene = new Scene(root, MIN_WIDTH, MIN_HEIGHT);
+        Config.setStyle(scene);
         this.setScene(scene);
         this.requestFocus();
         // 添加聚焦事件，如果不聚焦在这个窗体上面，就退出应用窗口

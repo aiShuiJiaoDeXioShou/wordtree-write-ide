@@ -5,6 +5,7 @@ import javafx.scene.layout.HBox;
 public class BottomStateView extends HBox {
 
     public BottomStateView() {
-        this.setPrefHeight(35);
+        this.getStyleClass().add("bottom-coder");
+        this.setPrefHeight(18);
     }
 }

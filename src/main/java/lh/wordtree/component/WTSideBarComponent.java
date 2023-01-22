@@ -16,6 +16,7 @@ public class WTSideBarComponent extends VBox {
     private Label title = new Label(name);
 
     public WTSideBarComponent(Region node, OrdinaryFunction action) {
+        title.getStyleClass().add("task-top-title");
         node.prefHeightProperty().bind(this.prefHeightProperty());
         var left = this;
         left.setPrefSize(NoteCoreView.WIDTH * 0.17, NoteCoreView.HEIGHT);
@@ -23,6 +24,7 @@ public class WTSideBarComponent extends VBox {
         {
             leftTop.setPrefHeight(25);
             leftTop.prefWidthProperty().bind(left.prefWidthProperty());
+            leftTop.getStyleClass().add("task-top");
         }
         leftTop.setAlignment(Pos.CENTER_RIGHT);
         leftTop.setPadding(new Insets(5, 5, 5, 0));

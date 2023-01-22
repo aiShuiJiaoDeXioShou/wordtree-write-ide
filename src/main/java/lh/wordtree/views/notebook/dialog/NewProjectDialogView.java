@@ -17,21 +17,17 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
 import lh.wordtree.App;
 import lh.wordtree.comm.Config;
 import lh.wordtree.component.WTInputPro;
 import lh.wordtree.entity.NovelProject;
 import lh.wordtree.utils.ConfigUtils;
 import lh.wordtree.views.notebook.core.LeftNoteBookFileTreeView;
-import lh.wordtree.views.toolbox.home.HomeScene;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class NewProjectDialogView extends Stage {
@@ -53,24 +49,11 @@ public class NewProjectDialogView extends Stage {
         splitPane.setPrefSize(800,600);
         splitPane.setDividerPosition(0, 0.3);
         var scene = new Scene(splitPane);
-        setStyle(scene);
+        Config.setStyle(scene);
         this.initOwner(App.primaryStage);
         this.initModality(Modality.WINDOW_MODAL);
         this.setScene(scene);
         this.controller();
-    }
-
-    private void setStyle(Scene scene) {
-        JMetro metro;
-        if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
-            metro = new JMetro(Style.LIGHT);
-        } else metro = new JMetro(Style.DARK);
-        metro.setScene(scene);
-        metro.getOverridingStylesheets().addAll(getStyle("static/style/base.css"), getStyle("static/style/app.css"));
-    }
-
-    private String getStyle(String path) {
-        return Objects.requireNonNull(HomeScene.class.getClassLoader().getResource(path)).toExternalForm();
     }
 
     private BorderPane novelInit() {

@@ -11,9 +11,18 @@
 
 .writer-editor .paragraph-text {
     -fx-font-family: "Microsoft YaHei UI" !important;
-    -fx-padding: 10 0 10 5;
+    -fx-padding: 10 0 10 20;
 }
 
 .writer-editor {
     -fx-font-size: 15;
+}
+
+.text-area .text {
+    -fx-line-spacing: 10px;
+}
+
+.text-area {
+    -fx-background-color: none;
+    -fx-border-width: none;
 }

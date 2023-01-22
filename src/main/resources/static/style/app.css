@@ -1,9 +1,45 @@
+/*编辑器部分左侧文件树*/
 .node-left {
     -fx-background-color: -node-left-bgc;
 }
 
 .node-left .note-left-item {
     -fx-text-fill: -def-text-fill;
+}
+
+/*编辑器部分右侧管理工具部分*/
+.right-toolkits {
+    -fx-background-color: -node-right-bgc;
+    -fx-border-width: 1;
+    -fx-border-color: -node-right-bgc;
+}
+
+#code-right .task-top {
+    -fx-background-color: -node-right-bgc;
+    -fx-border-width: 1;
+    -fx-border-color: -node-right-bgc;
+}
+
+#code-right .task-top-title {
+    -fx-text-fill: -node-right-top-title;
+}
+
+#code-left .task-top {
+    -fx-background-color: -node-left-top-bgc;
+}
+
+.note-book-menu .menu, .menu-bar {
+    -fx-background-color: #ffff;
+}
+
+.bottom-coder {
+    -fx-background-color: -def-bottom-coder-bgc;
+}
+
+.alert-label {
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-color: -node-left-top-bgc;
 }
 
 .embedded-prompt {

@@ -23,6 +23,7 @@ public class NoteBookMenuView extends BorderPane {
     private LeftNoteBookFileTreeView lnbf = LeftNoteBookFileTreeView.INSTANCE;
 
     public NoteBookMenuView() {
+        this.getStyleClass().add("note-book-menu");
         openFile = new MenuItem("打开工作区间");
         newWorkSpace = new MenuItem("新建工作空间");
         file = new Menu("文件");
@@ -41,7 +42,7 @@ public class NoteBookMenuView extends BorderPane {
             actionBar.setSpacing(10);
         }
         this.getStyleClass().add("note-menu-bar");
-        this.setPadding(new Insets(5, 30, 5, 0));
+        this.setPadding(new Insets(0, 30, 0, 0));
         this.setRight(actionBar);
         this.controller();
     }

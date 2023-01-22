@@ -2,8 +2,7 @@ package lh.wordtree.views.notebook.root;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
+import javafx.scene.layout.HBox;
 import lh.wordtree.component.WTNoteLeftButtonItem;
 import lh.wordtree.views.notebook.bookrack.BookRackView;
 import lh.wordtree.views.notebook.core.NoteCoreView;
@@ -13,13 +12,13 @@ import lh.wordtree.views.toolbox.home.HomeScene;
 
 import java.util.Objects;
 
-public class NoteLeftButtonBarView extends VBox {
+public class NoteLeftButtonBarView extends HBox {
 
     public static final NoteLeftButtonBarView INSTANCE = new NoteLeftButtonBarView();
     public ListView<WTNoteLeftButtonItem> listView;
 
     public NoteLeftButtonBarView() {
-        this.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 0))));
+//        this.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 0))));
         WTNoteLeftButtonItem fliesItem, writeItem, setting, plugins;
         fliesItem = new WTNoteLeftButtonItem("\uE7F4", "书籍管理");
         writeItem = new WTNoteLeftButtonItem("\uE70F", "写作");

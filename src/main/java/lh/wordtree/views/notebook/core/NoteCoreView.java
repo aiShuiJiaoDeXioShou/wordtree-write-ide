@@ -18,6 +18,7 @@ public class NoteCoreView extends BorderPane {
             WTHide borderHover = new WTHide();
             var menusSide = new WTSideBarComponent(task, () -> this.setRight(borderHover));
             menusSide.setName("任务管理器");
+            menusSide.setId("code-right");
             borderHover.setFunc(() -> this.setRight(menusSide));
             this.setRight(borderHover);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
@@ -28,6 +29,7 @@ public class NoteCoreView extends BorderPane {
             WTHide borderHover = new WTHide();
             var menusSide = new WTSideBarComponent(menus, () -> this.setLeft(borderHover));
             menusSide.setName("资源管理器");
+            menusSide.setId("code-left");
             borderHover.setFunc(() -> this.setLeft(menusSide));
             this.setLeft(menusSide);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));

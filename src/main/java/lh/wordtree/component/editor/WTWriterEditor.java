@@ -38,7 +38,7 @@ public class WTWriterEditor extends CodeArea {
 
     public static final HashMap<String, String> styleMap = new HashMap<>();
 
-    private File file;
+    private final File file;
 
     public WTWriterEditor(File file) {
         this.file = file;
@@ -59,7 +59,7 @@ public class WTWriterEditor extends CodeArea {
         Nodes.addInputMap(this, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
             FileUtil.writeUtf8String(this.getText(), file);
             var tab = TabMenuBarView.INSTANCE.getSelectionModel().getSelectedItem();
-            var graphic = (Text)tab.getGraphic();
+            var graphic = (Text) tab.getGraphic();
             graphic.setText("");
         }));
         this.start();
@@ -82,6 +82,16 @@ public class WTWriterEditor extends CodeArea {
                 if (m0.find()) Platform.runLater(() -> codeArea.insertText(caretPosition, m0.group()));
             }
         });
+        // 将tab将转化为四个空格
+        codeArea.addEventFilter(KeyEvent.KEY_PRESSED, KE -> {
+            if (KE.getCode() == KeyCode.TAB) {
+                int caretPosition = codeArea.getCaretPosition();
+                Platform.runLater(() -> {
+                    codeArea.insertText(caretPosition, "\s\s\s\s");
+                });
+                KE.consume();
+            }
+        });
     }
 
     private StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -101,17 +111,14 @@ public class WTWriterEditor extends CodeArea {
         }
 
         @Override
-        public void accept( ListModification<? extends Paragraph<PS, SEG, S>> lm )
-        {
-            if ( lm.getAddedSize() > 0 ) Platform.runLater( () ->
+        public void accept(ListModification<? extends Paragraph<PS, SEG, S>> lm) {
+            if (lm.getAddedSize() > 0) Platform.runLater(() ->
             {
-                int paragraph = Math.min( area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size()-1 );
-                String text = area.getText( paragraph, 0, paragraph, area.getParagraphLength( paragraph ) );
+                int paragraph = Math.min(area.firstVisibleParToAllParIndex() + lm.getFrom(), area.getParagraphs().size() - 1);
+                String text = area.getText(paragraph, 0, paragraph, area.getParagraphLength(paragraph));
 
-                if ( paragraph != prevParagraph || text.length() != prevTextLength )
-                {
-                    if ( paragraph < area.getParagraphs().size()-1 )
-                    {
+                if (paragraph != prevParagraph || text.length() != prevTextLength) {
+                    if (paragraph < area.getParagraphs().size() - 1) {
                         int startPos = area.getAbsolutePosition(paragraph, 0);
                         area.setStyleSpans(startPos, computeStyles.apply(text));
                     }
@@ -123,8 +130,9 @@ public class WTWriterEditor extends CodeArea {
     }
 
     private static class DefaultContextMenu extends ContextMenu {
-        private MenuItem search, translation;
-        private WTWriterEditorService service = new WTWriterEditorServiceImpl();
+        private final MenuItem search;
+        private final MenuItem translation;
+        private final WTWriterEditorService service = new WTWriterEditorServiceImpl();
 
         public DefaultContextMenu() {
             search = new MenuItem("查找");
