@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-import lh.wordtree.component.WTCoder;
+import lh.wordtree.component.editor.WTWriterEditor;
 import org.reactfx.EventStream;
 import org.reactfx.EventStreams;
 import org.reactfx.Subscription;
@@ -51,7 +51,7 @@ public class PopupDemo extends Application {
         stage = primaryStage;
 
         var file = new File("D:\\4.goCode\\TheTimer\\main.go");
-        var area = new WTCoder(file);
+        var area = new WTWriterEditor(file);
         area.appendText(FileUtil.readUtf8String(file));
         area.setStyle("-fx-font-size: 15;");
         area.setWrapText(true);

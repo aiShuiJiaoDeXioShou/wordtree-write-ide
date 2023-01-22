@@ -5,11 +5,10 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import lh.wordtree.component.WTFileMenu;
 import lh.wordtree.entity.RecentFiles;
 import lh.wordtree.service.FileService;
-import lh.wordtree.service.MenuFileService;
 import lh.wordtree.service.WorkSpaceService;
-import lh.wordtree.service.impl.MenuFileServiceImpl;
 import lh.wordtree.utils.ConfigUtils;
 import lh.wordtree.views.notebook.bookrack.BookRackView;
 import lh.wordtree.views.notebook.root.NoteLeftButtonBarView;
@@ -19,7 +18,6 @@ import java.time.LocalDateTime;
 
 public class LeftNoteBookFileTreeView extends TreeView<Label> {
     public static final LeftNoteBookFileTreeView INSTANCE = new LeftNoteBookFileTreeView();
-    private MenuFileService myFiles;
     public FileService fileService = new FileService() {
     };
     public File nowFile;
@@ -36,7 +34,6 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
         if (this.tree != null) {
             this.tree.getChildren().remove(0, this.tree.getChildren().size());
             this.tree = null;
-            this.myFiles = null;
             System.gc();
         }
     }
@@ -51,9 +48,11 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             Platform.runLater(() -> {
                 // 回收垃圾保存内存不溢出
                 this.gc();
-                this.myFiles = new MenuFileServiceImpl(file);
-                this.tree = this.myFiles.getTree();
+                this.tree = new WTFileMenu(this.nowFile);
                 this.setRoot(this.tree);
+                if (this.getRoot().getChildren().size() > 0) {
+                    this.getRoot().setExpanded(true);
+                }
             });
             System.gc();
         });
@@ -69,6 +68,5 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
             recentFiles.sort((o1, o2) -> o1.time().isBefore(o2.time()) ? 0 : -1);
             WorkSpaceService.save(recentFiles);
         });
-//        ThreadUtil.execAsync(BookRackView.INSTANCE::update);
     }
 }

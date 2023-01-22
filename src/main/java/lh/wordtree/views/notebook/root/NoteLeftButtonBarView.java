@@ -9,8 +9,11 @@ import lh.wordtree.views.notebook.bookrack.BookRackView;
 import lh.wordtree.views.notebook.core.NoteCoreView;
 import lh.wordtree.views.notebook.plugin.PluginView;
 import lh.wordtree.views.notebook.setting.SettingView;
+import lh.wordtree.views.toolbox.home.HomeScene;
 
-public class NoteLeftButtonBarView extends HBox {
+import java.util.Objects;
+
+public class NoteLeftButtonBarView extends VBox {
 
     public static final NoteLeftButtonBarView INSTANCE = new NoteLeftButtonBarView();
     public ListView<WTNoteLeftButtonItem> listView;
@@ -24,6 +27,7 @@ public class NoteLeftButtonBarView extends HBox {
         setting = new WTNoteLeftButtonItem("\uE713", "设置");
         listView = new ListView<>();
         {
+            listView.getStyleClass().add("node-left");
             listView.getItems().addAll(fliesItem, writeItem, plugins, setting);
             listView.getSelectionModel().select(1);
             listView.setPrefWidth(45);
@@ -31,6 +35,11 @@ public class NoteLeftButtonBarView extends HBox {
         }
         this.getChildren().addAll(listView);
         this.controller();
+    }
+
+
+    private String getStyle(String path) {
+        return Objects.requireNonNull(HomeScene.class.getClassLoader().getResource(path)).toExternalForm();
     }
 
     private void controller() {

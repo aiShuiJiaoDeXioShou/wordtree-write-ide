@@ -1,4 +1,4 @@
-package lh.wordtree.service;
+package lh.wordtree.service.editor;
 
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;

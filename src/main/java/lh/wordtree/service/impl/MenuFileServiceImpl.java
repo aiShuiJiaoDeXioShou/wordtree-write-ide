@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@Deprecated
 public class MenuFileServiceImpl implements MenuFileService {
     private List<File> files;
     private File root;

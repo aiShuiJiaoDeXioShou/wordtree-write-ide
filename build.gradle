@@ -40,9 +40,11 @@ dependencies {
     implementation('io.vertx:vertx-core:4.3.4')
     // 引入md文件解析器
     implementation('com.vladsch.flexmark:flexmark-all:0.64.0')
-    implementation('com.jfoenix:jfoenix:9.0.10')
+//    implementation('com.jfoenix:jfoenix:9.0.10')
     // 加载svg文件
     implementation('org.apache.xmlgraphics:batik-all:1.14')
+    // 汉语相关
+    implementation('com.github.stuxuhai:jpinyin:1.1.8')
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

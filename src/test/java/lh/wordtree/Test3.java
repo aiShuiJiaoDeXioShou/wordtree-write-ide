@@ -3,6 +3,7 @@ package lh.wordtree;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
+import lh.wordtree.utils.WTFileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -36,6 +37,6 @@ public class Test3 {
 
     @Test
     public void test4() {
-
+        System.out.println("编程语言为：" + WTFileUtils.firstName("c-code.json"));
     }
 }

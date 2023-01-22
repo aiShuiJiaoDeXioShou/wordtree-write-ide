@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.text.Text;
 import lh.wordtree.App;
-import lh.wordtree.component.WTCoder;
+import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.views.notebook.core.TabMenuBarView;
 
 import java.nio.charset.StandardCharsets;
@@ -24,6 +24,7 @@ public class NoteBookScene extends Scene {
     /**
      * 定义全局快捷键
      */
+    @Deprecated
     private void keyMap() {
         // 快捷键 Ctrl + S
         KeyCodeCombination keyCodeCombination = new KeyCodeCombination(KeyCode.S, KeyCodeCombination.CONTROL_DOWN);
@@ -32,18 +33,18 @@ public class NoteBookScene extends Scene {
             var inter = TabMenuBarView.INSTANCE;
             Tab nowTab = inter.getSelectionModel().getSelectedItem();
             if (nowTab == null) return;
-            if (nowTab.getContent() instanceof WTCoder content) {
+            if (nowTab.getContent() instanceof WTWriterEditor content) {
                 if (content.isHover()) {
                     // 保存文件
-                    FileUtil.writeString(content.getText(),nowTab.getId(), StandardCharsets.UTF_8);
+                    FileUtil.writeString(content.getText(), nowTab.getId(), StandardCharsets.UTF_8);
                     nowTab.setGraphic(new Text(""));
                 }
             }
             // 说明是md编辑器
             else if (nowTab.getContent() instanceof SplitPane content) {
-                if (content.getItems().get(0) instanceof WTCoder coder) {
+                if (content.getItems().get(0) instanceof WTWriterEditor coder) {
                     // 保存文件
-                    FileUtil.writeString(coder.getText(),nowTab.getId(), StandardCharsets.UTF_8);
+                    FileUtil.writeString(coder.getText(), nowTab.getId(), StandardCharsets.UTF_8);
                     nowTab.setGraphic(new Text(""));
                 }
             }

@@ -1,0 +1,19 @@
+.writer-editor .lineno {
+    -fx-font-family: "Microsoft YaHei UI" !important;
+    -fx-background-radius: 0;
+    -fx-box-border: none;
+    -fx-text-fill: #adadad;
+    -fx-pref-width: 55;
+    -fx-text-alignment: left;
+    -fx-background-color: #f2f2f2;
+    -fx-padding: 10 0 10 5;
+}
+
+.writer-editor .paragraph-text {
+    -fx-font-family: "Microsoft YaHei UI" !important;
+    -fx-padding: 10 0 10 5;
+}
+
+.writer-editor {
+    -fx-font-size: 15;
+}

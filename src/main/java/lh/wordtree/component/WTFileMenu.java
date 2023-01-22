@@ -12,8 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.service.FileService;
-import lh.wordtree.service.LanguageConstructorService;
+import lh.wordtree.service.editor.LanguageConstructorService;
 import lh.wordtree.service.impl.LanguageConstructorServiceImpl;
 import lh.wordtree.service.impl.MenuFileServiceImpl;
 import lh.wordtree.utils.ClassLoaderUtils;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 
 public class WTFileMenu extends TreeItem<Label> {
@@ -97,6 +100,34 @@ public class WTFileMenu extends TreeItem<Label> {
             // 为文件树添加右键事件
             if (event.getButton().name().equals(MouseButton.SECONDARY.name()))
                 fileMenuAddContextMenu(fileTree);
+        });
+        // 添加一个空的默认显示文件树小图标
+        var nullTree = new TreeItem<Label>();
+        this.getChildren().add(nullTree);
+        this.expandedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                if (this.getChildren().contains(nullTree)) this.getChildren().remove(nullTree);
+                // 为它添加展开事件,这个事件只触发一次
+                if (Objects.requireNonNull(file.listFiles()).length <= this.getChildren().size()) return;
+                // 获取该文件夹下面的子组件
+                for (File f : Arrays.stream(file.listFiles()).sorted((o1, o2) -> {
+                    if (o1.isDirectory() == o2.isDirectory()) {
+                        return o1.compareTo(o2);
+                    } else {
+                        if (o1.isDirectory()) {
+                            return -1;
+                        } else return 0;
+                    }
+                }).toList()) {
+                    var menu = new WTFileMenu(f);
+                    this.getChildren().add(menu);
+                }
+            } else {
+                // 当文件树小于10的时候释放内存
+                if (this.getChildren().size() > 10) return;
+                this.getChildren().clear();
+                this.getChildren().add(nullTree);
+            }
         });
 
     }
@@ -218,15 +249,13 @@ public class WTFileMenu extends TreeItem<Label> {
             tab.textProperty().bind(this.label.textProperty());
             tab.idProperty().bind(this.label.idProperty());
         }
-        if (build instanceof WTCoder code) {
+        if (build instanceof WTWriterEditor code) {
             addCode(tab, code);
             tab.setContent(code);
-        }
-        else if (build instanceof WebView webView) {
+        } else if (build instanceof WebView webView) {
             tab.setContent(webView);
-        }
-        else if (build instanceof SplitPane box) {
-            if (box.getItems().get(0) instanceof WTCoder code) {
+        } else if (build instanceof SplitPane box) {
+            if (box.getItems().get(0) instanceof WTWriterEditor code) {
                 addCode(tab, code);
             }
             tab.setContent(box);
@@ -235,7 +264,7 @@ public class WTFileMenu extends TreeItem<Label> {
         TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
     }
 
-    private void addCode(Tab tab, WTCoder code) {
+    private void addCode(Tab tab, WTWriterEditor code) {
         tab.setGraphic(new Text(""));
         tab.setOnCloseRequest(event -> {
             var target = (Tab) event.getSource();

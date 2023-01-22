@@ -1,15 +1,13 @@
-.root {
-    -fx-font-family: "Microsoft YaHei UI";
+.node-left {
+    -fx-background-color: -node-left-bgc;
+}
+
+.node-left .note-left-item {
+    -fx-text-fill: -def-text-fill;
 }
 
 .embedded-prompt {
     -fx-text-fill: #95a5a6;
-}
-
-.note-left-button-item {
-    -fx-border-radius: 5px;
-    -fx-border-width: 1px;
-    -fx-border-color: white;
 }
 
 /*代码编辑器高亮部分*/
@@ -40,12 +38,24 @@
     -fx-fill: cadetblue;
 }
 
-.paragraph-box {
-    -fx-background-color: #f2f9fc;
+.paragraph-box:has-caret {
+    -fx-background-color: #fcfaed;
 }
 
 /*覆盖tree-cell的形状*/
 .tree-cell > .tree-disclosure-node > .arrow {
     -fx-shape: "M461.024 665.856c-17.696 14.08-45.024 2.4-45.024-19.2v-269.312c0-21.6 27.328-33.28 45.024-19.2l169.44 134.656a24.096 24.096 0 0 1 0 38.4l-169.44 134.656z";
     -fx-background-color: #8997B2;
+}
+
+/*更改文本内容区域选中的颜色*/
+.styled-text-area .selection {
+    -fx-fill: #a6d2ff;
+}
+
+.note-menu-bar {
+    -fx-border-style: soild;
+    -fx-border-width: 1;
+    -fx-border-color: -def-border-color;
+    -fx-background-color: -def-backgroud-color;
 }

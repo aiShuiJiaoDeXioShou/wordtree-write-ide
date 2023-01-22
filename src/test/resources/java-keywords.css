@@ -37,3 +37,7 @@
 .code {
     -fx-font-size: 20px;
 }
+
+.lineno {
+    -fx-padding: 20;
+}

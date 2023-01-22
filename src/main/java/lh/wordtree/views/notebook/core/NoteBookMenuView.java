@@ -1,9 +1,10 @@
 package lh.wordtree.views.notebook.core;
 
 import cn.hutool.core.thread.ThreadUtil;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import lh.wordtree.App;
 import lh.wordtree.component.WTMessage;
@@ -11,10 +12,14 @@ import lh.wordtree.views.notebook.dialog.NewProjectDialogView;
 
 import java.io.File;
 
-public class NoteBookMenuView extends MenuBar {
+public class NoteBookMenuView extends BorderPane {
     public static final NoteBookMenuView INSTANCE = new NoteBookMenuView();
-    public MenuItem openFile,newWorkSpace;
-    public Menu file;
+    public HBox actionBar;
+    private MenuItem openFile, newWorkSpace;
+    private Menu file;
+    private MenuBar menuBar;
+    private Button update;
+    private ChoiceBox<String> choiceBox = new ChoiceBox<>();
     private LeftNoteBookFileTreeView lnbf = LeftNoteBookFileTreeView.INSTANCE;
 
     public NoteBookMenuView() {
@@ -22,7 +27,22 @@ public class NoteBookMenuView extends MenuBar {
         newWorkSpace = new MenuItem("新建工作空间");
         file = new Menu("文件");
         file.getItems().addAll(openFile, newWorkSpace);
-        this.getMenus().addAll(file);
+        menuBar = new MenuBar();
+        menuBar.getMenus().addAll(file);
+        this.setLeft(menuBar);
+        actionBar = new HBox();
+        {
+            // 这里有一个选择button
+            update = new Button("执行");
+            // 创建选择框组件
+            choiceBox.getItems().addAll("上传", "编译");
+            choiceBox.getSelectionModel().select(0);
+            actionBar.getChildren().addAll(choiceBox, update);
+            actionBar.setSpacing(10);
+        }
+        this.getStyleClass().add("note-menu-bar");
+        this.setPadding(new Insets(5, 30, 5, 0));
+        this.setRight(actionBar);
         this.controller();
     }
 

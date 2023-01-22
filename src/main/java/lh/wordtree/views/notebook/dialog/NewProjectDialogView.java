@@ -66,7 +66,7 @@ public class NewProjectDialogView extends Stage {
             metro = new JMetro(Style.LIGHT);
         } else metro = new JMetro(Style.DARK);
         metro.setScene(scene);
-        metro.getOverridingStylesheets().addAll(getStyle("static/css/base.css"), getStyle("static/css/app.css"));
+        metro.getOverridingStylesheets().addAll(getStyle("static/style/base.css"), getStyle("static/style/app.css"));
     }
 
     private String getStyle(String path) {

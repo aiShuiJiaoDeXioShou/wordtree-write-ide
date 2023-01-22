@@ -91,7 +91,8 @@ public class JavaCoder extends Application {
     public void start(Stage primaryStage) {
         CodeArea codeArea = new CodeArea();
         codeArea.getStyleClass().add("code");
-        codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
+        var nodeIntFunction = LineNumberFactory.get(codeArea);
+        codeArea.setParagraphGraphicFactory(nodeIntFunction);
         codeArea.setContextMenu(new DefaultContextMenu());
         codeArea.getVisibleParagraphs().addModificationObserver(
                 new VisibleParagraphStyler<>(codeArea, this::computeHighlighting)
