@@ -5,10 +5,11 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import lh.wordtree.comm.Config;
 import lh.wordtree.component.WTFileMenu;
 import lh.wordtree.entity.RecentFiles;
-import lh.wordtree.service.FileService;
-import lh.wordtree.service.WorkSpaceService;
+import lh.wordtree.service.file.FileService;
+import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.utils.ConfigUtils;
 import lh.wordtree.views.notebook.bookrack.BookRackView;
 import lh.wordtree.views.notebook.root.NoteLeftButtonBarView;
@@ -26,7 +27,8 @@ public class LeftNoteBookFileTreeView extends TreeView<Label> {
     public LeftNoteBookFileTreeView() {
         var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
-        this.nowFile = new File(recentFiles.get(0).filePath());
+        if (size > 0) this.nowFile = new File(recentFiles.get(0).filePath());
+        else this.nowFile = new File(Config.BASE_WORKSPACE);
         toggleFile(this.nowFile);
     }
 

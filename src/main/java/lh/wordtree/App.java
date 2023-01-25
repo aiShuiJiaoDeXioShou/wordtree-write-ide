@@ -10,7 +10,9 @@ import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lh.wordtree.comm.Config;
-import lh.wordtree.service.WebStarts;
+import lh.wordtree.service.record.TimerService;
+import lh.wordtree.service.record.TimerServiceImpl;
+import lh.wordtree.service.web.WebStartsServiceImpl;
 import lh.wordtree.utils.ConfigUtils;
 import lh.wordtree.views.notebook.root.NoteBookScene;
 import lh.wordtree.views.toolbox.home.HomeScene;
@@ -31,8 +33,9 @@ public class App extends Application {
 
     public static Stage primaryStage;
     public Scene scene = NoteBookScene.INSTANCE;
-    private WebStarts web = new WebStarts();
+    private static final TimerService timerService = new TimerServiceImpl();
     private Log log = LogFactory.get();
+    private WebStartsServiceImpl web = new WebStartsServiceImpl();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -45,7 +48,13 @@ public class App extends Application {
         primaryStage.setTitle("Learn");
         primaryStage.getIcons().add(new Image("static/icon/icon.png"));
         primaryStage.show();
+        log.info("正在启动初始化服务...");
+        this.InitializationService();
         log.info("应用程序启动成功...");
+    }
+
+    private void InitializationService() {
+        timerService.init();
     }
 
     /**
@@ -80,8 +89,8 @@ public class App extends Application {
         } else metro = new JMetro(Style.DARK);
         metro.setScene(scene);
         metro.getOverridingStylesheets().addAll(
-                getStyle("static/style/base.css"),
                 getStyle("static/style/light.css"),
+                getStyle("static/style/base.css"),
                 getStyle("static/style/app.css"),
                 getStyle("static/style/editor/writer-editor.css")
         );

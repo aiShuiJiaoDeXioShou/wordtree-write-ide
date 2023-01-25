@@ -15,7 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import lh.wordtree.dao.AuthorTaskMapper;
 import lh.wordtree.entity.RecentFiles;
-import lh.wordtree.service.WorkSpaceService;
+import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.utils.JDBCUtils;
 import lh.wordtree.views.notebook.core.LeftNoteBookFileTreeView;
 import lh.wordtree.views.notebook.core.NoteCoreView;

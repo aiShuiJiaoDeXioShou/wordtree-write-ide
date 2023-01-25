@@ -3,7 +3,7 @@ package lh.wordtree.component;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
-import lh.wordtree.function.OrdinaryFunction;
+import lh.wordtree.fun.OrdinaryFunction;
 import lh.wordtree.views.notebook.core.NoteCoreView;
 
 public class WTHide extends VBox {

@@ -1,4 +1,4 @@
-package lh.wordtree.service;
+package lh.wordtree.service.file;
 
 import com.sun.jna.platform.FileUtils;
 import javafx.application.Platform;

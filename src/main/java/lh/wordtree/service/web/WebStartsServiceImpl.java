@@ -1,18 +1,18 @@
-package lh.wordtree.service;
+package lh.wordtree.service.web;
 
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 
-public class WebStarts {
+public class WebStartsServiceImpl implements WebStartsService {
     public final static HttpServer server = Vertx.vertx().createHttpServer();
 
-    public WebStarts start() {
+    public WebStartsServiceImpl start() {
         this.httpService();
         return this;
     }
 
-    public WebStarts stop() {
+    public WebStartsServiceImpl stop() {
         server.close();
         return this;
     }

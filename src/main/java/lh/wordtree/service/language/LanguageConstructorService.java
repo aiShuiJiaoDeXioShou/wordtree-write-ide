@@ -1,4 +1,4 @@
-package lh.wordtree.service.editor;
+package lh.wordtree.service.language;
 
 import com.alibaba.fastjson2.JSON;
 import javafx.scene.Node;

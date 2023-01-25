@@ -8,16 +8,17 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import lh.wordtree.component.editor.WTWriterEditor;
-import lh.wordtree.service.FileService;
-import lh.wordtree.service.editor.LanguageConstructorService;
-import lh.wordtree.service.impl.LanguageConstructorServiceImpl;
-import lh.wordtree.service.impl.MenuFileServiceImpl;
+import lh.wordtree.service.file.FileService;
+import lh.wordtree.service.file.MenuFileServiceImpl;
+import lh.wordtree.service.language.LanguageConstructorService;
+import lh.wordtree.service.language.LanguageConstructorServiceImpl;
 import lh.wordtree.utils.ClassLoaderUtils;
 import lh.wordtree.utils.SvgUtils;
 import lh.wordtree.utils.WTFileUtils;
@@ -52,22 +53,19 @@ public class WTFileMenu extends TreeItem<Label> {
         imageView.setFitHeight(15);
         if (file.isFile()) {
             var extendName = WTFileUtils.lastName(file);
-            switch (extendName) {
-                case "" -> {
-                    imageView.setImage(SvgUtils.imageFromSvg(ClassLoaderUtils.load("static/icon/default_file.svg")));
-                    if (labeled instanceof Tab tab) {
-                        tab.setGraphic(imageView);
-                    } else if (labeled instanceof Label label) {
-                        label.setGraphic(imageView);
-                    }
+            if ("".equals(extendName)) {
+                imageView.setImage(SvgUtils.imageFromSvg(ClassLoaderUtils.load("static/icon/default_file.svg")));
+                if (labeled instanceof Tab tab) {
+                    tab.setGraphic(imageView);
+                } else if (labeled instanceof Label label) {
+                    label.setGraphic(imageView);
                 }
-                default -> {
-                    imageView.setImage(SvgUtils.imageFromSvg(ClassLoaderUtils.load("static/icon/"+extendName+".svg")));
-                    if (labeled instanceof Tab tab) {
-                        tab.setGraphic(imageView);
-                    } else if (labeled instanceof Label label) {
-                        label.setGraphic(imageView);
-                    }
+            } else {
+                imageView.setImage(SvgUtils.imageFromSvg(ClassLoaderUtils.load("static/icon/" + extendName + ".svg")));
+                if (labeled instanceof Tab tab) {
+                    tab.setGraphic(imageView);
+                } else if (labeled instanceof Label label) {
+                    label.setGraphic(imageView);
                 }
             }
         } else {
@@ -107,7 +105,7 @@ public class WTFileMenu extends TreeItem<Label> {
         this.getChildren().add(nullTree);
         this.expandedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
-                if (this.getChildren().contains(nullTree)) this.getChildren().remove(nullTree);
+                this.getChildren().remove(nullTree);
                 // 为它添加展开事件,这个事件只触发一次
                 if (Objects.requireNonNull(file.listFiles()).length <= this.getChildren().size()) return;
                 // 获取该文件夹下面的子组件
@@ -242,8 +240,9 @@ public class WTFileMenu extends TreeItem<Label> {
      */
     private void addTab() {
         LanguageConstructorService lsc = new LanguageConstructorServiceImpl(file);
-        var build = lsc.build();
-        var tab = new Tab();{
+        Node build = lsc.build();
+        var tab = new Tab();
+        {
             tab.textProperty().bind(this.label.textProperty());
             tab.idProperty().bind(this.label.idProperty());
         }
@@ -363,12 +362,12 @@ public class WTFileMenu extends TreeItem<Label> {
                 var bool = fileService.del(target.getId());
                 if (bool) {
                     var parent = fileTree.getParent();
-                    Platform.runLater(()->{
-                       // 更新节点
-                       if (parent != null) {
-                           fileTree.getParent().getChildren().remove(fileTree);
-                       } else WTMessage.sendError("错误: 这是根节点您不能删除!");
-                   });
+                    Platform.runLater(() -> {
+                        // 更新节点
+                        if (parent != null) {
+                            fileTree.getParent().getChildren().remove(fileTree);
+                        } else WTMessage.sendError("错误: 这是根节点您不能删除!");
+                    });
                 } else {
                     WTMessage.sendWarning("文件删除失败");
                 }

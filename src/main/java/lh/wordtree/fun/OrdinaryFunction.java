@@ -1,4 +1,4 @@
-package lh.wordtree.function;
+package lh.wordtree.fun;
 
 public interface OrdinaryFunction {
     void apply();

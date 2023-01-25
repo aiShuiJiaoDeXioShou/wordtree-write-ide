@@ -20,6 +20,8 @@ public class JDBCUtils {
     private static final SqlSessionFactory sqlSessionFactory;
     private static final SQLiteDataSource dataSource;
 
+    private static final SqlSession sqlSession;
+
     // myBatis 进行实例化操作
     static {
         dataSource = new SQLiteDataSource();
@@ -29,6 +31,7 @@ public class JDBCUtils {
         Configuration configuration = new Configuration(environment);
         configuration.addMappers("lh.wordtree.dao");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+        sqlSession = sqlSessionFactory.openSession(true);
     }
 
     /**
@@ -41,7 +44,7 @@ public class JDBCUtils {
     }
 
     public static SqlSession getSqlSessionFactory() {
-        return sqlSessionFactory.openSession();
+        return sqlSession;
     }
 
     /**

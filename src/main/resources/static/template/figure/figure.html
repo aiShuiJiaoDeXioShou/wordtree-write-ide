@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Figure</title>
+    <style>
+        body {
+            font-family: Calibri, Segoe, "Segoe UI", "Gill Sans", "Gill Sans MT", sans-serif;
+        }
+
+        /* 初始化节点 */
+        .tree,
+        .tree ul,
+        .tree li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        .tree {
+            margin: 0 0 1em;
+            text-align: center;
+        }
+
+        .tree,
+        .tree ul {
+            display: table;
+        }
+
+        .tree ul {
+            width: 100%;
+        }
+
+        .tree li {
+            display: table-cell;
+            padding: .5em 0;
+            vertical-align: top;
+        }
+
+        /* _________ */
+        .tree li:before {
+            outline: solid 1px #666;
+            content: "";
+            /* 下面的代码将线条自然拉伸了 */
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .tree li:first-child:before {
+            left: 50%;
+        }
+
+        .tree li:last-child:before {
+            right: 50%;
+        }
+
+        .tree code,
+        .tree span {
+            border: solid .1em #666;
+            border-radius: .2em;
+            display: inline-block;
+            margin: 0 .2em .5em;
+            padding: .2em .5em;
+            position: relative;
+        }
+
+        /* If the tree represents DOM structure */
+        .tree code {
+            font-family: monaco, Consolas, 'Lucida Console', monospace;
+        }
+
+        /* | */
+        .tree ul:before,
+        .tree code:before,
+        .tree span:before {
+            outline: solid 1px #666;
+            content: "";
+            height: .5em;
+            left: 50%;
+            position: absolute;
+        }
+
+        .tree ul:before {
+            top: -.5em;
+        }
+
+        .tree code:before,
+        .tree span:before {
+            top: -.55em;
+        }
+
+        /* The root node doesn't connect upwards */
+        .tree > li {
+            margin-top: 0;
+        }
+
+        .tree > li:before,
+        .tree > li:after,
+        .tree > li > code:before,
+        .tree > li > span:before {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+<figure>
+    <figcaption>斗破苍穹萧炎后宫</figcaption>
+    <ul class="tree">
+        <li>
+            <span>萧炎</span>
+            <ul>
+                <li>
+                    <span>萧熏儿</span>
+                    <ul>
+                        <li>
+                            <span>萧霖</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>美杜莎</span>
+                    <ul>
+                        <li>
+                            <span>蛇蛇</span>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <span>云韵</span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</figure>
+<script>
+    // 关系解析函数,转化为对应的html代码,将对应的html
+    const parse = (figure) => {
+        let figureEl = document.createElement('figure')
+        let figcaptionEl = document.createElement('figcaption')
+        let tree = document.createElement('ul')
+        tree.classList.add('tree')
+        figure.forEach(f => {
+            let liEl = document.createElement('li')
+            let codeEl = document.createElement('span')
+            // 用于放置子类
+            let ulEl = document.createElement('ul')
+            codeEl.innerText = f.name
+            liEl.appendChild(codeEl)
+            liEl.appendChild(ulEl)
+            tree.appendChild(liEl)
+            if (f.figures && f.figures.length > 0) createEl(f, ulEl)
+        })
+        figureEl.appendChild(figcaptionEl)
+        figureEl.appendChild(tree)
+        return figureEl
+    }
+
+    const createEl = (data, father) => {
+        data.figures.forEach(oneFigure => {
+            let liEl = document.createElement('li')
+            let codeEl = document.createElement('span')
+            codeEl.innerText = oneFigure.name
+            liEl.appendChild(codeEl)
+            father.appendChild(liEl)
+            if (oneFigure.figures && oneFigure.figures.length > 0) {
+                let ulEl = document.createElement('ul')
+                liEl.appendChild(ulEl)
+                createEl(oneFigure, ulEl)
+            }
+        })
+    }
+
+    const ui = () => {
+        // 解析json文件，将对应的json转化为人物关系树
+        const figureArr = JSON.parse(figureJSON)
+        const e = parse(figureArr)
+        document.body.appendChild(e)
+    }
+</script>
+</body>
+
+</html>

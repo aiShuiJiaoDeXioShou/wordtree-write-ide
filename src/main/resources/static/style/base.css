@@ -24,3 +24,13 @@ Text {
 .label.item-title, .label.item-title .text {
     -fx-font-family: "Microsoft YaHei UI";
 }
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}
+
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}

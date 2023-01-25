@@ -65,7 +65,10 @@ public interface Config {
         } else metro = new JMetro(Style.DARK);
         metro.setScene(scene);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
-        metro.getOverridingStylesheets().addAll(getStyle("static/style/base.css"));
+        metro.getOverridingStylesheets().addAll(
+                getStyle("static/style/light.css"),
+                getStyle("static/style/base.css")
+        );
     }
 
     enum THEME {

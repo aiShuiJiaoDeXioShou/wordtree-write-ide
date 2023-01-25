@@ -3,9 +3,13 @@ package lh.wordtree;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
+import lh.wordtree.dao.WorkPlanMapper;
+import lh.wordtree.entity.WorkPlan;
+import lh.wordtree.utils.JDBCUtils;
 import lh.wordtree.utils.WTFileUtils;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -38,5 +42,17 @@ public class Test3 {
     @Test
     public void test4() {
         System.out.println("编程语言为：" + WTFileUtils.firstName("c-code.json"));
+    }
+
+    @Test
+    public void test5() {
+        var sqlSessionFactory = JDBCUtils.getSqlSessionFactory();
+        WorkPlanMapper workPlanMapper = sqlSessionFactory.getMapper(WorkPlanMapper.class);
+        ;
+        var i = workPlanMapper.insert(
+                new WorkPlan().setWorks("奥特曼")
+                        .setId(LocalDate.now().toString())
+                        .setNumber(0)
+                        .setTime(0));
     }
 }

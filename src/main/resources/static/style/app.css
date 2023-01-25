@@ -95,3 +95,13 @@
     -fx-border-color: -def-border-color;
     -fx-background-color: -def-backgroud-color;
 }
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}
+
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}

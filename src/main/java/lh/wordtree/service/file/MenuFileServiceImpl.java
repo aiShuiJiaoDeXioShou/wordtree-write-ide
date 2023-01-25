@@ -1,9 +1,8 @@
-package lh.wordtree.service.impl;
+package lh.wordtree.service.file;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import lh.wordtree.component.WTFileMenu;
-import lh.wordtree.service.MenuFileService;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

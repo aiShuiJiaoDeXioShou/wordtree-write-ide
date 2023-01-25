@@ -1,6 +1,5 @@
-package lh.wordtree.service.editor.impl;
+package lh.wordtree.service.language;
 
-import lh.wordtree.service.editor.WTWriterEditorService;
 import lh.wordtree.utils.PinYinUtils;
 
 public class WTWriterEditorServiceImpl implements WTWriterEditorService {

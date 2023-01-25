@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-import lh.wordtree.service.SettingService;
+import lh.wordtree.service.setting.SettingService;
 
 public class SettingView extends StackPane {
     public TreeView<Label> treeView;

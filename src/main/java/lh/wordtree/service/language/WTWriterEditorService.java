@@ -1,4 +1,4 @@
-package lh.wordtree.service.editor;
+package lh.wordtree.service.language;
 
 public interface WTWriterEditorService {
     SearchInfo search(String keyWord);

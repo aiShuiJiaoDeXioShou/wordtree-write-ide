@@ -1,4 +1,4 @@
-package lh.wordtree.service;
+package lh.wordtree.service.setting;
 
 import cn.hutool.core.io.FileUtil;
 import lh.wordtree.comm.Config;

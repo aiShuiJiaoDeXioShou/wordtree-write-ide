@@ -1,4 +1,4 @@
-package lh.wordtree.service;
+package lh.wordtree.service.file;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
