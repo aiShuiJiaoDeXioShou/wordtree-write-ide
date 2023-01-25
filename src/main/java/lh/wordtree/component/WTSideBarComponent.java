@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
-import lh.wordtree.fun.OrdinaryFunction;
+import lh.wordtree.entity.fun.OrdinaryFunction;
 import lh.wordtree.views.notebook.core.NoteCoreView;
 
 public class WTSideBarComponent extends VBox {

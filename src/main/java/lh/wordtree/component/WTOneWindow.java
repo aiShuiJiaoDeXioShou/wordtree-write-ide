@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 import org.jetbrains.annotations.NotNull;
 
 public class WTOneWindow extends Stage {

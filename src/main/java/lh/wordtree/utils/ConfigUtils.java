@@ -1,6 +1,6 @@
 package lh.wordtree.utils;
 
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 
 import java.io.FileInputStream;
 import java.io.IOException;

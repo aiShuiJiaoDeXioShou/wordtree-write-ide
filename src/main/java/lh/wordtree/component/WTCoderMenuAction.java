@@ -2,7 +2,7 @@ package lh.wordtree.component;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import lh.wordtree.fun.OrdinaryFunction;
+import lh.wordtree.entity.fun.OrdinaryFunction;
 
 public interface WTCoderMenuAction {
 

@@ -2,7 +2,7 @@ package lh.wordtree.service.language;
 
 import com.alibaba.fastjson2.JSON;
 import javafx.scene.Node;
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 import lh.wordtree.entity.LanguageConfig;
 import lh.wordtree.utils.WTFileUtils;
 

@@ -1,4 +1,4 @@
-package lh.wordtree.comm;
+package lh.wordtree.config;
 
 import java.util.List;
 import java.util.Map;

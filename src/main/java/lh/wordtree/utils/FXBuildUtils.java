@@ -1,7 +1,7 @@
 package lh.wordtree.utils;
 
 
-import lh.wordtree.fun.StyleUtilFunction;
+import lh.wordtree.entity.fun.StyleUtilFunction;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 import lh.wordtree.service.record.TimerService;
 import lh.wordtree.service.record.TimerServiceImpl;
 import lh.wordtree.service.web.WebStartsServiceImpl;

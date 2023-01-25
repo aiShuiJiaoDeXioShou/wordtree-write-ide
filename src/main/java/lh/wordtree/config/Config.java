@@ -1,4 +1,4 @@
-package lh.wordtree.comm;
+package lh.wordtree.config;
 
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;

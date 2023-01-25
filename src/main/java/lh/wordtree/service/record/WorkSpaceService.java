@@ -3,7 +3,7 @@ package lh.wordtree.service.record;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 import lh.wordtree.entity.RecentFiles;
 
 import java.io.FileInputStream;

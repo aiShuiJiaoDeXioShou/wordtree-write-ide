@@ -1,6 +1,6 @@
 package lh.wordtree.utils;
 
-import lh.wordtree.comm.Config;
+import lh.wordtree.config.Config;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;

@@ -1,4 +1,5 @@
 package lh.wordtree.service.task;
 
-public class TaskService {
+public interface TaskService {
+    String BASE_PACKAGE = "lh.wordtree.task";
 }
