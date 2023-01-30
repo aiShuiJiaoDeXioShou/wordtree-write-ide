@@ -6,10 +6,9 @@ import lh.wordtree.dao.WorkPlanMapper;
 import lh.wordtree.entity.WorkPlan;
 import lh.wordtree.service.InitializationService;
 import lh.wordtree.utils.JDBCUtils;
-import lh.wordtree.views.notebook.core.LeftNoteBookFileTreeView;
+import lh.wordtree.views.notebook.core.FileTreeView;
 
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.Objects;
 
 public class TimerServiceImpl implements TimerService, InitializationService {
@@ -28,7 +27,7 @@ public class TimerServiceImpl implements TimerService, InitializationService {
         }
         // 判断数据库最后一条数据是不是跟当前日期处于同一个日期，如果不是则进行实例化
         var lastTime = lastWorkPlan.getIdToTime();
-        if (nowTime.isEqual(ChronoLocalDate.from(lastTime))) return;
+        if (nowTime.isEqual(lastTime)) return;
         this.insert();
     }
 
@@ -38,7 +37,7 @@ public class TimerServiceImpl implements TimerService, InitializationService {
         workPlan.setId(nowTime.toString())
                 .setTime(0)
                 .setNumber(0)
-                .setWorks(LeftNoteBookFileTreeView.INSTANCE.nowFile.getName());
+                .setWorks(FileTreeView.INSTANCE.nowFile.getName());
         workPlanMapper.insert(workPlan);
         log.info("正在插入完毕！！！");
     }

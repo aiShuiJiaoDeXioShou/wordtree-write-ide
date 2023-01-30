@@ -8,7 +8,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import lh.wordtree.App;
 import lh.wordtree.component.WTMessage;
-import lh.wordtree.views.notebook.dialog.NewProjectDialogView;
+import lh.wordtree.component.WTOneWindow;
+import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.views.notebook.bookrack.BookHistoryListView;
+import lh.wordtree.views.notebook.newbox.NewProjectDialogView;
 
 import java.io.File;
 
@@ -20,7 +23,8 @@ public class NoteBookMenuView extends BorderPane {
     private MenuBar menuBar;
     private Button update;
     private ChoiceBox<String> choiceBox = new ChoiceBox<>();
-    private LeftNoteBookFileTreeView lnbf = LeftNoteBookFileTreeView.INSTANCE;
+    public Label toggleWorkSpace;
+    private FileTreeView lnbf = FileTreeView.INSTANCE;
 
     public NoteBookMenuView() {
         this.getStyleClass().add("note-book-menu");
@@ -31,6 +35,25 @@ public class NoteBookMenuView extends BorderPane {
         menuBar = new MenuBar();
         menuBar.getMenus().addAll(file);
         this.setLeft(menuBar);
+
+        // 中间显示工作空间状态
+        toggleWorkSpace = new Label();
+        {
+            FactoryBeanService.nowRootFile.addListener((observable, oldValue, newValue) -> {
+                toggleWorkSpace.setText(newValue.getName());
+            });
+        }
+        toggleWorkSpace.getStyleClass().add("toggle-work-space");
+        this.setCenter(toggleWorkSpace);
+        toggleWorkSpace.setOnMouseClicked(e -> {
+            var stage = new WTOneWindow("历史工作空间");
+            stage.getRoot().getChildren().addAll(BookHistoryListView.INSTANCE);
+            stage.getLabel().setStyle("-fx-text-fill: #ffff");
+            stage.getTop().setStyle("-fx-background-color: #495057");
+            stage.show();
+        });
+
+        // 右侧编译文件树
         actionBar = new HBox();
         {
             // 这里有一个选择button

@@ -45,6 +45,8 @@ dependencies {
     implementation('org.apache.xmlgraphics:batik-all:1.14')
     // 汉语相关
     implementation('com.github.stuxuhai:jpinyin:1.1.8')
+    // 检测文件编码工具
+    implementation("com.googlecode.juniversalchardet:juniversalchardet:1.0.3")
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

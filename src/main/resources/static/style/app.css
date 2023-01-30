@@ -32,10 +32,6 @@
     -fx-background-color: #ffff;
 }
 
-.bottom-coder {
-    -fx-background-color: -def-bottom-coder-bgc;
-}
-
 .alert-label {
     -fx-text-alignment: center;
     -fx-alignment: center;
@@ -104,4 +100,29 @@
 .split-pane:vertical > .split-pane-divider {
     -fx-background-color: -def-border-color;
     -fx-pref-width: 1;
+}
+
+.bottom-coder {
+    -fx-background-color: -def-bottom-coder-bgc;
+}
+
+.bottom-button-bar .label {
+    -fx-text-fill: -def-text-fill;
+    -fx-padding: 2 5;
+}
+
+.bottom-button-bar .label:hover {
+    -fx-background-color: derive(-def-bottom-coder-bgc, 40%);
+}
+
+.bottom-button-bar {
+    -fx-spacing: 10;
+}
+
+.toggle-work-space {
+    -fx-padding: 3 20;
+}
+
+.toggle-work-space:hover {
+    -fx-background-color: derive(skyblue, 10%);
 }

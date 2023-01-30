@@ -31,9 +31,17 @@ public class WTOneWindow extends Stage {
     private String myTitle;
     protected Pane root = new VBox();
 
-    private final Label label = new Label("");
-    private Scene scene;
-    ;
+    protected final Label label = new Label("");
+    protected Scene scene;
+    protected StackPane top;
+
+    public StackPane getTop() {
+        return top;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
 
     public String getMyTitle() {
         return myTitle;
@@ -83,7 +91,7 @@ public class WTOneWindow extends Stage {
 
     private void init() {
         this.initStyle(StageStyle.TRANSPARENT);
-        var top = new StackPane();
+        top = new StackPane();
         top.getChildren().add(label);
         StackPane.setAlignment(label, Pos.CENTER);
         top.setPadding(new Insets(10));

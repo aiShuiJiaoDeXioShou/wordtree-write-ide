@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 
 public class WTMenu extends Label {
 
-    private Pane pareNode;
+    private final Pane pareNode;
 
     public WTMenu(Pane pareNode, String name, String iconPath) {
         super(name);

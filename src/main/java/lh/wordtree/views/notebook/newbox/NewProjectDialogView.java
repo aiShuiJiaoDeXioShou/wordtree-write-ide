@@ -1,4 +1,4 @@
-package lh.wordtree.views.notebook.dialog;
+package lh.wordtree.views.notebook.newbox;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,7 +22,7 @@ import lh.wordtree.component.WTInputPro;
 import lh.wordtree.config.Config;
 import lh.wordtree.entity.NovelProject;
 import lh.wordtree.utils.ConfigUtils;
-import lh.wordtree.views.notebook.core.LeftNoteBookFileTreeView;
+import lh.wordtree.views.notebook.core.FileTreeView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -121,7 +121,7 @@ public class NewProjectDialogView extends Stage {
             var file = new File(path);
             Config.initWriteWorkSpace(file, novelProject);
             this.close();
-            LeftNoteBookFileTreeView.INSTANCE.toggleFile(file);
+            FileTreeView.INSTANCE.toggleFile(file);
         });
 
         var boxRoot = new VBox();

@@ -9,10 +9,9 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
-import lh.wordtree.config.Config;
-import lh.wordtree.service.record.TimerService;
-import lh.wordtree.service.record.TimerServiceImpl;
+import lh.wordtree.service.task.TaskService;
 import lh.wordtree.service.web.WebStartsServiceImpl;
+import lh.wordtree.task.ITask;
 import lh.wordtree.utils.ConfigUtils;
 import lh.wordtree.views.notebook.root.NoteBookScene;
 import lh.wordtree.views.toolbox.home.HomeScene;
@@ -22,18 +21,8 @@ import java.util.Objects;
 public class App extends Application {
     public final static StackPane rootPane = new StackPane();
 
-    static {
-        // 应用程序启动前要进行初始化操作
-        try {
-            Config.initConfig();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static Stage primaryStage;
     public Scene scene = NoteBookScene.INSTANCE;
-    private static final TimerService timerService = new TimerServiceImpl();
     private Log log = LogFactory.get();
     private WebStartsServiceImpl web = new WebStartsServiceImpl();
 
@@ -49,12 +38,7 @@ public class App extends Application {
         primaryStage.getIcons().add(new Image("static/icon/icon.png"));
         primaryStage.show();
         log.info("正在启动初始化服务...");
-        this.InitializationService();
         log.info("应用程序启动成功...");
-    }
-
-    private void InitializationService() {
-        timerService.init();
     }
 
     /**
@@ -62,9 +46,8 @@ public class App extends Application {
      *
      * @throws Exception
      */
-    @Override
     public void init() throws Exception {
-        super.init();
+        TaskService.INSTANCE.start(ITask.INIT);
     }
 
     /**
@@ -72,10 +55,10 @@ public class App extends Application {
      *
      * @throws Exception
      */
-    @Override
     public void stop() throws Exception {
         // 关闭web服务器
         log.info("正在关闭窗口。");
+        TaskService.INSTANCE.start(ITask.END);
         log.info("正在关闭web服务。");
         web.stop();
         log.info("应用程序已退出。");
@@ -97,6 +80,10 @@ public class App extends Application {
     }
 
     private String getStyle(String path) {
-        return Objects.requireNonNull(HomeScene.class.getClassLoader().getResource(path)).toExternalForm();
+        return Objects.requireNonNull(
+                HomeScene.class
+                        .getClassLoader()
+                        .getResource(path)
+        ).toExternalForm();
     }
 }

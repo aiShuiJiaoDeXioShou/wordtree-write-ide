@@ -2,7 +2,7 @@ package lh.wordtree.entity;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * 当软件被打开的时候创建该对象，写入到sqllite数据库当中
@@ -48,8 +48,9 @@ public class WorkPlan {
         return this;
     }
 
-    public LocalDateTime getIdToTime() {
-        return LocalDateTimeUtil.parse(id, "yyyy-MM-dd");
+    public LocalDate getIdToTime() {
+        return LocalDateTimeUtil
+                .parse(id, "yyyy-MM-dd").toLocalDate();
     }
 
     public int getTime() {

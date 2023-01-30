@@ -5,6 +5,9 @@ import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
 import lh.wordtree.dao.WorkPlanMapper;
 import lh.wordtree.entity.WorkPlan;
+import lh.wordtree.service.task.TaskService;
+import lh.wordtree.service.task.TaskServiceImpl;
+import lh.wordtree.task.ITask;
 import lh.wordtree.utils.JDBCUtils;
 import lh.wordtree.utils.WTFileUtils;
 import org.junit.jupiter.api.Test;
@@ -54,5 +57,11 @@ public class Test3 {
                         .setId(LocalDate.now().toString())
                         .setNumber(0)
                         .setTime(0));
+    }
+
+    @Test
+    public void test6() {
+        TaskService taskService = new TaskServiceImpl();
+        taskService.start(ITask.WRITE);
     }
 }

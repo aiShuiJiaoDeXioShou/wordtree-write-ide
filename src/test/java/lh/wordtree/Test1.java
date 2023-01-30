@@ -19,7 +19,7 @@ import java.util.Properties;
 public class Test1 {
 
     public static URL getPath() {
-        return Test1.class.getClassLoader().getResource("config.properties");
+        return Test1.class.getClassLoader().getResource("test/resources/config.properties");
     }
 
     /**

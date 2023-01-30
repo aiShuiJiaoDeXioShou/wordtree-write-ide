@@ -34,6 +34,6 @@ public interface WorkPlanMapper {
     /**
      * 获取最后一条数据
      */
-    @Select("SELECT * FROM WorkPlace LIMIT 1;")
+    @Select("SELECT * FROM WorkPlace order by id desc limit 0,1;")
     WorkPlan selectOfLast();
 }

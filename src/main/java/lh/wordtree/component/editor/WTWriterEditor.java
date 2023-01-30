@@ -8,8 +8,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.WTWriterEditorService;
 import lh.wordtree.service.language.WTWriterEditorServiceImpl;
+import lh.wordtree.service.task.TaskService;
+import lh.wordtree.task.ITask;
 import lh.wordtree.utils.FxStyleUtils;
 import lh.wordtree.views.notebook.core.TabMenuBarView;
 import org.fxmisc.richtext.CodeArea;
@@ -48,12 +51,22 @@ public class WTWriterEditor extends CodeArea {
         this.setPadding(new Insets(5, 5, 5, 5));
         this.setWrapText(true);
         this.getStyleClass().add("writer-editor");
-//        styleMap.put("-fx-font-size", ConfigUtils.getProperties("codeFont"));
+        // styleMap.put("-fx-font-size", ConfigUtils.getProperties("codeFont"));
         // 初始化样式表
         FxStyleUtils.buildMapStyle(this, styleMap);
         // 添加对文本变化的监听事件
         this.textProperty().addListener((observable, oldValue, newValue) -> {
             // 先把自动补全功能写在这里
+            // 引入正在写入任务
+            TaskService.INSTANCE.start(ITask.WRITE);
+        });
+        // 监听光标移动事件
+        this.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
+            // 获取当前row line在coder中的位置
+            var paragraph = this.getCurrentParagraph() + 1;
+            var column = this.getCaretColumn();
+            // 改变底部状态栏的状态
+            FactoryBeanService.rowLine.set(paragraph + ":" + column);
         });
         // 添加键盘事件
         Nodes.addInputMap(this, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
@@ -70,24 +83,28 @@ public class WTWriterEditor extends CodeArea {
         codeArea.getStyleClass().add("code-area");
         codeArea.setParagraphGraphicFactory(LineNumberFactory.get(codeArea));
         codeArea.setContextMenu(new DefaultContextMenu());
-//        codeArea.getVisibleParagraphs().addModificationObserver(
-//                new VisibleParagraphStyler<>(codeArea, this::computeHighlighting)
-//        );
+        this.onEditing();
+        /*codeArea.getVisibleParagraphs().addModificationObserver(
+                new VisibleParagraphStyler<>(codeArea, this::computeHighlighting)
+        );*/
+    }
+
+    private void onEditing() {
         final Pattern whiteSpace = Pattern.compile("^\\s+");
-        codeArea.addEventHandler(KeyEvent.KEY_PRESSED, KE -> {
+        this.addEventHandler(KeyEvent.KEY_PRESSED, KE -> {
             if (KE.getCode() == KeyCode.ENTER) {
-                int caretPosition = codeArea.getCaretPosition();
-                int currentParagraph = codeArea.getCurrentParagraph();
-                Matcher m0 = whiteSpace.matcher(codeArea.getParagraph(currentParagraph - 1).getSegments().get(0));
-                if (m0.find()) Platform.runLater(() -> codeArea.insertText(caretPosition, m0.group()));
+                int caretPosition = this.getCaretPosition();
+                int currentParagraph = this.getCurrentParagraph();
+                Matcher m0 = whiteSpace.matcher(this.getParagraph(currentParagraph - 1).getSegments().get(0));
+                if (m0.find()) Platform.runLater(() -> this.insertText(caretPosition, m0.group()));
             }
         });
         // 将tab将转化为四个空格
-        codeArea.addEventFilter(KeyEvent.KEY_PRESSED, KE -> {
+        this.addEventFilter(KeyEvent.KEY_PRESSED, KE -> {
             if (KE.getCode() == KeyCode.TAB) {
-                int caretPosition = codeArea.getCaretPosition();
+                int caretPosition = this.getCaretPosition();
                 Platform.runLater(() -> {
-                    codeArea.insertText(caretPosition, "\s\s\s\s");
+                    this.insertText(caretPosition, "\s\s\s\s");
                 });
                 KE.consume();
             }

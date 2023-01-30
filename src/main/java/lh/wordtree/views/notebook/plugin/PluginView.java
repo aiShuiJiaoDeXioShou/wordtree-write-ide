@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import lh.wordtree.component.WTFxInputAlert;
 import lh.wordtree.component.WTMessage;
+import lh.wordtree.component.WTOneWindow;
+import lh.wordtree.views.notebook.record.RecordView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,15 @@ public class PluginView extends VBox {
         var button = new Button("loading");
         var alert = new Button("alert");
         button.setPadding(new Insets(4, 10, 4, 10));
-        this.getChildren().addAll(button, alert);
+        var record = new Button("记录");
+        this.getChildren().addAll(button, alert, record);
+        record.setOnMouseClicked(event -> {
+            var stage = new WTOneWindow("工具箱");
+            stage.getRoot().getChildren().addAll(new RecordView());
+            stage.getLabel().setStyle("-fx-text-fill: #ffff");
+            stage.getTop().setStyle("-fx-background-color: #495057");
+            stage.show();
+        });
         button.setOnMouseClicked(e -> {
             WTMessage.sendError("无法使用该模块，因为没有开发！");
         });

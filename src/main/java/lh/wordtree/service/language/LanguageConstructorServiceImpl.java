@@ -9,7 +9,7 @@ import lh.wordtree.App;
 import lh.wordtree.component.editor.WTProgrammingEditor;
 import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.config.Config;
-import lh.wordtree.service.factory.Factory;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.utils.WTFileUtils;
 import netscape.javascript.JSObject;
 
@@ -29,17 +29,17 @@ public class LanguageConstructorServiceImpl implements LanguageConstructorServic
         if (file.getName().contains(".txt")) {
             return new WTWriterEditor(file);
         } else if (file.getName().contains("地图.json")) {
-            WebView webView = Factory.getWebView();
+            WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
             engine.load(url("static/template/map/map.html"));
             return webView;
         } else if (file.getName().contains("任务.json")) {
-            WebView webView = Factory.getWebView();
+            WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
             engine.load(url("static/template/task/task.html"));
             return webView;
         } else if (file.getName().contains("人物.json")) {
-            WebView webView = Factory.getWebView();
+            WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
             var figureJSON = FileUtil.readString(file, StandardCharsets.UTF_8);
             // 将java获取到的数据发送到该WebEngine
@@ -48,7 +48,7 @@ public class LanguageConstructorServiceImpl implements LanguageConstructorServic
             engine.load(url("static/template/figure/figure.html"));
             return webView;
         } else if (file.getName().contains(".md")) {
-            WebView webView = Factory.getWebView();
+            WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
             var box = new SplitPane();
             var code = new WTWriterEditor(file);

@@ -109,4 +109,20 @@ public class NovelProject {
     public void setLastDateTime(LocalDateTime lastDateTime) {
         this.lastDateTime = lastDateTime;
     }
+
+    @Override
+    public String toString() {
+        return "NovelProject{" +
+                "name='" + name + '\'' +
+                ", path='" + path + '\'' +
+                ", targetWeb='" + targetWeb + '\'' +
+                ", img='" + img + '\'' +
+                ", theme='" + theme + '\'' +
+                ", author='" + author + '\'' +
+                ", targetNumber=" + targetNumber +
+                ", nowNumber=" + nowNumber +
+                ", startDateTime=" + startDateTime +
+                ", lastDateTime=" + lastDateTime +
+                '}';
+    }
 }

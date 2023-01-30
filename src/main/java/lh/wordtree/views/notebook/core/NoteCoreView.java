@@ -24,7 +24,7 @@ public class NoteCoreView extends BorderPane {
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
 
-        var menus = LeftNoteBookFileTreeView.INSTANCE;
+        var menus = FileTreeView.INSTANCE;
         {
             WTHide borderHover = new WTHide();
             var menusSide = new WTSideBarComponent(menus, () -> this.setLeft(borderHover));
@@ -34,6 +34,6 @@ public class NoteCoreView extends BorderPane {
             this.setLeft(menusSide);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
-        this.setBottom(new BottomStateView());
+        this.setBottom(BottomStateView.INSTANCE);
     }
 }

@@ -15,14 +15,17 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import lh.wordtree.component.editor.WTWriterEditor;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.file.MenuFileServiceImpl;
 import lh.wordtree.service.language.LanguageConstructorService;
 import lh.wordtree.service.language.LanguageConstructorServiceImpl;
+import lh.wordtree.service.task.TaskService;
+import lh.wordtree.task.ITask;
 import lh.wordtree.utils.ClassLoaderUtils;
 import lh.wordtree.utils.SvgUtils;
 import lh.wordtree.utils.WTFileUtils;
-import lh.wordtree.views.notebook.core.LeftNoteBookFileTreeView;
+import lh.wordtree.views.notebook.core.FileTreeView;
 import lh.wordtree.views.notebook.core.TabMenuBarView;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,7 +37,7 @@ import java.util.Optional;
 
 public class WTFileMenu extends TreeItem<Label> {
     private final File file;
-    private final FileService fileService = LeftNoteBookFileTreeView.INSTANCE.fileService;
+    private final FileService fileService = FileTreeView.INSTANCE.fileService;
     private final Label label;
 
     public WTFileMenu(File file) {
@@ -180,7 +183,7 @@ public class WTFileMenu extends TreeItem<Label> {
 
         var upload = new MenuItem("重新刷新");
         upload.setOnAction(e -> {
-            LeftNoteBookFileTreeView.INSTANCE.toggleFile(LeftNoteBookFileTreeView.INSTANCE.nowFile);
+            FileTreeView.INSTANCE.toggleFile(FileTreeView.INSTANCE.nowFile);
         });
 
         contextMenu.getItems().addAll(cp, cv, del, openFileDir, newFile, newFolder, rename, upload);
@@ -239,13 +242,16 @@ public class WTFileMenu extends TreeItem<Label> {
      * 每当双击该文件树的时候添加一个tab导航
      */
     private void addTab() {
+        FactoryBeanService.nowFile.set(file);
         LanguageConstructorService lsc = new LanguageConstructorServiceImpl(file);
+        ThreadUtil.execAsync(() -> TaskService.INSTANCE.start(ITask.TOGGLE_FILE));
         Node build = lsc.build();
         var tab = new Tab();
         {
             tab.textProperty().bind(this.label.textProperty());
             tab.idProperty().bind(this.label.idProperty());
         }
+        FactoryBeanService.nowWorkSpace.set(build);
         if (build instanceof WTWriterEditor code) {
             addCode(tab, code);
             tab.setContent(code);

@@ -112,7 +112,7 @@ public class JavaCoder extends Application {
         codeArea.replaceText(0, 0, sampleCode);
 
         Scene scene = new Scene(new StackPane(new VirtualizedScrollPane<>(codeArea)), 1000, 700);
-        scene.getStylesheets().add(JavaCoder.class.getClassLoader().getResource("java-keywords.css").toExternalForm());
+        scene.getStylesheets().add(JavaCoder.class.getClassLoader().getResource("test/resources/java-keywords.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Java Keywords Demo");
         primaryStage.show();
