@@ -11,11 +11,11 @@ import jfxtras.styles.jmetro.MDL2IconFont;
 import lh.wordtree.entity.fun.OrdinaryFunction;
 import lh.wordtree.views.notebook.core.NoteCoreView;
 
-public class WTSideBarComponent extends VBox {
+public class WTSideBar extends VBox {
     private String name;
-    private Label title = new Label(name);
+    public Label title = new Label(name);
 
-    public WTSideBarComponent(Region node, OrdinaryFunction action) {
+    public WTSideBar(Region node, OrdinaryFunction action) {
         title.getStyleClass().add("task-top-title");
         node.prefHeightProperty().bind(this.prefHeightProperty());
         var left = this;

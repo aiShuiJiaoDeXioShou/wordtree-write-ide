@@ -13,7 +13,7 @@ import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 import lh.wordtree.views.notebook.core.FileTreeView;
-import lh.wordtree.views.notebook.core.NoteBookMenuView;
+import lh.wordtree.views.notebook.core.MenuView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Task
+@Task(value = 1)
 public class WorkTask implements WTTask {
 
 
@@ -75,7 +75,7 @@ public class WorkTask implements WTTask {
                                 }
                                 imageView.setFitHeight(20);
                                 imageView.setFitWidth(20);
-                                Platform.runLater(() -> NoteBookMenuView.INSTANCE.toggleWorkSpace.setGraphic(imageView));
+                                Platform.runLater(() -> MenuView.INSTANCE.toggleWorkSpace.setGraphic(imageView));
                             }
                         });
                     }

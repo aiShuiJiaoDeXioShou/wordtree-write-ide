@@ -91,11 +91,14 @@ public class NewProjectDialogView extends Stage {
             hBox2.getChildren().add(imageView);
         });
 
-        var hBox3 = new WTInputPro("题材:",true);
+        var hBox3 = new WTInputPro("题材:", true);
         var themeField = hBox3.getTextField();
 
-        var hBox4 = new WTInputPro("目标字数:",true);
+        var hBox4 = new WTInputPro("目标字数:", true);
         var numberField = hBox4.getTextField();
+
+        var hBox5 = new WTInputPro("简介:", true);
+        var introductionField = hBox4.getTextField();
 
         var buttons = new HBox();
         buttons.setSpacing(10);
@@ -115,6 +118,7 @@ public class NewProjectDialogView extends Stage {
                 novelProject.setTargetNumber(Integer.valueOf(numberField.getText()));
                 novelProject.setTheme(themeField.getText());
                 novelProject.setName(nameField.getText());
+                novelProject.setBriefIntroduction(introductionField.getText());
             } catch (NullPointerException exception) {
                 System.out.println("不能为空！");
             }
@@ -125,7 +129,7 @@ public class NewProjectDialogView extends Stage {
         });
 
         var boxRoot = new VBox();
-        boxRoot.getChildren().addAll(hBox1, hBox, hBox2, hBox3, hBox4);
+        boxRoot.getChildren().addAll(hBox1, hBox, hBox2, hBox3, hBox4, hBox5);
         boxRoot.setSpacing(15);
         novel.setTop(boxRoot);
         novel.setBottom(buttons);

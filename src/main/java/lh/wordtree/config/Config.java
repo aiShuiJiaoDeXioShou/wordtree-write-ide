@@ -17,6 +17,8 @@ import java.util.Objects;
 
 public interface Config {
 
+    String APP_ICON = "static/icon/icon.png";
+
     // 初始化写作工作空间项目
     static void initWriteWorkSpace(File file, NovelProject novelProject) {
         file.mkdirs();
@@ -87,6 +89,8 @@ public interface Config {
     String SQLITE_JDBC_CONFIG_PATH = "jdbc:sqlite:" + SQLITE_PATH;
     // 初始化配置文件路径
     String INIT_PATH = APP_CONFIG_DIR + "/init.properties";
+    // 用户信息储存位置
+    String USER_CONFIG_PATH = APP_CONFIG_DIR + "/user.json";
     // 历史空间配置文件
     String WORKSPACE_PATH = APP_CONFIG_DIR + "/workspace.json";
     // 语言资源包文件路径

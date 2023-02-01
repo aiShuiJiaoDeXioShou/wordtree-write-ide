@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.web.WebView;
+import lh.wordtree.entity.Author;
 import lh.wordtree.entity.NovelProject;
 
 import java.io.File;
@@ -17,6 +18,7 @@ public abstract class FactoryBeanService {
     public static SimpleStringProperty number = new SimpleStringProperty("");
     public static SimpleBooleanProperty isWt = new SimpleBooleanProperty(false);
     public static SimpleObjectProperty<NovelProject> novelProject = new SimpleObjectProperty<>();
+    public static SimpleObjectProperty<Author> user = new SimpleObjectProperty<>();
 
     public static WebView getWebView() {
         return new WebView();

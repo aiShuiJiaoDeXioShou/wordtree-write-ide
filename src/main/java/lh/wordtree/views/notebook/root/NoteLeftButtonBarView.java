@@ -46,7 +46,6 @@ public class NoteLeftButtonBarView extends HBox {
             switch (newValue.getId()) {
                 case "书籍管理" -> {
                     NoteBookRootView.INSTANCE.setCenter(BookRackView.INSTANCE);
-                    BookRackView.INSTANCE.update();
                 }
                 case "写作" -> NoteBookRootView.INSTANCE.setCenter(NoteCoreView.INSTANCE);
                 case "插件" -> NoteBookRootView.INSTANCE.setCenter(new PluginView());

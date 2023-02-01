@@ -13,6 +13,7 @@ public class NovelProject {
     private Integer nowNumber;
     private LocalDateTime startDateTime;
     private LocalDateTime lastDateTime;
+    private String briefIntroduction;
 
     public NovelProject(String name, String path, String targetWeb, String img, String theme, String author, Integer targetNumber, Integer nowNumber, LocalDateTime startDateTime, LocalDateTime lastDateTime) {
         this.name = name;
@@ -25,6 +26,28 @@ public class NovelProject {
         this.nowNumber = nowNumber;
         this.startDateTime = startDateTime;
         this.lastDateTime = lastDateTime;
+    }
+
+    public NovelProject(String name, String path, String targetWeb, String img, String theme, String author, Integer targetNumber, Integer nowNumber, LocalDateTime startDateTime, LocalDateTime lastDateTime, String briefIntroduction) {
+        this.name = name;
+        this.path = path;
+        this.targetWeb = targetWeb;
+        this.img = img;
+        this.theme = theme;
+        this.author = author;
+        this.targetNumber = targetNumber;
+        this.nowNumber = nowNumber;
+        this.startDateTime = startDateTime;
+        this.lastDateTime = lastDateTime;
+        this.briefIntroduction = briefIntroduction;
+    }
+
+    public String getBriefIntroduction() {
+        return briefIntroduction;
+    }
+
+    public void setBriefIntroduction(String briefIntroduction) {
+        this.briefIntroduction = briefIntroduction;
     }
 
     public NovelProject() {

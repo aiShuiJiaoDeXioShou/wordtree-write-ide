@@ -1,11 +1,17 @@
 package lh.wordtree.task.edit;
 
+import cn.hutool.core.io.FileUtil;
+import com.alibaba.fastjson2.JSON;
+import javafx.application.Platform;
 import lh.wordtree.config.Config;
 import lh.wordtree.config.LauncherConfig;
+import lh.wordtree.entity.Author;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 import lh.wordtree.utils.ClassLoaderUtils;
+import lh.wordtree.views.notebook.login.OneLoginView;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +30,13 @@ public class InitTask implements WTTask {
         try {
             // 判断这个路径下面是否有.wordtree目录，没有进行创建操作
             var appConfigDirFile = new File(Config.APP_CONFIG_DIR);
+            var user = new File(Config.USER_CONFIG_PATH);
+            // 如果不存在则打开初始化用户界面，要求填入用户信息
+            if (!user.exists()) {
+                Platform.runLater(() -> new OneLoginView().show());
+            } else {
+                FactoryBeanService.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
+            }
             if (appConfigDirFile.exists()) return;
             var sqliteFile = new File(Config.SQLITE_PATH);
             var workspace = new File(Config.WORKSPACE_PATH);
