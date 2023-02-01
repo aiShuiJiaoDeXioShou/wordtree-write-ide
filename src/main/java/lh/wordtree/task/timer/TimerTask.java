@@ -10,7 +10,7 @@ import lh.wordtree.service.record.TimerService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 
-@Task
+@Task(name = "后台记录任务", value = -1)
 public class TimerTask implements WTTask {
     public static int nowSecond;
     public static int nowNumber;

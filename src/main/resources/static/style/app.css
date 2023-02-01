@@ -28,10 +28,6 @@
     -fx-background-color: -node-left-top-bgc;
 }
 
-.note-book-menu .menu, .menu-bar {
-    -fx-background-color: #ffff;
-}
-
 .alert-label {
     -fx-text-alignment: center;
     -fx-alignment: center;
@@ -85,10 +81,14 @@
     -fx-fill: #a6d2ff;
 }
 
-.note-menu-bar {
+.note-book-menu {
     -fx-border-style: soild;
     -fx-border-width: 1;
     -fx-border-color: -def-border-color;
+    -fx-background-color: -def-backgroud-color;
+}
+
+.note-book-menu .menu, .menu-bar {
     -fx-background-color: -def-backgroud-color;
 }
 
@@ -125,4 +125,142 @@
 
 .toggle-work-space:hover {
     -fx-background-color: derive(skyblue, 10%);
+}
+
+.wt-button {
+    -fx-padding: 5;
+}
+
+.wt-button:hover {
+    -fx-background-color: derive(skyblue, 10%);
+    -fx-background-radius: 5;
+}
+
+.book-rack {
+    -fx-background-color: -def-backgroud-color;
+}
+
+.book-rack .name {
+    -fx-font-size: 25;
+    -fx-font-weight: 25;
+    -fx-fill: black;
+}
+
+.book-rack .maxim {
+    -fx-fill: #f0f0f0;
+    -fx-text-fill: #868e96;
+    -fx-font-size: 15;
+    -fx-font-weight: 35;
+}
+
+.book-rack .head {
+    -fx-border-radius: 85;
+}
+
+.book-rack .edit {
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 50;
+    -fx-background-color: #f6f8fa;
+    -fx-font-weight: 35;
+}
+
+.wtbook {
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 10;
+    -fx-pref-width: 300;
+    -fx-cursor: hand;
+}
+
+.wtbook .wtbook-name {
+    -fx-text-fill: #1973dc;
+    -fx-font-size: 20;
+    -fx-font-weight: 20;
+}
+
+.wtbook .wtbook-author {
+    -fx-text-fill: #51cf66;
+}
+
+.wt-node-list {
+    -fx-background-color: -def-backgroud-color;
+    -fx-border-width: 0 0 0 1;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 5 8;
+}
+
+.wt-node-list .wt-node-item {
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 4 8;
+    -fx-border-color: -def-border-color;
+}
+
+.wt-label {
+    -fx-border-width: 1;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 5 8;
+    -fx-border-radius: 12.5;
+    -fx-background-radius: 12.5;
+    -fx-pref-height: 20;
+}
+
+.wt-label:hover {
+    -fx-cursor: hand;
+    -fx-border-color: #343a40;
+}
+
+.wt-label-white {
+    -fx-background-color: -def-backgroud-color;
+}
+
+.wt-label-primary {
+    -fx-background-color: #4dabf7;
+    -fx-border-color: #4dabf7;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-error {
+    -fx-background-color: #f03e3e;
+    -fx-border-color: #f03e3e;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-warning {
+    -fx-background-color: #ffec99;
+    -fx-border-color: #ffec99;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-success {
+    -fx-background-color: #69db7c;
+    -fx-border-color: #69db7c;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-info {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-black {
+    -fx-background-color: #495057;
+    -fx-text-fill: #ffff;
+}
+
+.wt-calendar .time-item {
+    -fx-background-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-pref-width: 15;
+    -fx-pref-height: 15;
+    -fx-border-color: -def-border-color;
+}
+
+.title {
+    -fx-font-size: 15;
+    -fx-font-weight: 25;
 }

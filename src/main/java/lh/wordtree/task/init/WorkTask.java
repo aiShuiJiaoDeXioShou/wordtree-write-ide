@@ -13,7 +13,7 @@ import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 import lh.wordtree.views.notebook.core.FileTreeView;
-import lh.wordtree.views.notebook.core.NoteBookMenuView;
+import lh.wordtree.views.notebook.core.MenuView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Task
+@Task(value = 1, name = "工作空间初始化任务")
 public class WorkTask implements WTTask {
 
 
@@ -40,7 +40,7 @@ public class WorkTask implements WTTask {
     private void fileInit() {
         var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
-        if (size > 0) FactoryBeanService.nowRootFile.set(new File(recentFiles.get(0).filePath()));
+        if (size > 0) FactoryBeanService.nowRootFile.set(new File(recentFiles.get(0).getFilePath()));
         else FactoryBeanService.nowRootFile.set(new File(Config.BASE_WORKSPACE));
         File nowRootFile = FactoryBeanService.nowRootFile.get();
         FileTreeView.INSTANCE.toggleFile(nowRootFile);
@@ -75,7 +75,7 @@ public class WorkTask implements WTTask {
                                 }
                                 imageView.setFitHeight(20);
                                 imageView.setFitWidth(20);
-                                Platform.runLater(() -> NoteBookMenuView.INSTANCE.toggleWorkSpace.setGraphic(imageView));
+                                Platform.runLater(() -> MenuView.INSTANCE.toggleWorkSpace.setGraphic(imageView));
                             }
                         });
                     }

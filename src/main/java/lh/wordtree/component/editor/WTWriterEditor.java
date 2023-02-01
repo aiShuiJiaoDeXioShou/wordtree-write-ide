@@ -65,8 +65,19 @@ public class WTWriterEditor extends CodeArea {
             // 获取当前row line在coder中的位置
             var paragraph = this.getCurrentParagraph() + 1;
             var column = this.getCaretColumn();
+            // 获取当前选中的字符
+            var selectedText = this.getSelectedText();
             // 改变底部状态栏的状态
-            FactoryBeanService.rowLine.set(paragraph + ":" + column);
+            FactoryBeanService.rowLine.set(paragraph + ":" + column + "(" + selectedText.length() + "字符" + ")");
+            if (selectedText.length() > 0) {
+                FactoryBeanService
+                        .rowLine
+                        .set(paragraph + ":" + column +
+                                "(" + selectedText.length() + "字符" + ")");
+            } else {
+                FactoryBeanService.rowLine.set(paragraph + ":" + column);
+            }
+
         });
         // 添加键盘事件
         Nodes.addInputMap(this, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {

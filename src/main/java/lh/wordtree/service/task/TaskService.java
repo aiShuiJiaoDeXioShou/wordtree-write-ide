@@ -1,7 +1,7 @@
 package lh.wordtree.service.task;
 
+import lh.wordtree.entity.fun.OrdinaryFunction;
 import lh.wordtree.task.ITask;
-import lh.wordtree.task.WTTask;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ public interface TaskService {
 
     void start(ITask iTask);
 
-    List<WTTask> getWriteTasks();
+    List<OrdinaryFunction> getWriteTasks();
 
-    List<WTTask> getToggleFileTasks();
+    List<OrdinaryFunction> getToggleFileTasks();
 
-    List<WTTask> getLoopTasks();
+    List<OrdinaryFunction> getLoopTasks();
 
-    List<WTTask> getSaveTasks();
+    List<OrdinaryFunction> getSaveTasks();
 }

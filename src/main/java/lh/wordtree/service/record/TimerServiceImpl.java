@@ -5,8 +5,8 @@ import cn.hutool.log.LogFactory;
 import lh.wordtree.dao.WorkPlanMapper;
 import lh.wordtree.entity.WorkPlan;
 import lh.wordtree.service.InitializationService;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.utils.JDBCUtils;
-import lh.wordtree.views.notebook.core.FileTreeView;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -37,7 +37,7 @@ public class TimerServiceImpl implements TimerService, InitializationService {
         workPlan.setId(nowTime.toString())
                 .setTime(0)
                 .setNumber(0)
-                .setWorks(FileTreeView.INSTANCE.nowFile.getName());
+                .setWorks(FactoryBeanService.nowRootFile.get().getName());
         workPlanMapper.insert(workPlan);
         log.info("正在插入完毕！！！");
     }

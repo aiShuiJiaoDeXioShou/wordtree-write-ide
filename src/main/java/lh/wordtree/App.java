@@ -9,6 +9,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
+import lh.wordtree.config.Config;
 import lh.wordtree.service.task.TaskService;
 import lh.wordtree.service.web.WebStartsServiceImpl;
 import lh.wordtree.task.ITask;
@@ -35,7 +36,7 @@ public class App extends Application {
         this.setStyle();
         primaryStage.setScene(scene);
         primaryStage.setTitle("Learn");
-        primaryStage.getIcons().add(new Image("static/icon/icon.png"));
+        primaryStage.getIcons().add(new Image(Config.APP_ICON));
         primaryStage.show();
         log.info("正在启动初始化服务...");
         log.info("应用程序启动成功...");

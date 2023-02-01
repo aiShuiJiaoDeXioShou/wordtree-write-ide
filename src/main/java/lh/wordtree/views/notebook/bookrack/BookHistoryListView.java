@@ -1,8 +1,6 @@
 package lh.wordtree.views.notebook.bookrack;
 
 import cn.hutool.core.thread.ThreadUtil;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -19,28 +17,17 @@ import java.io.File;
 import java.util.List;
 
 public class BookHistoryListView extends VBox {
-    public final static BookHistoryListView INSTANCE = new BookHistoryListView();
-    public List<RecentFiles> recentFiles;
+    public List<RecentFiles> recentFiles = WorkSpaceService.get();
     private ListView<Label> bookHistoryList = new ListView<>();
 
     public BookHistoryListView() {
-        this.myLayout(false);
+        this.myLayout();
     }
 
-    public BookHistoryListView(boolean isShowTile) {
-        this.myLayout(isShowTile);
-    }
-
-    private void myLayout(boolean isShowTile) {
+    private void myLayout() {
         this.initWorkSpace();
         this.controller();
         this.getChildren().add(bookHistoryList);
-        if (!isShowTile) return;
-        var box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        box.setPadding(new Insets(6, 0, 6, 0));
-        box.getChildren().add(new Label("最近打开的项目"));
-        this.getChildren().add(box);
     }
 
     private void initWorkSpace() {
@@ -54,11 +41,10 @@ public class BookHistoryListView extends VBox {
             }
         }
         // 获取工作空间的历史所有数据
-        recentFiles = WorkSpaceService.get();
         for (RecentFiles recentFile : recentFiles) {
             var label = new Label();
-            label.setGraphic(new Text(recentFile.workspaceName()));
-            label.setId(recentFile.filePath());
+            label.setGraphic(new Text(recentFile.getWorkspaceName()));
+            label.setId(recentFile.getFilePath());
             bookHistoryList.getItems().add(label);
         }
     }

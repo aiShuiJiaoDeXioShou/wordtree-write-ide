@@ -2,6 +2,7 @@ package lh.wordtree.service.task;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
+import lh.wordtree.entity.fun.OrdinaryFunction;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
@@ -11,13 +12,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class TaskServiceImpl implements TaskService {
-    private final List<WTTask> writeTasks = new LinkedList<>();
-    private final List<WTTask> toggleFileTasks = new LinkedList<>();
-    private final List<WTTask> loopTasks = new LinkedList<>();
-    private final List<WTTask> saveTasks = new LinkedList<>();
-    private final List<WTTask> initTasks = new LinkedList<>();
-    private final List<WTTask> endTasks = new LinkedList<>();
-    private final List<WTTask> globalTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> writeTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> toggleFileTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> loopTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> saveTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> initTasks = new LinkedList<>();
+    private final List<OrdinaryFunction> endTasks = new LinkedList<>();
 
     public TaskServiceImpl() {
         annotationParse();
@@ -30,9 +30,17 @@ public class TaskServiceImpl implements TaskService {
         // 获取base包下所有的类,扫描注解
         var classes = ClassUtil.scanPackage(BASE_PACKAGE);
         // 判断是否包含Task注解，如果包含Task注解则保留，如果不包含则过滤掉
-        var wtTasks = classes.stream()
+        var taskList = classes.stream()
                 // 过滤空对象
                 .filter(aClass -> !Objects.isNull(aClass.getAnnotation(Task.class)))
+                // 对任务的优先级别进行排序
+                .sorted((o1, o2) -> {
+                    var o1Task = o1.getAnnotation(Task.class);
+                    var o2Task = o2.getAnnotation(Task.class);
+                    var v1 = o1Task.value();
+                    var v2 = o2Task.value();
+                    return v2 - v1;
+                })
                 // 对对象进行分类
                 .peek(aClass -> {
                     Object o = ReflectUtil.newInstance(aClass);
@@ -40,13 +48,20 @@ public class TaskServiceImpl implements TaskService {
                     var iTask = annotation.iTask();
                     if (o instanceof WTTask wtTask) {
                         switch (iTask) {
-                            case LOOP -> loopTasks.add(wtTask);
-                            case SAVE -> saveTasks.add(wtTask);
-                            case WRITE -> writeTasks.add(wtTask);
-                            case TOGGLE_FILE -> toggleFileTasks.add(wtTask);
-                            case INIT -> initTasks.add(wtTask);
-                            case END -> endTasks.add(wtTask);
-                            case NONE -> globalTasks.add(wtTask);
+                            case LOOP -> loopTasks.add(wtTask::apply);
+                            case SAVE -> saveTasks.add(wtTask::apply);
+                            case WRITE -> writeTasks.add(wtTask::apply);
+                            case TOGGLE_FILE -> toggleFileTasks.add(wtTask::apply);
+                            case INIT -> initTasks.add(wtTask::apply);
+                            case END -> endTasks.add(wtTask::apply);
+                            case NONE -> {
+                                loopTasks.add(wtTask::loop);
+                                saveTasks.add(wtTask::save);
+                                writeTasks.add(wtTask::write);
+                                toggleFileTasks.add(wtTask::toggleFile);
+                                initTasks.add(wtTask::init);
+                                endTasks.add(wtTask::end);
+                            }
                         }
                     }
                 })
@@ -62,47 +77,34 @@ public class TaskServiceImpl implements TaskService {
             case INIT -> applyTask(getInitTasks());
             case END -> applyTask(getEndTasks());
         }
-        globalTasksApply(iTask);
     }
 
-    private void applyTask(List<WTTask> tasks) {
+    private void applyTask(List<OrdinaryFunction> tasks) {
         if (tasks.size() > 0)
-            tasks.forEach(WTTask::apply);
+            tasks.forEach(OrdinaryFunction::apply);
     }
 
-    private void globalTasksApply(ITask iTask) {
-        if (globalTasks.size() > 0)
-            switch (iTask) {
-                case LOOP -> globalTasks.forEach(WTTask::loop);
-                case SAVE -> globalTasks.forEach(WTTask::save);
-                case WRITE -> globalTasks.forEach(WTTask::write);
-                case TOGGLE_FILE -> globalTasks.forEach(WTTask::toggleFile);
-                case INIT -> globalTasks.forEach(WTTask::init);
-                case END -> globalTasks.forEach(WTTask::end);
-            }
-    }
-
-    public List<WTTask> getInitTasks() {
+    public List<OrdinaryFunction> getInitTasks() {
         return initTasks;
     }
 
-    public List<WTTask> getWriteTasks() {
+    public List<OrdinaryFunction> getWriteTasks() {
         return writeTasks;
     }
 
-    public List<WTTask> getToggleFileTasks() {
+    public List<OrdinaryFunction> getToggleFileTasks() {
         return toggleFileTasks;
     }
 
-    public List<WTTask> getLoopTasks() {
+    public List<OrdinaryFunction> getLoopTasks() {
         return loopTasks;
     }
 
-    public List<WTTask> getSaveTasks() {
+    public List<OrdinaryFunction> getSaveTasks() {
         return saveTasks;
     }
 
-    public List<WTTask> getEndTasks() {
+    public List<OrdinaryFunction> getEndTasks() {
         return endTasks;
     }
 }

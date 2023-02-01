@@ -9,4 +9,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Task {
     ITask iTask() default ITask.NONE;
+
+    /**
+     * 优先级
+     */
+    int value() default 0;
+
+    String name() default "";
 }

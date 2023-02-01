@@ -10,12 +10,12 @@ import lh.wordtree.entity.RecentFiles;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.record.WorkSpaceService;
-import lh.wordtree.utils.ConfigUtils;
-import lh.wordtree.views.notebook.bookrack.BookHistoryListView;
 import lh.wordtree.views.notebook.root.NoteLeftButtonBarView;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
+import java.util.List;
 
 public class FileTreeView extends TreeView<Label> {
     public static final FileTreeView INSTANCE = new FileTreeView();
@@ -51,17 +51,21 @@ public class FileTreeView extends TreeView<Label> {
             });
             System.gc();
         });
+        ThreadUtil.execAsync(this::flushWorkSpace);
+    }
+
+    private void flushWorkSpace() {
         // 对工作空间的保存操作
-        ThreadUtil.execAsync(() -> {
-            var recentFiles = BookHistoryListView.INSTANCE.recentFiles;
-            var filesStream = recentFiles.stream().filter(re -> re.filePath().equals(file.getPath())).toList();
-            // 判断打开的工作空间是否存在
-            if (filesStream.size() > 0)
-                recentFiles = recentFiles.stream().filter(re -> !re.filePath().equals(file.getPath())).toList();
-            var recent = new RecentFiles(LocalDateTime.now(), file.getPath(), ConfigUtils.getProperties("username"), file.getName());
-            recentFiles.add(recent);
-            recentFiles.sort((o1, o2) -> o1.time().isBefore(o2.time()) ? 0 : -1);
-            WorkSpaceService.save(recentFiles);
-        });
+        var file = FactoryBeanService.nowRootFile.getValue();
+        List<RecentFiles> recentFiles = WorkSpaceService.get();
+        var filesStream = recentFiles.stream().filter(re -> re.getFilePath().equals(file.getPath())).toList();
+        if (filesStream.size() == 0) return;
+        // 判断打开的工作空间是否存在
+        var files = recentFiles.stream().peek(re -> {
+            if (!re.getFilePath().equals(file.getPath())) {
+                re.setTime(LocalDateTime.now());
+            }
+        }).sorted((o1, o2) -> (int) (o1.getTime().getLong(ChronoField.SECOND_OF_DAY) - o2.getTime().getLong(ChronoField.SECOND_OF_DAY))).toList();
+        WorkSpaceService.save(files);
     }
 }
