@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'org.beryx.runtime' version '1.12.5'
+    id 'org.jetbrains.kotlin.jvm' version '1.8.10'
 }
 
 ext {
@@ -17,6 +18,7 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+    implementation project(':wt-def')
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
@@ -50,6 +52,7 @@ dependencies {
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 javafx {
@@ -84,5 +87,15 @@ runtime {
         } else if (currentOs.macOsX) {
             installerOptions += ['--mac-package-name', 'library']
         }
+    }
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }

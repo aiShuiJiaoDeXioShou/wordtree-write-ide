@@ -38,7 +38,7 @@ public class InitTask implements WTTask {
             } else {
                 FactoryBeanService.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
             }
-//            if (appConfigDirFile.exists()) return;
+            if (appConfigDirFile.exists()) return;
             var countryLanguage = new File(Config.COUNTRY_LANGUAGE);
             var sqliteFile = new File(Config.SQLITE_PATH);
             var workspace = new File(Config.WORKSPACE_PATH);

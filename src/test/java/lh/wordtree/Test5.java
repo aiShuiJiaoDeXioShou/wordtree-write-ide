@@ -61,7 +61,6 @@ public class Test5 {
         var service = new WTPluginServiceImpl(src);
         var send = service.sendJar();
         send.forEach(WTPlugin::init);
-        send.forEach(System.out::println);
     }
 
     private void test() {
