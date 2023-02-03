@@ -1,10 +1,11 @@
 package lh.wordtree.task.edit;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.thread.ThreadUtil;
 import com.alibaba.fastjson2.JSON;
 import javafx.application.Platform;
+import lh.wordtree.config.CodeLauncherConfig;
 import lh.wordtree.config.Config;
-import lh.wordtree.config.LauncherConfig;
 import lh.wordtree.entity.Author;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.task.ITask;
@@ -18,11 +19,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Task(iTask = ITask.INIT, name = "配置初始化任务")
+@Task(iTask = ITask.INIT, name = "配置初始化任务", value = 3)
 public class InitTask implements WTTask {
 
     public void apply() {
-        initConfig();
+        ThreadUtil.execAsync(this::initConfig);
     }
 
     // 初始化配置对象
@@ -37,12 +38,22 @@ public class InitTask implements WTTask {
             } else {
                 FactoryBeanService.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
             }
-            if (appConfigDirFile.exists()) return;
+//            if (appConfigDirFile.exists()) return;
+            var countryLanguage = new File(Config.COUNTRY_LANGUAGE);
             var sqliteFile = new File(Config.SQLITE_PATH);
             var workspace = new File(Config.WORKSPACE_PATH);
             var languageCodePath = new File(Config.LANGUAGE_CODE_PATH);
             var init = new File(Config.INIT_PATH);
             var baseWorkspace = new File(Config.BASE_WORKSPACE);
+            if (!countryLanguage.exists()) {
+                countryLanguage.mkdirs();
+                Files.copy(ClassLoaderUtils.load(
+                                "static/country-language/chinese.properties"),
+                        Path.of(Config.COUNTRY_LANGUAGE + "/chinese.properties"));
+                Files.copy(ClassLoaderUtils.load(
+                                "static/country-language/english.properties"),
+                        Path.of(Config.COUNTRY_LANGUAGE + "/english.properties"));
+            }
             if (!appConfigDirFile.exists()) {
                 appConfigDirFile.mkdirs();
             }
@@ -60,7 +71,7 @@ public class InitTask implements WTTask {
             }
             if (!languageCodePath.exists()) {
                 languageCodePath.mkdirs();
-                LauncherConfig.LANGUAGE_CODE_DATA.forEach(lang -> {
+                CodeLauncherConfig.LANGUAGE_CODE_DATA.forEach(lang -> {
                     lang.forEach((k, v) -> {
                         try {
                             var path = Config.LANGUAGE_CODE_PATH + "/" + k + "-code.json";

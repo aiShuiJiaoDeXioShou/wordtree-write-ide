@@ -12,8 +12,6 @@ public interface Task {
     default void lastFun() {
     }
 
-    ;
-
     enum TaskCycle {
         PRE, AFTER, WHEN
     }

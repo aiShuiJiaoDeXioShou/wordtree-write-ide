@@ -66,11 +66,6 @@ public class TaskServiceImpl implements TaskService {
                     }
                 })
                 .toList();
-        initTasks.sort((o1, o2) -> {
-            var task1 = o1.getClass().getAnnotation(Task.class);
-            var task2 = o2.getClass().getAnnotation(Task.class);
-            return task2.value() - task1.value();
-        });
     }
 
     public void start(ITask iTask) {

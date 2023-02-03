@@ -3,7 +3,7 @@ package lh.wordtree.config;
 import java.util.List;
 import java.util.Map;
 
-public interface LauncherConfig {
+public interface CodeLauncherConfig {
     // 初始化语言配置文件
     List<Map<String, String>> LANGUAGE_CODE_DATA = List.of(
             Map.of("java", """

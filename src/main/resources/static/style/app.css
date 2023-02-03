@@ -82,7 +82,6 @@
 }
 
 .note-book-menu {
-    -fx-border-style: soild;
     -fx-border-width: 1;
     -fx-border-color: -def-border-color;
     -fx-background-color: -def-backgroud-color;
@@ -142,7 +141,6 @@
 
 .book-rack .name {
     -fx-font-size: 25;
-    -fx-font-weight: 25;
     -fx-fill: black;
 }
 
@@ -150,7 +148,6 @@
     -fx-fill: #f0f0f0;
     -fx-text-fill: #868e96;
     -fx-font-size: 15;
-    -fx-font-weight: 35;
 }
 
 .book-rack .head {
@@ -163,7 +160,6 @@
     -fx-background-radius: 5;
     -fx-padding: 8 50;
     -fx-background-color: #f6f8fa;
-    -fx-font-weight: 35;
 }
 
 .wtbook {
@@ -179,7 +175,6 @@
 .wtbook .wtbook-name {
     -fx-text-fill: #1973dc;
     -fx-font-size: 20;
-    -fx-font-weight: 20;
 }
 
 .wtbook .wtbook-author {
@@ -262,5 +257,4 @@
 
 .title {
     -fx-font-size: 15;
-    -fx-font-weight: 25;
 }

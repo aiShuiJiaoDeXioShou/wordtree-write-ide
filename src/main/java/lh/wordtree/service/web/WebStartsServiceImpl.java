@@ -1,13 +1,17 @@
 package lh.wordtree.service.web;
 
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import io.vertx.core.Vertx;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 
 public class WebStartsServiceImpl implements WebStartsService {
     public final static HttpServer server = Vertx.vertx().createHttpServer();
+    private Log log = LogFactory.get();
 
     public WebStartsServiceImpl start() {
+        log.info("正在初始化web服务...");
         this.httpService();
         return this;
     }

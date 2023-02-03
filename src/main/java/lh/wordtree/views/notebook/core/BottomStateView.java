@@ -13,16 +13,20 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.service.language.CountryService;
 import lh.wordtree.utils.CharsetDetectUtil;
+
+import java.util.Map;
 
 public class BottomStateView extends BorderPane {
     public static final BottomStateView INSTANCE = new BottomStateView();
+    private Map<String, String> language = CountryService.language;
     private final double height = 18;
     public Label code = new Label();
-    public Label tab = new Label("四个空格");
+    public Label tab = new Label(language.get("四个空格"));
     public Label nowRow = new Label();
     public Label lock = new Label("lock");
-    public Label terminal = new Label("终端");
+    public Label terminal = new Label(language.get("终端"));
     public Label git = new Label("git");
     public Popup chartPopup = new Popup();
     public Label workTime = new Label();

@@ -24,21 +24,23 @@ public class App extends Application {
 
     public static Stage primaryStage;
     public Scene scene = NoteBookScene.INSTANCE;
-    private Log log = LogFactory.get();
+    private final Log log = LogFactory.get();
     private WebStartsServiceImpl web = new WebStartsServiceImpl();
+
+    public App() {
+        log.info("应用程序开始启动...");
+        TaskService.INSTANCE.start(ITask.INIT);
+        web.start();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        log.info("应用程序开始启动...");
-        log.info("正在初始化web服务...");
-        web.start();
         primaryStage = stage;
         this.setStyle();
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Learn");
+        primaryStage.setTitle(Config.APP_NAME);
         primaryStage.getIcons().add(new Image(Config.APP_ICON));
         primaryStage.show();
-        log.info("正在启动初始化服务...");
         log.info("应用程序启动成功...");
     }
 
@@ -48,7 +50,6 @@ public class App extends Application {
      * @throws Exception
      */
     public void init() throws Exception {
-        TaskService.INSTANCE.start(ITask.INIT);
     }
 
     /**

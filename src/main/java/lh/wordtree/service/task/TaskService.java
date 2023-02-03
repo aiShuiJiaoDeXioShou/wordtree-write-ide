@@ -19,4 +19,8 @@ public interface TaskService {
     List<OrdinaryFunction> getLoopTasks();
 
     List<OrdinaryFunction> getSaveTasks();
+
+    List<OrdinaryFunction> getInitTasks();
+
+    List<OrdinaryFunction> getEndTasks();
 }
