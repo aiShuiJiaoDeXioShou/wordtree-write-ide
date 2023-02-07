@@ -2,6 +2,7 @@ package lh.wordtree.service.plugin;
 
 import cn.hutool.core.util.ClassLoaderUtil;
 import cn.hutool.core.util.ReflectUtil;
+import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
 import lh.wordtree.utils.WTFileUtils;
 
@@ -15,9 +16,15 @@ public class WTPluginServiceImpl implements WTPluginService {
 
     private String src;
     private List<WTPlugin> plugins = new ArrayList<>();
+    private List<WTPlugLanguage> plugLanguages = new ArrayList<>();
 
     public WTPluginServiceImpl(String src) {
         this.src = src;
+        sendJar();
+    }
+
+    public List<WTPlugLanguage> getPlugLanguages() {
+        return plugLanguages;
     }
 
     public String src() {
@@ -60,9 +67,13 @@ public class WTPluginServiceImpl implements WTPluginService {
             if (o instanceof WTPlugin plugin) {
                 plugins.add(plugin);
             }
+            if (o instanceof WTPlugLanguage plugLanguage) {
+                plugLanguages.add(plugLanguage);
+            }
             jar.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

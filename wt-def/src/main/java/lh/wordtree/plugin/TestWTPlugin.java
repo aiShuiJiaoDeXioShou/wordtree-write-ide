@@ -12,6 +12,11 @@ public class TestWTPlugin implements WTPlugin {
     }
 
     @Override
+    public void apply() {
+
+    }
+
+    @Override
     public void end() {
 
     }
@@ -48,6 +53,11 @@ public class TestWTPlugin implements WTPlugin {
                         第三部上篇于2012年12月出版，第三部中篇于2013年07月出版，第三部下篇于2013年12月出版
                         ，第四部则于2015年10月出版，第五部于2018年5月15日在QQ阅读平台开始连载。
                         """;
+            }
+
+            @Override
+            public WTPluginType type() {
+                return WTPluginType.language;
             }
         };
     }

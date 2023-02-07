@@ -10,9 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import lh.wordtree.plugin.TestWTPlugin;
 import lh.wordtree.plugin.WTPlugin;
 import lh.wordtree.service.language.CountryService;
+import lh.wordtree.service.plugin.WTPluginService;
 
 import java.util.Map;
 
@@ -41,9 +41,9 @@ public class PluginView extends BorderPane {
         ThreadUtil.execAsync(() -> {
             var pluginMarket = new ListView<MarketPlugin>();
             Platform.runLater(() -> install.setContent(pluginMarket));
-            for (int i = 0; i < 10; i++) {
-                var testWTPlugin = new TestWTPlugin();
-                var marketPlugin = new MarketPlugin(testWTPlugin, false);
+            var wtPlugins = WTPluginService.pluginService.sendJar();
+            for (WTPlugin wtPlugin : wtPlugins) {
+                var marketPlugin = new MarketPlugin(wtPlugin, true);
                 Platform.runLater(() -> pluginMarket.getItems().add(marketPlugin));
             }
             showInfo(pluginMarket);

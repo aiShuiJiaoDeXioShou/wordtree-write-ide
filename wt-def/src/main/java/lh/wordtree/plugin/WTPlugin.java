@@ -5,6 +5,8 @@ import javafx.scene.Node;
 public interface WTPlugin {
     void init();
 
+    void apply();
+
     default void write() {
     }
 

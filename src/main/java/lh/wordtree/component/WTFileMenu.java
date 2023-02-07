@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
+import lh.wordtree.component.editor.WTLangCodeArea;
 import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.file.FileService;
@@ -27,6 +28,7 @@ import lh.wordtree.utils.SvgUtils;
 import lh.wordtree.utils.WTFileUtils;
 import lh.wordtree.views.notebook.core.FileTreeView;
 import lh.wordtree.views.notebook.core.TabMenuBarView;
+import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -258,7 +260,7 @@ public class WTFileMenu extends TreeItem<Label> {
         } else if (build instanceof WebView webView) {
             tab.setContent(webView);
         } else if (build instanceof SplitPane box) {
-            if (box.getItems().get(0) instanceof WTWriterEditor code) {
+            if (box.getItems().get(0) instanceof CodeArea code) {
                 addCode(tab, code);
             }
             tab.setContent(box);
@@ -268,7 +270,7 @@ public class WTFileMenu extends TreeItem<Label> {
         tab.getContent().requestFocus();
     }
 
-    private void addCode(Tab tab, WTWriterEditor code) {
+    private void addCode(Tab tab, CodeArea code) {
         tab.setGraphic(new Text(""));
         tab.setOnCloseRequest(event -> {
             var target = (Tab) event.getSource();
@@ -289,9 +291,8 @@ public class WTFileMenu extends TreeItem<Label> {
             TabMenuBarView.INSTANCE.getTabs().remove(tab);
         });
         String context = FileUtil.readString(this.label.getId(), StandardCharsets.UTF_8);
-        if (StrUtil.isBlank(context.trim())) {
-            code.appendText("\s\s\s\s" + context);
-        } else code.appendText(context);
+        if (StrUtil.isBlank(context.trim())) code.appendText("\s\s\s\s" + context);
+        if (!(code instanceof WTLangCodeArea)) code.appendText(context);
         // 只要文本发生了改变，改变tab标签的ui状态
         code.textProperty().addListener((observable, oldValue, newValue) -> {
             tab.setGraphic(new Text("*"));

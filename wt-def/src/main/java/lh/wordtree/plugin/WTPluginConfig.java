@@ -17,4 +17,6 @@ public interface WTPluginConfig {
      * @return
      */
     String introduce();
+
+    WTPluginType type();
 }

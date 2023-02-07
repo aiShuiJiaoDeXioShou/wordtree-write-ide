@@ -1,6 +1,5 @@
 package lh.wordtree.service.language;
 
-import cn.hutool.core.io.FileUtil;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.web.WebEngine;
@@ -11,10 +10,8 @@ import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.config.Config;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.utils.WTFileUtils;
-import netscape.javascript.JSObject;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -39,14 +36,8 @@ public class LanguageConstructorServiceImpl implements LanguageConstructorServic
             engine.load(url("static/template/task/task.html"));
             return webView;
         } else if (file.getName().contains("人物.json")) {
-            WebView webView = FactoryBeanService.getWebView();
-            WebEngine engine = webView.getEngine();
-            var figureJSON = FileUtil.readString(file, StandardCharsets.UTF_8);
-            // 将java获取到的数据发送到该WebEngine
-            JSObject win = (JSObject) engine.executeScript("window");
-            win.setMember("figureJSON", figureJSON);//设置变量
-            engine.load(url("static/template/figure/figure.html"));
-            return webView;
+            var languageService = new WTLanguageServiceImpl(file);
+            return languageService.view();
         } else if (file.getName().contains(".md")) {
             WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
