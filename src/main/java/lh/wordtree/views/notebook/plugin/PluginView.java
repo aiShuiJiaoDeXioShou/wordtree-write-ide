@@ -17,7 +17,14 @@ import lh.wordtree.service.plugin.WTPluginService;
 import java.util.Map;
 
 public class PluginView extends BorderPane {
-    public final static PluginView INSTANCE = new PluginView();
+    public static PluginView newInstance() {
+        return PluginViewHolder.instance;
+    }
+
+    private static class PluginViewHolder {
+        public static PluginView instance = new PluginView();
+    }
+
     private final double tabW = 130;
     private final TabPane tabPane = new TabPane();
     private Map<String, String> language = CountryService.language;

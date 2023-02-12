@@ -8,19 +8,23 @@ public interface WTPlugin {
     void apply();
 
     default void write() {
+        throw new UnsupportedOperationException();
     }
 
     default void toggleFile() {
+        throw new UnsupportedOperationException();
     }
 
     default void loop() {
+        throw new UnsupportedOperationException();
     }
 
     default void save() {
+        throw new UnsupportedOperationException();
     }
 
     default Node view() {
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     void end();

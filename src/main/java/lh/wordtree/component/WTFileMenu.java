@@ -39,8 +39,10 @@ import java.util.Optional;
 
 public class WTFileMenu extends TreeItem<Label> {
     private final File file;
-    private final FileService fileService = FileTreeView.INSTANCE.fileService;
+    private final FileService fileService = FileTreeView.newInstance().fileService;
     private final Label label;
+
+    private final TabMenuBarView tabMenuBar = TabMenuBarView.newInstance();
 
     public WTFileMenu(File file) {
         this.file = file;
@@ -185,7 +187,7 @@ public class WTFileMenu extends TreeItem<Label> {
 
         var upload = new MenuItem("重新刷新");
         upload.setOnAction(e -> {
-            FileTreeView.INSTANCE.toggleFile(FileTreeView.INSTANCE.nowFile);
+            FileTreeView.newInstance().toggleFile(FileTreeView.newInstance().nowFile);
         });
 
         contextMenu.getItems().addAll(cp, cv, del, openFileDir, newFile, newFolder, rename, upload);
@@ -198,11 +200,11 @@ public class WTFileMenu extends TreeItem<Label> {
      * @param fileTree
      */
     private void menuDoubleClick(TreeItem<Label> fileTree) {
-        ObservableList<Tab> tabs = TabMenuBarView.INSTANCE.getTabs();
+        ObservableList<Tab> tabs = tabMenuBar.getTabs();
         FilteredList<Tab> filtered = tabs.filtered(tab -> tab.getId().equals(fileTree.getValue().getId()));
         if (filtered.size() > 0) {
             Tab tab = filtered.get(0);
-            TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
+            tabMenuBar.getSelectionModel().select(tab);
         } else {
             this.addTab();
         }
@@ -265,8 +267,8 @@ public class WTFileMenu extends TreeItem<Label> {
             }
             tab.setContent(box);
         }
-        TabMenuBarView.INSTANCE.getTabs().add(tab);
-        TabMenuBarView.INSTANCE.getSelectionModel().select(tab);
+        tabMenuBar.getTabs().add(tab);
+        tabMenuBar.getSelectionModel().select(tab);
         tab.getContent().requestFocus();
     }
 
@@ -288,7 +290,7 @@ public class WTFileMenu extends TreeItem<Label> {
                 }
             }
             System.gc();
-            TabMenuBarView.INSTANCE.getTabs().remove(tab);
+            tabMenuBar.getTabs().remove(tab);
         });
         String context = FileUtil.readString(this.label.getId(), StandardCharsets.UTF_8);
         if (StrUtil.isBlank(context.trim())) code.appendText("\s\s\s\s" + context);

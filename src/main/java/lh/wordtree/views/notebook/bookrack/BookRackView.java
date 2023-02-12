@@ -27,10 +27,16 @@ import java.util.Map;
 
 public class BookRackView extends BorderPane {
 
-    public final static BookRackView INSTANCE = new BookRackView();;
-
-    public BookRackView() {
+    private BookRackView() {
         this.myLayout();
+    }
+
+    public static BookRackView newInstance() {
+        return BookRackViewHolder.instance;
+    }
+
+    private static class BookRackViewHolder {
+        public static BookRackView instance = new BookRackView();
     }
 
     private void myLayout() {

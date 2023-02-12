@@ -14,11 +14,14 @@ import lh.wordtree.views.notebook.core.TabMenuBarView;
 import java.nio.charset.StandardCharsets;
 
 public class NoteBookScene extends Scene {
-    public final static NoteBookScene INSTANCE = new NoteBookScene();
     public NoteBookScene() {
         super(App.rootPane);
         App.rootPane.getChildren().clear();
-        App.rootPane.getChildren().add(NoteBookRootView.INSTANCE);
+        App.rootPane.getChildren().add(NoteBookRootView.newInstance());
+    }
+
+    public static NoteBookScene newInstance() {
+        return NoteBookSceneHolder.instance;
     }
 
     /**
@@ -30,7 +33,7 @@ public class NoteBookScene extends Scene {
         KeyCodeCombination keyCodeCombination = new KeyCodeCombination(KeyCode.S, KeyCodeCombination.CONTROL_DOWN);
         this.getAccelerators().put(keyCodeCombination, () -> {
             // 保存编辑区的文本内容
-            var inter = TabMenuBarView.INSTANCE;
+            var inter = TabMenuBarView.newInstance();
             Tab nowTab = inter.getSelectionModel().getSelectedItem();
             if (nowTab == null) return;
             if (nowTab.getContent() instanceof WTWriterEditor content) {
@@ -50,6 +53,10 @@ public class NoteBookScene extends Scene {
             }
 
         });
+    }
+
+    private static class NoteBookSceneHolder {
+        public static NoteBookScene instance = new NoteBookScene();
     }
 
 }

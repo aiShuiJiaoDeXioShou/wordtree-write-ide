@@ -125,7 +125,7 @@ public class NewProjectDialogView extends Stage {
             var file = new File(path);
             Config.initWriteWorkSpace(file, novelProject);
             this.close();
-            FileTreeView.INSTANCE.toggleFile(file);
+            FileTreeView.newInstance().toggleFile(file);
         });
 
         var boxRoot = new VBox();

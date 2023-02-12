@@ -23,7 +23,7 @@ public class App extends Application {
     public final static StackPane rootPane = new StackPane();
 
     public static Stage primaryStage;
-    public Scene scene = NoteBookScene.INSTANCE;
+    public Scene scene = NoteBookScene.newInstance();
     private final Log log = LogFactory.get();
     private WebStartsServiceImpl web = new WebStartsServiceImpl();
 

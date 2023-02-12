@@ -59,6 +59,17 @@ public class WTFileUtils {
         return filename.substring(filename.lastIndexOf(".") + 1);
     }
 
+    public static String lastExtension(File file) {
+        if (file == null) return null;
+        String filename = file.getName();
+        //文件没有后缀名的情况
+        if (filename.lastIndexOf(".") == -1) {
+            return "";
+        }
+        // 这种返回的是没有.的后缀名
+        return filename.substring(filename.lastIndexOf("."));
+    }
+
     public static String lastName(String fileName) {
         //文件没有后缀名的情况
         if (fileName.lastIndexOf(".") == -1) {

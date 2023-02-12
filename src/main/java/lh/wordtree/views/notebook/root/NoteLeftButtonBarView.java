@@ -13,11 +13,7 @@ import lh.wordtree.views.toolbox.home.HomeScene;
 import java.util.Objects;
 
 public class NoteLeftButtonBarView extends HBox {
-
-    public static final NoteLeftButtonBarView INSTANCE = new NoteLeftButtonBarView();
-    public ListView<WTNoteLeftButtonItem> listView;
-
-    public NoteLeftButtonBarView() {
+    private NoteLeftButtonBarView() {
 //        this.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(0, 1, 0, 0))));
         WTNoteLeftButtonItem fliesItem, writeItem, setting, plugins;
         fliesItem = new WTNoteLeftButtonItem("\uE7F4", "书籍管理");
@@ -36,22 +32,32 @@ public class NoteLeftButtonBarView extends HBox {
         this.controller();
     }
 
-
-    private String getStyle(String path) {
-        return Objects.requireNonNull(HomeScene.class.getClassLoader().getResource(path)).toExternalForm();
+    public static NoteLeftButtonBarView newInstance() {
+        return NoteLeftButtonBarViewHolder.instance;
     }
+
+    public ListView<WTNoteLeftButtonItem> listView;
 
     private void controller() {
         listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue.getId()) {
                 case "书籍管理" -> {
-                    NoteBookRootView.INSTANCE.setCenter(BookRackView.INSTANCE);
+                    NoteBookRootView.newInstance().setCenter(BookRackView.newInstance());
                 }
-                case "写作" -> NoteBookRootView.INSTANCE.setCenter(NoteCoreView.INSTANCE);
-                case "插件" -> NoteBookRootView.INSTANCE.setCenter(PluginView.INSTANCE);
-                case "设置" -> NoteBookRootView.INSTANCE.setCenter(new SettingView());
+                case "写作" -> NoteBookRootView.newInstance().setCenter(NoteCoreView.newInstance());
+                case "插件" -> NoteBookRootView.newInstance().setCenter(PluginView.newInstance());
+                case "设置" -> NoteBookRootView.newInstance().setCenter(new SettingView());
             }
         });
+    }
+
+
+    private String getStyle(String path) {
+        return Objects.requireNonNull(HomeScene.class.getClassLoader().getResource(path)).toExternalForm();
+    }
+
+    private static class NoteLeftButtonBarViewHolder {
+        public static NoteLeftButtonBarView instance = new NoteLeftButtonBarView();
     }
 
 }

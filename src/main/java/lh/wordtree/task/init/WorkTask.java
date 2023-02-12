@@ -32,7 +32,7 @@ public class WorkTask implements WTTask {
         parseWT();
         // 对根源目录进行监听，如果路径发生改变，则重新刷新
         FactoryBeanService.nowRootFile.addListener((observable, oldValue, newValue) -> {
-            FileTreeView.INSTANCE.toggleFile(newValue);
+            FileTreeView.newInstance().toggleFile(newValue);
             parseWT();
         });
     }
@@ -43,7 +43,7 @@ public class WorkTask implements WTTask {
         if (size > 0) FactoryBeanService.nowRootFile.set(new File(recentFiles.get(0).getFilePath()));
         else FactoryBeanService.nowRootFile.set(new File(Config.BASE_WORKSPACE));
         File nowRootFile = FactoryBeanService.nowRootFile.get();
-        FileTreeView.INSTANCE.toggleFile(nowRootFile);
+        FileTreeView.newInstance().toggleFile(nowRootFile);
     }
 
     private void parseWT() {
@@ -75,7 +75,7 @@ public class WorkTask implements WTTask {
                                 }
                                 imageView.setFitHeight(20);
                                 imageView.setFitWidth(20);
-                                Platform.runLater(() -> MenuView.INSTANCE.toggleWorkSpace.setGraphic(imageView));
+                                Platform.runLater(() -> MenuView.newInstance().toggleWorkSpace.setGraphic(imageView));
                             }
                         });
                     }

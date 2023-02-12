@@ -8,15 +8,11 @@ import lh.wordtree.component.WTIcon;
 import lh.wordtree.component.WTSideBar;
 
 public class NoteCoreView extends BorderPane {
-    public static final NoteCoreView INSTANCE = new NoteCoreView();
-    public static final double HEIGHT = 650;
-    public static final double WIDTH = 1300;
+    private NoteCoreView() {
+        this.setTop(MenuView.newInstance());
+        this.setCenter(TabMenuBarView.newInstance());
 
-    public NoteCoreView() {
-        this.setTop(MenuView.INSTANCE);
-        this.setCenter(TabMenuBarView.INSTANCE);
-
-        var task = ToolkitsView.INSTANCE;
+        var task = ToolkitsView.newInstance();
         {
             WTHide borderHover = new WTHide();
             var menusSide = new WTSideBar(task, () -> this.setRight(borderHover));
@@ -27,7 +23,7 @@ public class NoteCoreView extends BorderPane {
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
 
-        var menus = FileTreeView.INSTANCE;
+        var menus = FileTreeView.newInstance();
         {
             WTHide borderHover = new WTHide();
             var menusSide = new WTSideBar(menus, () -> this.setLeft(borderHover));
@@ -38,6 +34,17 @@ public class NoteCoreView extends BorderPane {
             this.setLeft(menusSide);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
-        this.setBottom(BottomStateView.INSTANCE);
+        this.setBottom(BottomStateView.newInstance());
+    }
+
+    public static NoteCoreView newInstance() {
+        return NoteCoreViewHolder.instance;
+    }
+
+    public static final double HEIGHT = 650;
+    public static final double WIDTH = 1300;
+
+    private static class NoteCoreViewHolder {
+        public static NoteCoreView instance = new NoteCoreView();
     }
 }

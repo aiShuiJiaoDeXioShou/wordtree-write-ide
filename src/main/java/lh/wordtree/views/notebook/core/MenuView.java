@@ -20,10 +20,21 @@ import java.io.File;
 import java.util.Map;
 
 public class MenuView extends BorderPane {
-    public static final MenuView INSTANCE = new MenuView();
+    private final FileTreeView lnbf = FileTreeView.newInstance();// 右侧编译文件树
+
+    private MenuView() {
+        this.getStyleClass().add("note-book-menu");
+        this.setPadding(new Insets(0, 30, 0, 0));
+        this.setRight(actionBar);
+        this.controller();
+    }
 
     private MenuItem openFile, newWorkSpace;
-    private final FileTreeView lnbf = FileTreeView.INSTANCE;// 右侧编译文件树
+
+    public static MenuView newInstance() {
+        return MenuViewHolder.instance;
+    }
+
     public HBox actionBar = new HBox();
     // 中间显示工作空间状态
     public Label toggleWorkSpace = new Label();
@@ -101,11 +112,8 @@ public class MenuView extends BorderPane {
         });
     }
 
-    public MenuView() {
-        this.getStyleClass().add("note-book-menu");
-        this.setPadding(new Insets(0, 30, 0, 0));
-        this.setRight(actionBar);
-        this.controller();
+    private static class MenuViewHolder {
+        public static MenuView instance = new MenuView();
     }
 
     public void controller() {

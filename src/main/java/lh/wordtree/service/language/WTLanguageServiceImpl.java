@@ -33,7 +33,7 @@ public class WTLanguageServiceImpl implements WTLanguageService {
 
     private HashMap<String, String> map = new HashMap<>();
 
-    private WTPlugLanguage language = WTPluginService.pluginService.getPlugLanguages().get(0);
+    private final WTPlugLanguage language = WTPluginService.pluginService.getPlugLanguages().get(0);
 
     private String parseText;
     private JSONObject parseObject;
@@ -75,7 +75,7 @@ public class WTLanguageServiceImpl implements WTLanguageService {
         Nodes.addInputMap(codeArea, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
             parseObject.put("wt", codeArea.getText());
             FileUtil.writeUtf8String(parseObject.toString(JSONWriter.Feature.PrettyFormat), file);
-            var tab = TabMenuBarView.INSTANCE.getSelectionModel().getSelectedItem();
+            var tab = TabMenuBarView.newInstance().getSelectionModel().getSelectedItem();
             var graphic = (Text) tab.getGraphic();
             graphic.setText("");
         }));

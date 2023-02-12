@@ -12,7 +12,7 @@ public class ToolsView extends VBox {
     public ToolsView() {
         this.setSpacing(20);
         var notebook = new WTToolsLabel("记事本！", "static/icon/note.png");
-        notebook.setOnMouseClicked(e -> App.primaryStage.setScene(NoteBookScene.INSTANCE));
+        notebook.setOnMouseClicked(e -> App.primaryStage.setScene(NoteBookScene.newInstance()));
         var fictionAnalysis = new WTToolsLabel("小说数据分析", "static/icon/note.png");
         this.getChildren().addAll(notebook, fictionAnalysis);
     }

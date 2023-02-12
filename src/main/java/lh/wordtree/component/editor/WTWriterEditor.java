@@ -82,7 +82,7 @@ public class WTWriterEditor extends CodeArea {
         // 添加键盘事件
         Nodes.addInputMap(this, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
             FileUtil.writeUtf8String(this.getText(), file);
-            var tab = TabMenuBarView.INSTANCE.getSelectionModel().getSelectedItem();
+            var tab = TabMenuBarView.newInstance().getSelectionModel().getSelectedItem();
             var graphic = (Text) tab.getGraphic();
             graphic.setText("");
         }));

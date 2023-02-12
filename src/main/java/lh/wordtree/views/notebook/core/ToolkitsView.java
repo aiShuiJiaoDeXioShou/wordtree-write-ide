@@ -7,7 +7,13 @@ import javafx.scene.layout.AnchorPane;
 
 // 右侧的小组件栏
 public class ToolkitsView extends AnchorPane {
-    public static final ToolkitsView INSTANCE = new ToolkitsView();
+    public static ToolkitsView newInstance() {
+        return ToolkitsViewViewHolder.instance;
+    }
+
+    private static class ToolkitsViewViewHolder {
+        public static ToolkitsView instance = new ToolkitsView();
+    }
 
     public ToolkitsView() {
         this.getStyleClass().add("right-toolkits");

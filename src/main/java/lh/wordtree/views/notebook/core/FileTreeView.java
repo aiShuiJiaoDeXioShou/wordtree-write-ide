@@ -18,18 +18,12 @@ import java.time.temporal.ChronoField;
 import java.util.List;
 
 public class FileTreeView extends TreeView<Label> {
-    public static final FileTreeView INSTANCE = new FileTreeView();
-    public FileService fileService = new FileService() {
-    };
-    public File nowFile;
-    private TreeItem<Label> tree;
+    private FileTreeView() {
 
-    private void gc() {
-        if (this.tree != null) {
-            this.tree.getChildren().remove(0, this.tree.getChildren().size());
-            this.tree = null;
-            System.gc();
-        }
+    }
+
+    public static FileTreeView newInstance() {
+        return FileTreeViewHolder.instance;
     }
 
     public void toggleFile(File file) {
@@ -37,7 +31,7 @@ public class FileTreeView extends TreeView<Label> {
         FactoryBeanService.nowRootFile.set(file);
         this.nowFile = file;
         // 改变路由状态
-        NoteLeftButtonBarView.INSTANCE.listView.getSelectionModel().select(1);
+        NoteLeftButtonBarView.newInstance().listView.getSelectionModel().select(1);
         // 执行垃圾回收机制
         ThreadUtil.execAsync(() -> {
             Platform.runLater(() -> {
@@ -52,6 +46,23 @@ public class FileTreeView extends TreeView<Label> {
             System.gc();
         });
         ThreadUtil.execAsync(this::flushWorkSpace);
+    }
+
+    public FileService fileService = new FileService() {
+    };
+    public File nowFile;
+    private TreeItem<Label> tree;
+
+    private void gc() {
+        if (this.tree != null) {
+            this.tree.getChildren().remove(0, this.tree.getChildren().size());
+            this.tree = null;
+            System.gc();
+        }
+    }
+
+    private static class FileTreeViewHolder {
+        public static FileTreeView instance = new FileTreeView();
     }
 
     private void flushWorkSpace() {

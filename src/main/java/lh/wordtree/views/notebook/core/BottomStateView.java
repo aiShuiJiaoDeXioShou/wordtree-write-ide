@@ -19,7 +19,34 @@ import lh.wordtree.utils.CharsetDetectUtil;
 import java.util.Map;
 
 public class BottomStateView extends BorderPane {
-    public static final BottomStateView INSTANCE = new BottomStateView();
+    private BottomStateView() {
+        FactoryBeanService.nowFile.addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                charsetName = CharsetDetectUtil.detect(newValue);
+                code.setText(charsetName);
+            }
+        });
+        this.getStyleClass().add("bottom-coder");
+        this.setPrefHeight(height);
+        var buttonBar = new HBox();
+        buttonBar.setPrefHeight(height);
+        buttonBar.setMaxHeight(height);
+        buttonBar.getStyleClass().add("bottom-button-bar");
+        buttonBar.getChildren().addAll(code, tab, nowRow, lock, terminal);
+        var leftButtonBar = new HBox();
+        leftButtonBar.setPadding(new Insets(0, 0, 0, 15));
+        leftButtonBar.getStyleClass().add("bottom-button-bar");
+        leftButtonBar.setSpacing(10);
+        leftButtonBar.getChildren().addAll(git, workTime, workNumber);
+        this.setLeft(leftButtonBar);
+        this.setRight(buttonBar);
+        controller();
+    }
+
+    public static BottomStateView newInstance() {
+        return BottomStateViewHolder.instance;
+    }
+
     private Map<String, String> language = CountryService.language;
     private final double height = 18;
     public Label code = new Label();
@@ -98,28 +125,8 @@ public class BottomStateView extends BorderPane {
         workNumber.textProperty().bind(FactoryBeanService.number);
     }
 
-    public BottomStateView() {
-        FactoryBeanService.nowFile.addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                charsetName = CharsetDetectUtil.detect(newValue);
-                code.setText(charsetName);
-            }
-        });
-        this.getStyleClass().add("bottom-coder");
-        this.setPrefHeight(height);
-        var buttonBar = new HBox();
-        buttonBar.setPrefHeight(height);
-        buttonBar.setMaxHeight(height);
-        buttonBar.getStyleClass().add("bottom-button-bar");
-        buttonBar.getChildren().addAll(code, tab, nowRow, lock, terminal);
-        var leftButtonBar = new HBox();
-        leftButtonBar.setPadding(new Insets(0, 0, 0, 15));
-        leftButtonBar.getStyleClass().add("bottom-button-bar");
-        leftButtonBar.setSpacing(10);
-        leftButtonBar.getChildren().addAll(git, workTime, workNumber);
-        this.setLeft(leftButtonBar);
-        this.setRight(buttonBar);
-        controller();
+    private static class BottomStateViewHolder {
+        public static BottomStateView instance = new BottomStateView();
     }
 
     private void controller() {
