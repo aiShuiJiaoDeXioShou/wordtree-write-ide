@@ -3,13 +3,13 @@ package lh.wordtree;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
+import lh.wordtree.comm.utils.WTFileUtils;
+import lh.wordtree.dao.DAO;
 import lh.wordtree.dao.WorkPlanMapper;
 import lh.wordtree.entity.WorkPlan;
 import lh.wordtree.service.task.TaskService;
 import lh.wordtree.service.task.TaskServiceImpl;
 import lh.wordtree.task.ITask;
-import lh.wordtree.utils.JDBCUtils;
-import lh.wordtree.utils.WTFileUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -49,9 +49,8 @@ public class Test3 {
 
     @Test
     public void test5() {
-        var sqlSessionFactory = JDBCUtils.getSqlSessionFactory();
+        var sqlSessionFactory = DAO.getSqlSessionFactory();
         WorkPlanMapper workPlanMapper = sqlSessionFactory.getMapper(WorkPlanMapper.class);
-        ;
         var i = workPlanMapper.insert(
                 new WorkPlan().setWorks("奥特曼")
                         .setId(LocalDate.now().toString())

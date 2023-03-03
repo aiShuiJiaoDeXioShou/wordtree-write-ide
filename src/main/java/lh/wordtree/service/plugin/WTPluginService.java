@@ -7,9 +7,14 @@ import java.util.List;
 
 public interface WTPluginService {
     WTPluginService pluginService = new WTPluginServiceImpl("D:\\ytjava\\ideayt\\u3\\build\\libs");
-    List<WTPlugin> sendJar();
+
+    void sendJar();
+
+    List<WTPlugin> getPlugins();
 
     List<WTPlugin> getWebPlugins();
 
     List<WTPlugLanguage> getPlugLanguages();
+
+    void registered(WTPlugin plugin);
 }

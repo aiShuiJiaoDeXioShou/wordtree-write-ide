@@ -4,8 +4,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.web.WebView;
+import lh.wordtree.comm.entity.NovelProject;
 import lh.wordtree.entity.Author;
-import lh.wordtree.entity.NovelProject;
 
 import java.io.File;
 

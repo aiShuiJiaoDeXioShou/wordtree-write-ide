@@ -5,13 +5,15 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 public interface WorkPlanMapper {
 
     /**
      * 根据时间顺序获取全部数据
      */
     @Select("select * from WorkPlace")
-    WorkPlan selectAllOfDate();
+    List<WorkPlan> selectAllOfDate();
 
     /**
      * 更新数据
@@ -23,7 +25,7 @@ public interface WorkPlanMapper {
      * 根据时间查询
      */
     @Select("select * from WorkPlace where id > #{startTime} and id < #{endTime}")
-    WorkPlan selectOfDate(Long startTime, Long endTime);
+    List<WorkPlan> selectOfDate(Long startTime, Long endTime);
 
     /**
      * 插入一条数据

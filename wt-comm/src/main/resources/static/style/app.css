@@ -1,0 +1,260 @@
+/*编辑器部分左侧文件树*/
+.node-left {
+    -fx-background-color: -node-left-bgc;
+}
+
+.node-left .note-left-item {
+    -fx-text-fill: -def-text-fill;
+}
+
+/*编辑器部分右侧管理工具部分*/
+.right-toolkits {
+    -fx-background-color: -node-right-bgc;
+    -fx-border-width: 1;
+    -fx-border-color: -node-right-bgc;
+}
+
+#code-right .task-top {
+    -fx-background-color: -node-right-bgc;
+    -fx-border-width: 1;
+    -fx-border-color: -node-right-bgc;
+}
+
+#code-right .task-top-title {
+    -fx-text-fill: -node-right-top-title;
+}
+
+#code-left .task-top {
+    -fx-background-color: -node-left-top-bgc;
+}
+
+.alert-label {
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-background-color: -node-left-top-bgc;
+}
+
+.embedded-prompt {
+    -fx-text-fill: #95a5a6;
+}
+
+/*代码编辑器高亮部分*/
+.keyword {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
+.semicolon {
+    -fx-font-weight: bold;
+}
+.paren {
+    -fx-fill: firebrick;
+    -fx-font-weight: bold;
+}
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+.brace {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+.string {
+    -fx-fill: black;
+}
+
+.comment {
+    -fx-fill: cadetblue;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #fcfaed;
+}
+
+/*覆盖tree-cell的形状*/
+.tree-cell > .tree-disclosure-node > .arrow {
+    -fx-shape: "M461.024 665.856c-17.696 14.08-45.024 2.4-45.024-19.2v-269.312c0-21.6 27.328-33.28 45.024-19.2l169.44 134.656a24.096 24.096 0 0 1 0 38.4l-169.44 134.656z";
+    -fx-background-color: #8997B2;
+}
+
+/*更改文本内容区域选中的颜色*/
+.styled-text-area .selection {
+    -fx-fill: #a6d2ff;
+}
+
+.note-book-menu {
+    -fx-border-width: 1;
+    -fx-border-color: -def-border-color;
+    -fx-background-color: -def-backgroud-color;
+}
+
+.note-book-menu .menu, .menu-bar {
+    -fx-background-color: -def-backgroud-color;
+}
+
+.split-pane:horizontal > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}
+
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: -def-border-color;
+    -fx-pref-width: 1;
+}
+
+.bottom-coder {
+    -fx-background-color: -def-bottom-coder-bgc;
+}
+
+.bottom-button-bar .label {
+    -fx-text-fill: -def-text-fill;
+    -fx-padding: 2 5;
+}
+
+.bottom-button-bar .label:hover {
+    -fx-background-color: derive(-def-bottom-coder-bgc, 40%);
+}
+
+.bottom-button-bar {
+    -fx-spacing: 10;
+}
+
+.toggle-work-space {
+    -fx-padding: 3 20;
+}
+
+.toggle-work-space:hover {
+    -fx-background-color: derive(skyblue, 10%);
+}
+
+.wt-button {
+    -fx-padding: 5;
+}
+
+.wt-button:hover {
+    -fx-background-color: derive(skyblue, 10%);
+    -fx-background-radius: 5;
+}
+
+.book-rack {
+    -fx-background-color: -def-backgroud-color;
+}
+
+.book-rack .name {
+    -fx-font-size: 25;
+    -fx-fill: black;
+}
+
+.book-rack .maxim {
+    -fx-fill: #f0f0f0;
+    -fx-text-fill: #868e96;
+    -fx-font-size: 15;
+}
+
+.book-rack .head {
+    -fx-border-radius: 85;
+}
+
+.book-rack .edit {
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 50;
+    -fx-background-color: #f6f8fa;
+}
+
+.wtbook {
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 10;
+    -fx-pref-width: 300;
+    -fx-cursor: hand;
+}
+
+.wtbook .wtbook-name {
+    -fx-text-fill: #1973dc;
+    -fx-font-size: 20;
+}
+
+.wtbook .wtbook-author {
+    -fx-text-fill: #51cf66;
+}
+
+.wt-node-list {
+    -fx-background-color: -def-backgroud-color;
+    -fx-border-width: 0 0 0 1;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 5 8;
+}
+
+.wt-node-list .wt-node-item {
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 4 8;
+    -fx-border-color: -def-border-color;
+}
+
+.wt-label {
+    -fx-border-width: 1;
+    -fx-border-color: -def-border-color;
+    -fx-padding: 5 8;
+    -fx-border-radius: 12.5;
+    -fx-background-radius: 12.5;
+    -fx-pref-height: 20;
+}
+
+.wt-label:hover {
+    -fx-cursor: hand;
+    -fx-border-color: #343a40;
+}
+
+.wt-label-white {
+    -fx-background-color: -def-backgroud-color;
+}
+
+.wt-label-primary {
+    -fx-background-color: #4dabf7;
+    -fx-border-color: #4dabf7;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-error {
+    -fx-background-color: #f03e3e;
+    -fx-border-color: #f03e3e;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-warning {
+    -fx-background-color: #ffec99;
+    -fx-border-color: #ffec99;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-success {
+    -fx-background-color: #69db7c;
+    -fx-border-color: #69db7c;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-info {
+    -fx-background-color: #e9ecef;
+    -fx-text-fill: #ffff;
+}
+
+.wt-label-black {
+    -fx-background-color: #495057;
+    -fx-text-fill: #ffff;
+}
+
+.wt-calendar .time-item {
+    -fx-background-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-pref-width: 15;
+    -fx-pref-height: 15;
+    -fx-border-color: -def-border-color;
+}
+
+.title {
+    -fx-font-size: 15;
+}

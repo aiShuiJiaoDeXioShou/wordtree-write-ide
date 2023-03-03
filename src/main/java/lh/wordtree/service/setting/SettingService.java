@@ -1,7 +1,7 @@
 package lh.wordtree.service.setting;
 
 import cn.hutool.core.io.FileUtil;
-import lh.wordtree.config.Config;
+import lh.wordtree.comm.config.Config;
 
 import java.nio.charset.StandardCharsets;
 

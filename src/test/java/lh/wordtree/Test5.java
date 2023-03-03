@@ -3,12 +3,11 @@ package lh.wordtree;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import lh.wordtree.component.WTFxInputAlert;
-import lh.wordtree.component.WTMessage;
-import lh.wordtree.component.WTOneWindow;
-import lh.wordtree.plugin.WTPlugin;
+import lh.wordtree.component.CpMessage;
 import lh.wordtree.service.plugin.WTPluginServiceImpl;
-import lh.wordtree.views.notebook.record.RecordView;
+import lh.wordtree.ui.WTFxInputAlert;
+import lh.wordtree.ui.WTOneWindow;
+import lh.wordtree.views.record.RecordView;
 import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
@@ -59,8 +58,7 @@ public class Test5 {
     public void test3() {
         String src = "D:\\ytjava\\ideayt\\u1\\build\\libs";
         var service = new WTPluginServiceImpl(src);
-        var send = service.sendJar();
-        send.forEach(WTPlugin::init);
+        service.sendJar();
     }
 
     private void test() {
@@ -78,7 +76,7 @@ public class Test5 {
             stage.show();
         });
         button.setOnMouseClicked(e -> {
-            WTMessage.sendError("无法使用该模块，因为没有开发！");
+            CpMessage.sendError("无法使用该模块，因为没有开发！");
         });
         List<WTFxInputAlert.AlertTask> alertTasks = new ArrayList<>();
         alertTasks.add(new WTFxInputAlert.AlertTask("章节", "static/icon/default_file.svg", alert1 -> {
@@ -95,5 +93,6 @@ public class Test5 {
             alert1.show();
         });
     }
+
 
 }

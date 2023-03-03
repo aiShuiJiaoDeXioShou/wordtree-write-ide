@@ -2,7 +2,7 @@ package lh.wordtree.service.task;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
-import lh.wordtree.entity.fun.OrdinaryFunction;
+import lh.wordtree.comm.entity.fun.OrdinaryFunction;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;

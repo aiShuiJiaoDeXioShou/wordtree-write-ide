@@ -6,14 +6,14 @@ import com.alibaba.fastjson2.JSON;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import lh.wordtree.config.Config;
-import lh.wordtree.entity.NovelProject;
+import lh.wordtree.comm.config.Config;
+import lh.wordtree.comm.entity.NovelProject;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
-import lh.wordtree.views.notebook.core.FileTreeView;
-import lh.wordtree.views.notebook.core.MenuView;
+import lh.wordtree.views.core.FileTreeView;
+import lh.wordtree.views.core.MenuView;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -8,8 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
-import lh.wordtree.utils.ConfigUtils;
-import lh.wordtree.utils.WTFileUtils;
+import lh.wordtree.comm.utils.ConfigUtils;
+import lh.wordtree.comm.utils.WTFileUtils;
 
 import java.io.File;
 import java.io.IOException;

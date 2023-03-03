@@ -1,6 +1,6 @@
 package lh.wordtree.service.task;
 
-import lh.wordtree.entity.fun.OrdinaryFunction;
+import lh.wordtree.comm.entity.fun.OrdinaryFunction;
 import lh.wordtree.task.ITask;
 
 import java.util.List;

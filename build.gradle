@@ -19,6 +19,8 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     implementation project(':wt-def')
+    implementation project(':wt-ui')
+    implementation project(':wt-comm')
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
@@ -49,6 +51,8 @@ dependencies {
     implementation('com.github.stuxuhai:jpinyin:1.1.8')
     // 检测文件编码工具
     implementation("com.googlecode.juniversalchardet:juniversalchardet:1.0.3")
+    // sqlite数据库框架
+    implementation("com.j256.ormlite:ormlite-jdbc:6.0")
     // 测试框架
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
@@ -91,11 +95,11 @@ runtime {
 }
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }

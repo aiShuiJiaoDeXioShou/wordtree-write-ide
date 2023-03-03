@@ -1,3 +1,5 @@
 rootProject.name = 'wordtree-app'
 include 'wt-def'
+include 'wt-ui'
+include 'wt-comm'
 

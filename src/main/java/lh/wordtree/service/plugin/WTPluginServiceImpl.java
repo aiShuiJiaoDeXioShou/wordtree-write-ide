@@ -2,9 +2,10 @@ package lh.wordtree.service.plugin;
 
 import cn.hutool.core.util.ClassLoaderUtil;
 import cn.hutool.core.util.ReflectUtil;
+import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
-import lh.wordtree.utils.WTFileUtils;
+import lh.wordtree.plugin.wtlang.WTLangPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +22,24 @@ public class WTPluginServiceImpl implements WTPluginService {
     public WTPluginServiceImpl(String src) {
         this.src = src;
         sendJar();
+        // 注册自带的插件
+        registered(new WTLangPlugin());
     }
 
     public List<WTPlugLanguage> getPlugLanguages() {
         return plugLanguages;
+    }
+
+    /**
+     * 手动注册插件
+     *
+     * @param plugin 需要注册的插件
+     */
+    public void registered(WTPlugin plugin) {
+        plugins.add(plugin);
+        if (plugin instanceof WTPlugLanguage language) {
+            plugLanguages.add(language);
+        }
     }
 
     public String src() {
@@ -34,13 +49,19 @@ public class WTPluginServiceImpl implements WTPluginService {
     /**
      * 扫描指定位置的jar包,加载本地的jar包
      */
-    public List<WTPlugin> sendJar() {
+    public void sendJar() {
+        if (plugins.size() > 0) {
+            plugins = new ArrayList<>();
+        }
         var file = new File(src());
         for (String f : file.list()) {
             if (WTFileUtils.lastName(f).equals("jar")) {
                 parsePlugin(src() + "/" + f);
             }
         }
+    }
+
+    public List<WTPlugin> getPlugins() {
         return plugins;
     }
 

@@ -3,8 +3,8 @@ package lh.wordtree.service.language;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import lh.wordtree.config.Config;
-import lh.wordtree.utils.ConfigUtils;
+import lh.wordtree.comm.config.Config;
+import lh.wordtree.comm.utils.ConfigUtils;
 
 import java.util.Enumeration;
 import java.util.LinkedHashMap;

@@ -4,14 +4,15 @@ import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import lh.wordtree.comm.config.Config;
+import lh.wordtree.comm.utils.ClassLoaderUtils;
+import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.component.editor.WTProgrammingEditor;
 import lh.wordtree.component.editor.WTWriterEditor;
-import lh.wordtree.config.Config;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.MdParseService;
+import lh.wordtree.service.language.OutlineServiceImpl;
 import lh.wordtree.service.language.WTLanguageServiceImpl;
-import lh.wordtree.utils.ClassLoaderUtils;
-import lh.wordtree.utils.WTFileUtils;
 
 import java.io.File;
 import java.util.Arrays;
@@ -37,6 +38,7 @@ public class EditorLanguageFactory {
             return webView;
         });
         this.registered("人物.json", f -> new WTLanguageServiceImpl(f).view());
+        this.registered("大记事.json", f -> new OutlineServiceImpl(f).view());
         this.registered(".md", f -> {
             WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();

@@ -2,7 +2,7 @@ package lh.wordtree.service.file;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import lh.wordtree.component.WTFileMenu;
+import lh.wordtree.component.CpFileMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class MenuFileServiceImpl implements MenuFileService {
                 } else return 0;
             }
         }).toList()) {
-            var item = new WTFileMenu(f);
+            var item = new CpFileMenu(f);
             if (f.isDirectory()) {
                 dirList.add(item);
                 dirFileTreeItem(f, item);
@@ -65,7 +65,7 @@ public class MenuFileServiceImpl implements MenuFileService {
     public TreeItem<Label> getTree() {
         dirList = new ArrayList<>();
         fileList = new ArrayList<>();
-        treeRoot = new WTFileMenu(root);
+        treeRoot = new CpFileMenu(root);
         if (root.isDirectory()) dirFileTreeItem(root, treeRoot);
         return treeRoot;
     }

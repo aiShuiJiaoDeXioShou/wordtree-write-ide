@@ -9,13 +9,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
-import lh.wordtree.config.Config;
+import lh.wordtree.comm.config.Config;
+import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.service.task.TaskService;
-import lh.wordtree.service.web.WebStartsServiceImpl;
 import lh.wordtree.task.ITask;
-import lh.wordtree.utils.ConfigUtils;
-import lh.wordtree.views.notebook.root.NoteBookScene;
-import lh.wordtree.views.toolbox.home.HomeScene;
+import lh.wordtree.views.root.NoteBookScene;
 
 import java.util.Objects;
 
@@ -25,12 +23,10 @@ public class App extends Application {
     public static Stage primaryStage;
     public Scene scene = NoteBookScene.newInstance();
     private final Log log = LogFactory.get();
-    private WebStartsServiceImpl web = new WebStartsServiceImpl();
 
     public App() {
         log.info("应用程序开始启动...");
         TaskService.INSTANCE.start(ITask.INIT);
-        web.start();
     }
 
     @Override
@@ -62,7 +58,6 @@ public class App extends Application {
         log.info("正在关闭窗口。");
         TaskService.INSTANCE.start(ITask.END);
         log.info("正在关闭web服务。");
-        web.stop();
         log.info("应用程序已退出。");
         System.exit(0);
     }
@@ -83,7 +78,7 @@ public class App extends Application {
 
     private String getStyle(String path) {
         return Objects.requireNonNull(
-                HomeScene.class
+                App.class
                         .getClassLoader()
                         .getResource(path)
         ).toExternalForm();
