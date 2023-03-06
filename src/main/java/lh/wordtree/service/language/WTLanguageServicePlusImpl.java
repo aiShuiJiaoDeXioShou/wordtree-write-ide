@@ -8,43 +8,35 @@ import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import lh.wordtree.App;
 import lh.wordtree.comm.config.Config;
+import lh.wordtree.comm.entity.Figure;
 import lh.wordtree.component.editor.WTLangCodeArea;
 import lh.wordtree.plugin.WTPlugLanguage;
-import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.plugin.WTPluginService;
+import lh.wordtree.ui.WTNetwork;
 import lh.wordtree.views.core.TabMenuBarView;
-import netscape.javascript.JSObject;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import static javafx.scene.input.KeyCode.S;
 import static javafx.scene.input.KeyCombination.CONTROL_DOWN;
 import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
-@Deprecated
-public class WTLanguageServiceImpl implements WTLanguageService {
-    private File file;
-
-    private HashMap<String, String> map = new HashMap<>();
-
+public class WTLanguageServicePlusImpl implements WTLanguageService {
     private final WTPlugLanguage language = WTPluginService.pluginService.getPlugLanguages().get(0);
-
-    private String parseText;
+    private File file;
+    private List<Figure> parseData;
     private JSONObject parseObject;
     private String sourceWt;
     private SplitPane splitPane = new SplitPane();
     private WTLangCodeArea codeArea = new WTLangCodeArea();
 
-    public WTLanguageServiceImpl(File file) {
+    public WTLanguageServicePlusImpl(File file) {
         this.file = file;
         this.parse();
     }
@@ -63,11 +55,7 @@ public class WTLanguageServiceImpl implements WTLanguageService {
         }
         sourceWt = parseObject.getString("wt");
         // 如果是一个空文件就创造相关的关系
-        parseText = JSON.toJSONString(language.parse(sourceWt));
-        var objects = JSON.parseArray(parseText, JSONObject.class);
-        for (JSONObject object : objects) {
-            map.put(object.getString("name"), object.toString());
-        }
+        parseData = (List<Figure>) language.parse(sourceWt);
     }
 
     public Node view() {
@@ -86,26 +74,17 @@ public class WTLanguageServiceImpl implements WTLanguageService {
     }
 
     private void layout() {
-        WebView webView = FactoryBeanService.getWebView();
-        WebEngine engine = webView.getEngine();
-        JSObject win = (JSObject) engine.executeScript("window");
-        win.setMember("figureJSON", parseText);//设置变量
-        engine.load(url("static/template/figure/figure.html"));
+        var wtNetwork = new WTNetwork(parseData);
         codeArea.appendText(sourceWt);
-        splitPane.getItems().addAll(codeArea, webView);
+        splitPane.getItems().addAll(codeArea, wtNetwork.getRoot());
     }
 
     private void flush() {
         // 解析文本数据
         this.parse();
         splitPane.getItems().remove(1);
-        // 将java获取到的数据发送到该WebEngine
-        WebView webView = FactoryBeanService.getWebView();
-        WebEngine engine = webView.getEngine();
-        JSObject win = (JSObject) engine.executeScript("window");
-        win.setMember("figureJSON", parseText);//设置变量
-        engine.load(url("static/template/figure/figure.html"));
-        splitPane.getItems().add(webView);
+        var wtNetwork = new WTNetwork(parseData);
+        splitPane.getItems().add(wtNetwork.getRoot());
     }
 
     /**
@@ -117,11 +96,6 @@ public class WTLanguageServiceImpl implements WTLanguageService {
         var tab = TabMenuBarView.newInstance().getSelectionModel().getSelectedItem();
         var graphic = (Text) tab.getGraphic();
         graphic.setText("");
-    }
-
-
-    private String url(String path) {
-        return Objects.requireNonNull(App.class.getClassLoader().getResource(path)).toExternalForm();
     }
 
 }

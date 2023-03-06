@@ -77,10 +77,10 @@ class UiTest2 : Application() {
         canvas.width = 1080.0
         canvas.height = 500.0
 
-        var c = c(280.0, 100.0, Role("萧炎", "炎帝", "炎盟", ""))
-        var c1 = c(200.0, 300.0, Role("萧熏儿", "帝母", "炎盟", "妻子"))
+        var c = c(280.0, 100.0, Role("萧炎", "炎帝", "炎盟", "", arrayListOf()))
+        var c1 = c(200.0, 300.0, Role("萧熏儿", "帝母", "炎盟", "妻子", arrayListOf()))
         c.intersect(c1)
-        var c2 = c(200.0, 400.0, Role("美杜莎", "小三", "炎盟", "妻子"))
+        var c2 = c(200.0, 400.0, Role("美杜莎", "小三", "炎盟", "妻子", arrayListOf()))
         c.intersect(c2)
 
         borderPane.center = canvas
@@ -102,6 +102,44 @@ class UiTest2 : Application() {
     }
 }
 
+class UiTest3 : Application() {
+    override fun start(primaryStage: Stage?) {
+        primaryStage!!.title = "Canvas Test"
+        val borderPane = BorderPane()
+        val wtNetwork = WTNetwork(
+            listOf(
+                Role(
+                    "萧炎", "传说当中的顶级强者", "炎帝", "",
+                    arrayListOf(
+                        Role("萧薰儿", "传说当中的顶级强者", "炎帝", "爸爸", arrayListOf()),
+                        Role("美杜莎", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                        Role("萧鳞", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                    )
+                ),
+                Role(
+                    "萧炎1", "传说当中的顶级强者", "炎帝", "",
+                    arrayListOf(
+                        Role("萧薰儿1", "传说当中的顶级强者", "炎帝", "爸爸", arrayListOf()),
+                        Role("美杜莎1", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                        Role("萧鳞1", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                    )
+                ),
+                Role(
+                    "萧炎2", "传说当中的顶级强者", "炎帝", "",
+                    arrayListOf(
+                        Role("萧薰儿2", "传说当中的顶级强者", "炎帝", "爸爸", arrayListOf()),
+                        Role("美杜莎2", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                        Role("萧鳞2", "传说当中的顶级强者", "炎帝", "父亲", arrayListOf()),
+                    )
+                )
+            )
+        )
+        val scene = Scene(wtNetwork.root)
+        primaryStage.scene = scene
+        primaryStage.show()
+    }
+}
+
 fun main() {
-    Application.launch(UiTest2::class.java)
+    Application.launch(UiTest3::class.java)
 }

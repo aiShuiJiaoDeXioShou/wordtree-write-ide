@@ -12,7 +12,7 @@ import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.MdParseService;
 import lh.wordtree.service.language.OutlineServiceImpl;
-import lh.wordtree.service.language.WTLanguageServiceImpl;
+import lh.wordtree.service.language.WTLanguageServicePlusImpl;
 
 import java.io.File;
 import java.util.Arrays;
@@ -37,7 +37,7 @@ public class EditorLanguageFactory {
             engine.load(ClassLoaderUtils.url("static/template/task/task.html"));
             return webView;
         });
-        this.registered("人物.json", f -> new WTLanguageServiceImpl(f).view());
+        this.registered("人物.json", f -> new WTLanguageServicePlusImpl(f).view());
         this.registered("大记事.json", f -> new OutlineServiceImpl(f).view());
         this.registered(".md", f -> {
             WebView webView = FactoryBeanService.getWebView();

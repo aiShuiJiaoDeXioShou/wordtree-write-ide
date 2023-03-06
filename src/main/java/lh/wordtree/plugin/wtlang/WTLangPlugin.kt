@@ -1,10 +1,9 @@
 package lh.wordtree.plugin.wtlang
 
-import com.alibaba.fastjson2.JSON
-import com.alibaba.fastjson2.JSONWriter
 import javafx.scene.Node
 import javafx.scene.image.Image
 import javafx.scene.layout.BorderPane
+import lh.wordtree.comm.entity.Figure
 import lh.wordtree.plugin.WTPlugLanguage
 import lh.wordtree.plugin.WTPluginConfig
 import lh.wordtree.plugin.WTPluginType
@@ -15,9 +14,9 @@ class WTLangPlugin : WTPlugLanguage {
 
     }
 
-    override fun parse(source: String?): String {
+    override fun parse(source: String?): List<Figure> {
         if (source != null) parser.parser(source)
-        return JSON.toJSONString(parser.figuresAll(), JSONWriter.Feature.PrettyFormat)
+        return parser.figuresAll()
     }
 
     override fun apply() {

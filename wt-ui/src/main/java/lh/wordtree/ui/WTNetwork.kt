@@ -4,9 +4,13 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.geometry.Insets
 import javafx.scene.Cursor
+import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
+import javafx.scene.control.Button
 import javafx.scene.control.Label
+import javafx.scene.control.ListView
 import javafx.scene.input.MouseEvent
+import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
@@ -14,14 +18,79 @@ import javafx.scene.shape.ArcType
 import javafx.scene.text.Font
 import javafx.scene.text.TextAlignment
 import javafx.stage.Popup
+import lh.wordtree.comm.entity.Figure
 import java.awt.MouseInfo
 import kotlin.math.pow
 
-class WTNetwork() {
+typealias Role = Figure
 
+class WTNetwork(val roles: List<Role>) {
+    val root = BorderPane()
+    private val leftMenu = ListView<Box>()
+    private var nowRole = SimpleObjectProperty<Role>()
+    private var canvasW = 900.0
+    private var canvasH = 500.0
+    private var itemWSpan = 50.0
+    private var itemHSpan = 200.0
+    private var nowContext2D: GraphicsContext? = null
+    private var nowCanvas: Canvas? = null
+
+    init {
+        view()
+        controller()
+    }
+
+    private fun view() {
+        roles.forEach {
+            leftMenu.items.add(Box(it))
+        }
+        root.left = leftMenu
+        root.center = newCanvas()
+    }
+
+    private fun controller() {
+        // 添加对记事项选择事件
+        leftMenu.selectionModel.selectedItemProperty().addListener { _, _, value ->
+            nowRole.value = value.role
+        }
+        nowRole.addListener { _, _, v ->
+            val canvas = newCanvas()
+            root.center = canvas
+            createView(v, canvas.graphicsContext2D)
+        }
+    }
+
+    private fun newCanvas(): Canvas {
+        val canvas = Canvas()
+        canvas.width = canvasW
+        canvas.height = canvasH
+        nowCanvas = canvas
+        nowContext2D = canvas.graphicsContext2D
+        return canvas
+    }
+
+    /**
+     * 创造关系图
+     */
+    private fun createView(role: Role, context2D: GraphicsContext) {
+        val roleView = RoleView(context2D = context2D, role = role, x = canvasW / 2, y = canvasH / 2 - itemHSpan)
+        var startW = canvasW / 4
+        var startH = canvasH / 2
+        role.figures.forEach {
+            startW += itemWSpan + roleView.size
+            val (x, y) = Pair(startW, startH)
+            val rv1 = RoleView(context2D = context2D, role = it, x = x, y = y)
+            roleView.intersect(rv1)
+        }
+    }
+
+    private class Box(val role: Role) : VBox() {
+        init {
+            val button = Button(role.name)
+            children.addAll(button)
+        }
+    }
 }
-
-data class Role(val name: String, val der: String, val power: String, val relationship: String)
 enum class RoleViewType {
     ROUND, TRIANGLE, SQUARE
 }
@@ -36,6 +105,10 @@ data class RoleViewSkin(
 )
 
 abstract class BaseContentPopup(role: Role) : Popup()
+
+/**
+ * 单个item的详细数值
+ */
 class RoleView(
     val x: Double = 0.0,
     val y: Double = 0.0,
@@ -49,7 +122,7 @@ class RoleView(
     /**
      * 球的大小
      */
-    private val size get() = 70.0
+    val size = 70.0
 
     /**
      * 绘制圆形
@@ -60,12 +133,19 @@ class RoleView(
     /**
      * 字体大小
      */
-    private val fontSize get() = 16.0
+    val fontSize = 16.0
 
     /**
      * 判断时候在该目标范围
      */
     var isRangeProperty = SimpleBooleanProperty(false)
+
+    /**
+     * 小三角形宽度
+     */
+    var minEndSp = 5.0
+
+    var oneBoolEvent = true
 
     init {
         draw()
@@ -107,6 +187,7 @@ class RoleView(
         context2D.canvas.addEventHandler(MouseEvent.MOUSE_MOVED) {
             isRangeProperty.value = (it.x > x && it.y > y && it.x < (x + size) && it.y < (y + size))
         }
+        oneBoolEvent = false
         // 设置默认Hover事件
         isRangeProperty.addListener { _, _, bool ->
             val p = MouseInfo.getPointerInfo().location
@@ -194,11 +275,12 @@ class RoleView(
         val z1 = (sw.pow(2) + sh.pow(2)).pow(1 / 2)
         val p = 30
         context2D.moveTo(startX, startY)
-        context2D.bezierCurveTo(cx + p, cy + p, cx - p, cy - p, endX, endY)
+        // endY - minEndSp * 2 这段代码的意思是将终点放在小三角形上面
+        context2D.bezierCurveTo(cx + p, cy + p, cx - p, cy - p, endX, endY - minEndSp * 2)
         context2D.stroke()
 
         // 画出小三角形
-        val w = 5.0
+        val w = minEndSp
         context2D.apply {
             beginPath()
             moveTo(endX - w, endY - w * 2)
@@ -259,7 +341,7 @@ class RoleView(
                 """.trimIndent()
                 prefWidthProperty().bind(box.widthProperty())
             }
-            val name = Label("人物详情：${role.der}").apply {
+            val name = Label("人物详情：${role.description}").apply {
                 prefWidthProperty().bind(box.widthProperty())
                 padding = Insets(5.0, 0.0, 0.0, 10.0)
             }

@@ -1,10 +1,11 @@
 package lh.wordtree.plugin.wtlang
 
+import lh.wordtree.comm.entity.Figure
 import java.io.File
 
 data class Restrict(val start: String, val end: String)
 data class Value(val name: String, val value: String)
-data class Figure(val name: String, val description: String, var figures: ArrayList<Figure>)
+
 interface WtParser {
     fun figuresAll(): ArrayList<Figure>
     fun figure(character: String): ArrayList<Figure>
@@ -110,7 +111,7 @@ class SimpleParser : WtParser {
         val valDis = defList.stream().map { it.value.split(",")[0] }.toList().distinct()
         distinct += valDis
         for (def in distinct) {
-            val f = Figure(def, "", arrayListOf())
+            val f = Figure(def, "", "", "", arrayListOf())
             figures += f
             collectionOr(f)
         }
@@ -119,7 +120,7 @@ class SimpleParser : WtParser {
 
     override fun figure(character: String): ArrayList<Figure> {
         val figures = arrayListOf<Figure>()
-        val f = Figure(character, "", arrayListOf())
+        val f = Figure(character, "", "", "", arrayListOf())
         figures += f
         collectionOr(f)
         return figures
@@ -146,11 +147,11 @@ class SimpleParser : WtParser {
             val cDes = v[2]
             val contraryDes = v[1]
             if (def.name == d.name) {
-                val f = Figure(cName, cDes, arrayListOf())
+                val f = Figure(cName, cDes, "", "", arrayListOf())
                 def.figures += f
                 collection(f)
             } else if (def.name == cName) {
-                val f = Figure(d.name, contraryDes, arrayListOf())
+                val f = Figure(d.name, contraryDes, "", "", arrayListOf())
                 def.figures += f
             }
         }
@@ -163,10 +164,10 @@ class SimpleParser : WtParser {
             val cDes = v[2]
             val contraryDes = v[1]
             if (def.name == d.name) {
-                val f = Figure(cName, cDes, arrayListOf())
+                val f = Figure(cName, cDes, "", "", arrayListOf())
                 def.figures += f
             } else if (def.name == cName) {
-                val f = Figure(d.name, contraryDes, arrayListOf())
+                val f = Figure(d.name, contraryDes, "", "", arrayListOf())
                 def.figures += f
             }
         }
@@ -179,11 +180,11 @@ class SimpleParser : WtParser {
             val cDes = v[2]
             val contraryDes = v[1]
             if (def.name == d.name) {
-                val f = Figure(cName, cDes, arrayListOf())
+                val f = Figure(cName, cDes, "", "", arrayListOf())
                 def.figures += f
                 collectionAll(f)
             } else if (def.name == cName) {
-                val f = Figure(d.name, contraryDes, arrayListOf())
+                val f = Figure(d.name, contraryDes, "", "", arrayListOf())
                 def.figures += f
                 collection2(f)
             }
@@ -196,7 +197,7 @@ class SimpleParser : WtParser {
             val cName = v[0]
             val cDes = v[2]
             if (def.name == d.name) {
-                val f = Figure(cName, cDes, arrayListOf())
+                val f = Figure(cName, cDes, "", "", arrayListOf())
                 def.figures += f
                 collection2(f)
             }
