@@ -6,16 +6,17 @@ import javafx.geometry.Insets
 import javafx.scene.Cursor
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
-import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.ListView
+import javafx.scene.control.ScrollPane
+import javafx.scene.control.SplitPane
 import javafx.scene.input.MouseEvent
-import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.paint.Paint
 import javafx.scene.shape.ArcType
 import javafx.scene.text.Font
+import javafx.scene.text.Text
 import javafx.scene.text.TextAlignment
 import javafx.stage.Popup
 import lh.wordtree.comm.entity.Figure
@@ -24,16 +25,24 @@ import kotlin.math.pow
 
 typealias Role = Figure
 
-class WTNetwork(val roles: List<Role>) {
-    val root = BorderPane()
+class WTNetwork(
+    var roles: List<Role>,
+    private var canvasW: Double = 1080.0,
+    private var canvasH: Double = 500.0,
+    var startW: Double = 100.0,
+    var startH: Double = canvasH
+) {
+
+    val root = SplitPane()
     private val leftMenu = ListView<Box>()
     private var nowRole = SimpleObjectProperty<Role>()
-    private var canvasW = 900.0
-    private var canvasH = 500.0
     private var itemWSpan = 50.0
     private var itemHSpan = 200.0
     private var nowContext2D: GraphicsContext? = null
     private var nowCanvas: Canvas? = null
+    private var scroll = ScrollPane()
+    private var menuIndex: Int = 0
+
 
     init {
         view()
@@ -44,20 +53,23 @@ class WTNetwork(val roles: List<Role>) {
         roles.forEach {
             leftMenu.items.add(Box(it))
         }
-        root.left = leftMenu
-        root.center = newCanvas()
+        scroll.content = newCanvas()
+        if (root.items.size > 0) return
+        root.items.addAll(scroll, leftMenu)
+        root.setDividerPosition(0, 0.8)
     }
 
     private fun controller() {
         // 添加对记事项选择事件
         leftMenu.selectionModel.selectedItemProperty().addListener { _, _, value ->
-            nowRole.value = value.role
+            if (value != null) nowRole.value = value.role
         }
         nowRole.addListener { _, _, v ->
             val canvas = newCanvas()
-            root.center = canvas
+            scroll.content = canvas
             createView(v, canvas.graphicsContext2D)
         }
+        leftMenu.selectionModel.select(menuIndex)
     }
 
     private fun newCanvas(): Canvas {
@@ -73,20 +85,31 @@ class WTNetwork(val roles: List<Role>) {
      * 创造关系图
      */
     private fun createView(role: Role, context2D: GraphicsContext) {
-        val roleView = RoleView(context2D = context2D, role = role, x = canvasW / 2, y = canvasH / 2 - itemHSpan)
-        var startW = canvasW / 4
-        var startH = canvasH / 2
+        val roleView = RoleView(context2D = context2D, role = role, x = startW / 2, y = startH / 2 - itemHSpan)
+        var startW = startW / 4
+        var startH = startH / 2
+        var index = 0
         role.figures.forEach {
-            startW += itemWSpan + roleView.size
+            if (index != 0) startW += itemWSpan + roleView.size
             val (x, y) = Pair(startW, startH)
             val rv1 = RoleView(context2D = context2D, role = it, x = x, y = y)
             roleView.intersect(rv1)
+            index++
         }
+    }
+
+    fun flush(parseData: List<Figure>?) {
+        menuIndex = leftMenu.selectionModel.selectedIndex
+        roles = parseData!!
+        leftMenu.items.remove(0, leftMenu.items.size - 1)
+        leftMenu.items.removeAt(0)
+        view()
+        leftMenu.selectionModel.select(menuIndex)
     }
 
     private class Box(val role: Role) : VBox() {
         init {
-            val button = Button(role.name)
+            val button = Text(role.name)
             children.addAll(button)
         }
     }

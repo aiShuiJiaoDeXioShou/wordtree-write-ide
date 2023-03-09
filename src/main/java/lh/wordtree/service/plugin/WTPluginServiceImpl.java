@@ -10,14 +10,16 @@ import lh.wordtree.plugin.wtlang.WTLangPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarFile;
 
 public class WTPluginServiceImpl implements WTPluginService {
 
     private String src;
     private List<WTPlugin> plugins = new ArrayList<>();
-    private List<WTPlugLanguage> plugLanguages = new ArrayList<>();
+    private Map<String, WTPlugLanguage> plugLanguages = new HashMap<>();
 
     public WTPluginServiceImpl(String src) {
         this.src = src;
@@ -26,7 +28,7 @@ public class WTPluginServiceImpl implements WTPluginService {
         registered(new WTLangPlugin());
     }
 
-    public List<WTPlugLanguage> getPlugLanguages() {
+    public Map<String, WTPlugLanguage> getPlugLanguages() {
         return plugLanguages;
     }
 
@@ -38,7 +40,7 @@ public class WTPluginServiceImpl implements WTPluginService {
     public void registered(WTPlugin plugin) {
         plugins.add(plugin);
         if (plugin instanceof WTPlugLanguage language) {
-            plugLanguages.add(language);
+            plugLanguages.put(language.config().file(), language);
         }
     }
 
@@ -89,7 +91,7 @@ public class WTPluginServiceImpl implements WTPluginService {
                 plugins.add(plugin);
             }
             if (o instanceof WTPlugLanguage plugLanguage) {
-                plugLanguages.add(plugLanguage);
+                plugLanguages.put(plugLanguage.config().file(), plugLanguage);
             }
             jar.close();
         } catch (IOException e) {

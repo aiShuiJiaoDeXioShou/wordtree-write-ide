@@ -4,6 +4,7 @@ import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
 
 import java.util.List;
+import java.util.Map;
 
 public interface WTPluginService {
     WTPluginService pluginService = new WTPluginServiceImpl("D:\\ytjava\\ideayt\\u3\\build\\libs");
@@ -14,7 +15,7 @@ public interface WTPluginService {
 
     List<WTPlugin> getWebPlugins();
 
-    List<WTPlugLanguage> getPlugLanguages();
+    Map<String, WTPlugLanguage> getPlugLanguages();
 
     void registered(WTPlugin plugin);
 }

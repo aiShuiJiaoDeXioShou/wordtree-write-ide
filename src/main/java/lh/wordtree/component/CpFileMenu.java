@@ -52,6 +52,8 @@ public class CpFileMenu extends TreeItem<Label> {
         label.setId(file.getPath());
         label.setText(file.getName());
         this.setValue(label);
+        label.setMinWidth(230);
+        label.setMinHeight(30);
         this.setAction(this);
     }
 
@@ -100,6 +102,9 @@ public class CpFileMenu extends TreeItem<Label> {
                 // 双击事件
                 if (event.getClickCount() >= 2)
                     this.menuDoubleClick(fileTree);
+                // 为文件树添加右键事件
+                if (event.getButton().name().equals(MouseButton.SECONDARY.name()))
+                    fileMenuAddContextMenu(fileTree);
             });
             return;
         }
@@ -136,7 +141,6 @@ public class CpFileMenu extends TreeItem<Label> {
                 this.getChildren().add(nullTree);
             }
         });
-
     }
 
     /**
@@ -251,7 +255,7 @@ public class CpFileMenu extends TreeItem<Label> {
         LanguageConstructorService lsc = new LanguageConstructorServiceImpl(file);
         ThreadUtil.execAsync(() -> TaskService.INSTANCE.start(ITask.TOGGLE_FILE));
         Node build = lsc.build();
-        var tab = new Tab();
+        var tab = new CpTab(tabMenuBar);
         {
             tab.textProperty().bind(this.label.textProperty());
             tab.idProperty().bind(this.label.idProperty());

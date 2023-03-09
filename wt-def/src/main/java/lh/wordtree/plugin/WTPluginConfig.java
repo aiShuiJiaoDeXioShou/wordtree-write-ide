@@ -19,4 +19,11 @@ public interface WTPluginConfig {
     String introduce();
 
     WTPluginType type();
+
+    /**
+     * 解析的文件后缀名称
+     */
+    default String file() {
+        return ".*";
+    }
 }

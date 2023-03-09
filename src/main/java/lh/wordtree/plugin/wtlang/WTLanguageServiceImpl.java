@@ -1,4 +1,4 @@
-package lh.wordtree.service.language;
+package lh.wordtree.plugin.wtlang;
 
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
@@ -31,12 +31,12 @@ import static javafx.scene.input.KeyCombination.CONTROL_DOWN;
 import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
 @Deprecated
-public class WTLanguageServiceImpl implements WTLanguageService {
+public class WTLanguageServiceImpl {
     private File file;
 
     private HashMap<String, String> map = new HashMap<>();
 
-    private final WTPlugLanguage language = WTPluginService.pluginService.getPlugLanguages().get(0);
+    private final WTPlugLanguage language = WTPluginService.pluginService.getPlugLanguages().get("人物.json");
 
     private String parseText;
     private JSONObject parseObject;
