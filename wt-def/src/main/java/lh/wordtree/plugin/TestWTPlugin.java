@@ -26,7 +26,7 @@ public class TestWTPlugin implements WTPlugin {
         return new WTPluginConfig() {
 
             public String name() {
-                return "é˜…è¯»å™¨æ’ä»¶";
+                return "ÔÄ¶ÁÆ÷²å¼þ";
             }
 
             public String version() {
@@ -34,7 +34,7 @@ public class TestWTPlugin implements WTPlugin {
             }
 
             public String author() {
-                return "æž—æ²³";
+                return "ÁÖºÓ";
             }
 
             public Image icon() {
@@ -47,11 +47,11 @@ public class TestWTPlugin implements WTPlugin {
 
             public String introduce() {
                 return """
-                        ã€Šé¾™æ—ã€‹ï¼Œä½œå®¶æ±Ÿå—åˆ›ä½œçš„ç³»åˆ—é•¿ç¯‡å¹»æƒ³å°è¯´ï¼Œ
-                        ç”±ã€Šé¾™æ—â… ï¼šç«ä¹‹æ™¨æ›¦ã€‹ã€ã€Šé¾™æ—â…¡æ‚¼äº¡è€…ä¹‹çž³ã€‹ã€ã€Šé¾™æ—â…¢é»‘æœˆä¹‹æ½®ã€‹ã€ã€Šé¾™æ—â…£å¥¥ä¸ä¹‹æ¸Šã€‹ï¼Œã€Šé¾™æ—â…¤ï¼šæ‚¼äº¡è€…çš„å½’æ¥ã€‹ç»„æˆï¼Œ
-                        2009å¹´10æœˆ1æ—¥å¼€å§‹åœ¨å°è¯´ç»˜ä¸Šè¿žè½½ï¼Œç¬¬ä¸€éƒ¨äºŽ2010å¹´04æœˆé¦–æ¬¡å‡ºç‰ˆï¼Œç¬¬äºŒéƒ¨äºŽ2011å¹´05æœˆå‡ºç‰ˆï¼Œ
-                        ç¬¬ä¸‰éƒ¨ä¸Šç¯‡äºŽ2012å¹´12æœˆå‡ºç‰ˆï¼Œç¬¬ä¸‰éƒ¨ä¸­ç¯‡äºŽ2013å¹´07æœˆå‡ºç‰ˆï¼Œç¬¬ä¸‰éƒ¨ä¸‹ç¯‡äºŽ2013å¹´12æœˆå‡ºç‰ˆ
-                        ï¼Œç¬¬å››éƒ¨åˆ™äºŽ2015å¹´10æœˆå‡ºç‰ˆï¼Œç¬¬äº”éƒ¨äºŽ2018å¹´5æœˆ15æ—¥åœ¨QQé˜…è¯»å¹³å°å¼€å§‹è¿žè½½ã€‚
+                        ¡¶Áú×å¡·£¬×÷¼Ò½­ÄÏ´´×÷µÄÏµÁÐ³¤Æª»ÃÏëÐ¡Ëµ£¬
+                        ÓÉ¡¶Áú×å¢ñ£º»ðÖ®³¿êØ¡·¡¢¡¶Áú×å¢òµ¿ÍöÕßÖ®Í«¡·¡¢¡¶Áú×å¢óºÚÔÂÖ®³±¡·¡¢¡¶Áú×å¢ô°Â¶¡Ö®Ô¨¡·£¬¡¶Áú×å¢õ£ºµ¿ÍöÕßµÄ¹éÀ´¡·×é³É£¬
+                        2009Äê10ÔÂ1ÈÕ¿ªÊ¼ÔÚÐ¡Ëµ»æÉÏÁ¬ÔØ£¬µÚÒ»²¿ÓÚ2010Äê04ÔÂÊ×´Î³ö°æ£¬µÚ¶þ²¿ÓÚ2011Äê05ÔÂ³ö°æ£¬
+                        µÚÈý²¿ÉÏÆªÓÚ2012Äê12ÔÂ³ö°æ£¬µÚÈý²¿ÖÐÆªÓÚ2013Äê07ÔÂ³ö°æ£¬µÚÈý²¿ÏÂÆªÓÚ2013Äê12ÔÂ³ö°æ
+                        £¬µÚËÄ²¿ÔòÓÚ2015Äê10ÔÂ³ö°æ£¬µÚÎå²¿ÓÚ2018Äê5ÔÂ15ÈÕÔÚQQÔÄ¶ÁÆ½Ì¨¿ªÊ¼Á¬ÔØ¡£
                         """;
             }
 

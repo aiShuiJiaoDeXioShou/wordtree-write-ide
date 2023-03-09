@@ -2,8 +2,8 @@ package lh.wordtree.service.record;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import lh.wordtree.dao.DAO;
 import lh.wordtree.dao.WorkPlanMapper;
+import lh.wordtree.dao.impl.WorkPlanMapperImpl;
 import lh.wordtree.entity.WorkPlan;
 import lh.wordtree.service.InitializationService;
 import lh.wordtree.service.factory.FactoryBeanService;
@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class TimerServiceImpl implements TimerService, InitializationService {
 
-    private final WorkPlanMapper workPlanMapper = DAO.getSqlSessionFactory().getMapper(WorkPlanMapper.class);
+    private final WorkPlanMapper workPlanMapper = new WorkPlanMapperImpl();
     private final WorkPlan lastWorkPlan = workPlanMapper.selectOfLast();
     // 当前工作时间
     private final LocalDate nowTime = LocalDate.now();

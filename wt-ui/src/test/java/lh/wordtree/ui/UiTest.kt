@@ -8,9 +8,13 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.VBox
+import javafx.scene.media.Media
+import javafx.scene.media.MediaPlayer
 import javafx.scene.paint.Color
 import javafx.scene.shape.ArcType
 import javafx.stage.Stage
+import javafx.util.Duration
 
 class UiTest : Application() {
     val bi = Button("画笔")
@@ -140,6 +144,31 @@ class UiTest3 : Application() {
     }
 }
 
+class UiTest4 : Application() {
+    val root: BorderPane = BorderPane()
+    override fun start(stage: Stage?) {
+        val scene = Scene(root)
+        stage!!.title = "任务管理"
+        val url = UiTest4().javaClass.classLoader.getResource("static/play/时钟秒表运行.mp3")?.toExternalForm()
+        println(url)
+        val media = Media(url)
+        val mediaPlayer = MediaPlayer(media)
+        root.center = VBox().apply {
+            prefWidth = 800.0
+            prefHeight = 500.0
+            val button = Button("点击响铃声")
+            children.add(button)
+            mediaPlayer.stopTime = Duration.minutes(1.0)
+            button.onMouseClicked = EventHandler {
+                mediaPlayer.play()
+            }
+        }
+        stage.scene = scene
+        stage.show()
+    }
+
+}
+
 fun main() {
-    Application.launch(UiTest3::class.java)
+    Application.launch(UiTest4::class.java)
 }

@@ -2,8 +2,8 @@ package lh.wordtree.views.bookrack;
 
 import javafx.beans.property.SimpleObjectProperty;
 import lh.wordtree.comm.entity.NovelProject;
-import lh.wordtree.dao.DAO;
 import lh.wordtree.dao.WorkPlanMapper;
+import lh.wordtree.dao.impl.WorkPlanMapperImpl;
 import lh.wordtree.entity.Author;
 import lh.wordtree.entity.RecentFiles;
 import lh.wordtree.service.factory.FactoryBeanService;
@@ -18,7 +18,7 @@ public class BookRackViewModel {
     // 获取当前的用户信息
     private final SimpleObjectProperty<Author> user = FactoryBeanService.user;
     private final List<RecentFiles> recentFiles = WorkSpaceService.get();
-    private final WorkPlanMapper workPlanMapper = DAO.getSqlSessionFactory().getMapper(WorkPlanMapper.class);
+    private final WorkPlanMapper workPlanMapper = new WorkPlanMapperImpl();
 
     public Author user() {
         return user.get();

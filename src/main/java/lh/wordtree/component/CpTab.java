@@ -5,6 +5,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
+import java.util.Objects;
+
 public class CpTab extends Tab {
 
     private MenuItem other = new MenuItem();
@@ -25,7 +27,7 @@ public class CpTab extends Tab {
         this.setContextMenu(contextMenu);
         other.setOnAction(event -> tabPane.getTabs().removeIf(tab -> !tab.equals(this)));
         now.setOnAction(event -> tabPane.getTabs().remove(this));
-        all.setOnAction(event -> tabPane.getTabs().removeAll());
+        all.setOnAction(event -> tabPane.getTabs().removeIf(tab -> !Objects.isNull(tab)));
         left.setOnAction(event -> tabPane.getTabs().removeIf(tab -> {
             var now = tabPane.getTabs().indexOf(this);
             var i = tabPane.getTabs().indexOf(tab);

@@ -8,10 +8,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import lh.wordtree.dao.AuthorTaskMapper;
-import lh.wordtree.dao.DAO;
 
 public class BookRackRightView extends VBox {
-    private AuthorTaskMapper authorTaskMapper = DAO.getSqlSessionFactory().getMapper(AuthorTaskMapper.class);
+    private AuthorTaskMapper authorTaskMapper;
 
     public BookRackRightView() {
         var title = new VBox();
