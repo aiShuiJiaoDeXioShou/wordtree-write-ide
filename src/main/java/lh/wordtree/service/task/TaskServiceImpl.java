@@ -3,6 +3,7 @@ package lh.wordtree.service.task;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
+import lh.wordtree.comm.entity.fun.OrdinaryFunction1;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TaskServiceImpl implements TaskService {
-    private final List<OrdinaryFunction> writeTasks = new LinkedList<>();
+    private final List<OrdinaryFunction1<String>> writeTasks = new LinkedList<>();
     private final List<OrdinaryFunction> toggleFileTasks = new LinkedList<>();
     private final List<OrdinaryFunction> loopTasks = new LinkedList<>();
     private final List<OrdinaryFunction> saveTasks = new LinkedList<>();
@@ -50,7 +51,7 @@ public class TaskServiceImpl implements TaskService {
                         switch (iTask) {
                             case LOOP -> loopTasks.add(wtTask::apply);
                             case SAVE -> saveTasks.add(wtTask::apply);
-                            case WRITE -> writeTasks.add(wtTask::apply);
+                            case WRITE -> writeTasks.add(source -> wtTask.apply());
                             case TOGGLE_FILE -> toggleFileTasks.add(wtTask::apply);
                             case INIT -> initTasks.add(wtTask::apply);
                             case END -> endTasks.add(wtTask::apply);
@@ -68,11 +69,17 @@ public class TaskServiceImpl implements TaskService {
                 .toList();
     }
 
-    public void start(ITask iTask) {
+    public void start(ITask iTask, Object... obj) {
         switch (iTask) {
             case LOOP -> applyTask(getLoopTasks());
             case SAVE -> applyTask(getSaveTasks());
-            case WRITE -> applyTask(getWriteTasks());
+            case WRITE -> {
+                var writeTasks1 = getWriteTasks();
+                writeTasks1.forEach(fun -> {
+                    if (obj[0] instanceof String s)
+                        fun.apply(s);
+                });
+            }
             case TOGGLE_FILE -> applyTask(getToggleFileTasks());
             case INIT -> applyTask(getInitTasks());
             case END -> applyTask(getEndTasks());
@@ -88,7 +95,7 @@ public class TaskServiceImpl implements TaskService {
         return initTasks;
     }
 
-    public List<OrdinaryFunction> getWriteTasks() {
+    public List<OrdinaryFunction1<String>> getWriteTasks() {
         return writeTasks;
     }
 

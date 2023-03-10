@@ -2,12 +2,17 @@ package lh.wordtree.component.editor;
 
 import cn.hutool.core.io.FileUtil;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import lh.wordtree.App;
 import lh.wordtree.comm.utils.FxStyleUtils;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.WTWriterEditorService;
@@ -19,6 +24,7 @@ import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.GenericStyledArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.Paragraph;
+import org.fxmisc.richtext.model.PlainTextChange;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.fxmisc.wellbehaved.event.InputMap;
@@ -28,6 +34,7 @@ import org.reactfx.collection.ListModification;
 import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -42,10 +49,45 @@ public class WTWriterEditor extends CodeArea {
     public static final HashMap<String, String> styleMap = new HashMap<>();
 
     private final File file;
+    private final CoderPopup popup = new CoderPopup(this);
+    ChangeListener<Integer> curoserMoveEvnet = (observable, oldValue, newValue) -> {
+        // 获取当前row line在coder中的位置
+        var paragraph = this.getCurrentParagraph() + 1;
+        var column = this.getCaretColumn();
+        // 获取当前选中的字符
+        var selectedText = this.getSelectedText();
+        // 改变底部状态栏的状态
+        FactoryBeanService.rowLine.set(paragraph + ":" + column + "(" + selectedText.length() + "字符" + ")");
+        if (selectedText.length() > 0) {
+            FactoryBeanService
+                    .rowLine
+                    .set(paragraph + ":" + column +
+                            "(" + selectedText.length() + "字符" + ")");
+        } else {
+            FactoryBeanService.rowLine.set(paragraph + ":" + column);
+        }
+    };
+
+    /**
+     * 检测文本编辑器文本修改事件
+     */
+    Consumer<List<PlainTextChange>> textChange = plainTextChanges -> {
+        for (PlainTextChange plainTextChange : plainTextChanges) {
+            var inserted = plainTextChange.getInserted();
+            TaskService.INSTANCE.start(ITask.WRITE, inserted);
+        }
+    };
 
     public WTWriterEditor(File file) {
         this.file = file;
-        // 初始化语言构造工厂
+        this.view();
+        this.listener();
+        // 添加对文本变化的监听事件,先把自动补全功能写在这里,引入正在写入任务
+        this.multiPlainChanges().subscribe(textChange);
+        this.start();
+    }
+
+    public void view() {
         this.setPrefWidth(500);
         this.setPrefHeight(700);
         this.setPadding(new Insets(5, 5, 5, 5));
@@ -54,31 +96,11 @@ public class WTWriterEditor extends CodeArea {
         // styleMap.put("-fx-font-size", ConfigUtils.getProperties("codeFont"));
         // 初始化样式表
         FxStyleUtils.buildMapStyle(this, styleMap);
-        // 添加对文本变化的监听事件
-        this.textProperty().addListener((observable, oldValue, newValue) -> {
-            // 先把自动补全功能写在这里
-            // 引入正在写入任务
-            TaskService.INSTANCE.start(ITask.WRITE);
-        });
-        // 监听光标移动事件
-        this.caretPositionProperty().addListener((observable, oldValue, newValue) -> {
-            // 获取当前row line在coder中的位置
-            var paragraph = this.getCurrentParagraph() + 1;
-            var column = this.getCaretColumn();
-            // 获取当前选中的字符
-            var selectedText = this.getSelectedText();
-            // 改变底部状态栏的状态
-            FactoryBeanService.rowLine.set(paragraph + ":" + column + "(" + selectedText.length() + "字符" + ")");
-            if (selectedText.length() > 0) {
-                FactoryBeanService
-                        .rowLine
-                        .set(paragraph + ":" + column +
-                                "(" + selectedText.length() + "字符" + ")");
-            } else {
-                FactoryBeanService.rowLine.set(paragraph + ":" + column);
-            }
+    }
 
-        });
+    public void listener() {
+        // 监听光标移动事件
+        this.caretPositionProperty().addListener(curoserMoveEvnet);
         // 添加键盘事件
         Nodes.addInputMap(this, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
             FileUtil.writeUtf8String(this.getText(), file);
@@ -86,7 +108,41 @@ public class WTWriterEditor extends CodeArea {
             var graphic = (Text) tab.getGraphic();
             graphic.setText("");
         }));
-        this.start();
+    }
+
+    public CoderPopup popup() {
+        return popup;
+    }
+
+    public static class CoderPopup extends Popup {
+        private ListView<Label> listView;
+        private CodeArea codeArea;
+
+        public CoderPopup(CodeArea code) {
+            this.codeArea = code;
+            this.setAutoHide(true);
+        }
+
+        public void popupShow() {
+            // 获取现在光标的所在位置
+            var bounds = codeArea.getCaretBounds().get();
+            this.setX(bounds.getMaxX());
+            this.setY(bounds.getMaxY());
+            this.show(App.primaryStage);
+        }
+
+        public void update(List<String> list) {
+            if (this.getContent().size() > 0) {
+                this.getContent().remove(listView);
+            }
+            listView = new ListView<>();
+            for (String source : list) {
+                var label = new Label(source);
+                listView.getItems().add(label);
+            }
+            this.getContent().add(listView);
+        }
+
     }
 
     private void start() {

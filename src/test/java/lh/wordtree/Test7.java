@@ -5,14 +5,14 @@ import lh.wordtree.entity.AuthorTask;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class Test7 {
     @Test
     public void dao1() throws SQLException {
         var authorTaskMapper = new AuthorTaskMapperImpl();
-        var authorTasks = authorTaskMapper.selectAll();
-        for (AuthorTask authorTask : authorTasks) {
-            System.out.println(authorTask);
-        }
+        authorTaskMapper.insertAuthorTask(
+                new AuthorTask(LocalDateTime.now(), LocalDateTime.now(), "linghe", "hello", "true", 100, "false")
+        );
     }
 }

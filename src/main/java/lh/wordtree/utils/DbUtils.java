@@ -46,11 +46,7 @@ public abstract class DbUtils {
                 var declaredFields = clazz.getDeclaredFields();
                 for (Field declaredField : declaredFields) {
                     declaredField.setAccessible(true);
-                    if (isBool(entity.get(declaredField.getName())) != null) {
-                        declaredField.set(instance, isBool(entity.get(declaredField.getName())));
-                    } else {
-                        declaredField.set(instance, entity.get(declaredField.getName()));
-                    }
+                    declaredField.set(instance, entity.get(declaredField.getName()));
                 }
                 return instance;
             } catch (Exception e) {
@@ -77,11 +73,7 @@ public abstract class DbUtils {
                     } else {
                         var field = clazz.getDeclaredField(fieldName);
                         field.setAccessible(true);
-                        if (isBool(entity.get(fieldName)) != null) {
-                            field.set(instance, isBool(entity.get(fieldName)));
-                        } else {
-                            field.set(instance, entity.get(fieldName));
-                        }
+                        field.set(instance, entity.get(fieldName));
                     }
                 }
                 return instance;
@@ -92,28 +84,13 @@ public abstract class DbUtils {
         }).toList();
     }
 
-    private static Object isBool(Object obj) {
-        if (obj instanceof String bool) {
-            if (bool.equals("true")) {
-                return true;
-            } else if (bool.equals("false")) {
-                return false;
-            }
-        }
-        return null;
-    }
-
     public static <T> T padding(Entity entity, Class<T> clazz) {
         try {
             var instance = clazz.getDeclaredConstructor().newInstance();
             var declaredFields = clazz.getDeclaredFields();
             for (Field declaredField : declaredFields) {
                 declaredField.setAccessible(true);
-                if (isBool(entity.get(declaredField.getName())) != null) {
-                    declaredField.set(instance, isBool(entity.get(declaredField.getName())));
-                } else {
-                    declaredField.set(instance, entity.get(declaredField.getName()));
-                }
+                declaredField.set(instance, entity.get(declaredField.getName()));
             }
             return instance;
         } catch (Exception e) {

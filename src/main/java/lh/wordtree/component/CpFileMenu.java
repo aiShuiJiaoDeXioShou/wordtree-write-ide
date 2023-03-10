@@ -264,6 +264,7 @@ public class CpFileMenu extends TreeItem<Label> {
         if (build instanceof WTWriterEditor code) {
             addCode(tab, code);
             tab.setContent(code);
+            FactoryBeanService.nowCodeArea.set(code);
         } else if (build instanceof WebView webView) {
             tab.setContent(webView);
         } else if (build instanceof SplitPane box) {

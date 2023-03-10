@@ -28,4 +28,13 @@ public class AuthorTaskMapperImpl implements AuthorTaskMapper {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int delOne(int id) {
+        try {
+            return DbUtils.db().del(Entity.create(tableName).set("id", id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

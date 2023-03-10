@@ -19,6 +19,7 @@ import lh.wordtree.component.editor.WTLangCodeArea
 import lh.wordtree.plugin.WTPlugLanguage
 import lh.wordtree.plugin.WTPluginConfig
 import lh.wordtree.plugin.WTPluginType
+import lh.wordtree.service.factory.FactoryBeanService
 import lh.wordtree.service.plugin.WTPluginService
 import lh.wordtree.ui.WTNetwork
 import lh.wordtree.views.core.TabMenuBarView
@@ -106,6 +107,7 @@ class WtLangView(private val file: File) {
         sourceWt = parseObject!!.getString("wt")
         // 如果是一个空文件就创造相关的关系
         parseData = plugin!!.parse(sourceWt) as List<Figure>?
+        FactoryBeanService.roles.set(parseData)
     }
 
     fun view(): Node {

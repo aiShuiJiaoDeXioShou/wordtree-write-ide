@@ -17,11 +17,24 @@ public class AuthorTask {
     // 任务描述
     private String describe;
     // 是否采用强制手段
-    private Boolean isMandatory;
+    private String isMandatory;
     // 目标字数
     private Integer number;
     // 是否完成了该任务
-    private Boolean isComplete;
+    private String isComplete;
+
+    public AuthorTask() {
+    }
+
+    public AuthorTask(LocalDateTime startDateTime, LocalDateTime endDateTime, String authorName, String describe, String isMandatory, Integer number, String isComplete) {
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.authorName = authorName;
+        this.describe = describe;
+        this.isMandatory = isMandatory;
+        this.number = number;
+        this.isComplete = isComplete;
+    }
 
     public Integer getId() {
         return id;
@@ -63,11 +76,11 @@ public class AuthorTask {
         this.describe = describe;
     }
 
-    public Boolean getMandatory() {
+    public String getMandatory() {
         return isMandatory;
     }
 
-    public void setMandatory(Boolean mandatory) {
+    public void setMandatory(String mandatory) {
         isMandatory = mandatory;
     }
 
@@ -79,11 +92,11 @@ public class AuthorTask {
         this.number = number;
     }
 
-    public Boolean getComplete() {
+    public String getComplete() {
         return isComplete;
     }
 
-    public void setComplete(Boolean complete) {
+    public void setComplete(String complete) {
         isComplete = complete;
     }
 

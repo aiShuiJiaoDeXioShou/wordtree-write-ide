@@ -12,7 +12,7 @@ public interface WTTask {
     default void end() {
     }
 
-    default void write() {
+    default void write(String source) {
     }
 
     default void toggleFile() {
