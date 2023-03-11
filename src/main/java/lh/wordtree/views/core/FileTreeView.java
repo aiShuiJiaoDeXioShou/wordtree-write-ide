@@ -19,7 +19,6 @@ import java.util.List;
 
 public class FileTreeView extends TreeView<Label> {
     private FileTreeView() {
-
     }
 
     public static FileTreeView newInstance() {

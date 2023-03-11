@@ -11,6 +11,7 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ConfigUtils;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.task.TaskService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.views.root.NoteBookScene;
@@ -37,6 +38,7 @@ public class App extends Application {
         primaryStage.setTitle(Config.APP_NAME);
         primaryStage.getIcons().add(new Image(Config.APP_ICON));
         primaryStage.show();
+        FactoryBeanService.heigth.bind(primaryStage.heightProperty());
         log.info("应用程序启动成功...");
     }
 

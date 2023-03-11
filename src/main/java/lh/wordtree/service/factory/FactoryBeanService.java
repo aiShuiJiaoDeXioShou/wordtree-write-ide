@@ -1,6 +1,7 @@
 package lh.wordtree.service.factory;
 
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.web.WebView;
@@ -24,6 +25,7 @@ public abstract class FactoryBeanService {
     public static SimpleObjectProperty<NovelProject> novelProject = new SimpleObjectProperty<>();
     public static SimpleObjectProperty<Author> user = new SimpleObjectProperty<>();
     public static SimpleObjectProperty<List<Figure>> roles = new SimpleObjectProperty<>();
+    public static SimpleDoubleProperty heigth = new SimpleDoubleProperty();
 
     public static WebView getWebView() {
         return new WebView();

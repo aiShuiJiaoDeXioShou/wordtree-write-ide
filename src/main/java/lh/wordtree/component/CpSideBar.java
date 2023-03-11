@@ -9,6 +9,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
+import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.views.core.NoteCoreView;
 
 public class CpSideBar extends VBox {
@@ -19,7 +20,8 @@ public class CpSideBar extends VBox {
         title.getStyleClass().add("task-top-title");
         node.prefHeightProperty().bind(this.prefHeightProperty());
         var left = this;
-        left.setPrefSize(NoteCoreView.WIDTH * 0.17, NoteCoreView.HEIGHT);
+        left.setPrefWidth(NoteCoreView.WIDTH * 0.17);
+        left.prefHeightProperty().bind(FactoryBeanService.heigth);
         var leftTop = new HBox();
         {
             leftTop.setPrefHeight(25);

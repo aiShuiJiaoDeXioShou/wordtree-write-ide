@@ -4,7 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
-import lh.wordtree.views.core.NoteCoreView;
+import lh.wordtree.service.factory.FactoryBeanService;
 
 public class CpHide extends VBox {
     private OrdinaryFunction func;
@@ -13,7 +13,8 @@ public class CpHide extends VBox {
     public CpHide() {
         var borderHover = this;
         {
-            borderHover.setPrefSize(10, NoteCoreView.HEIGHT);
+            borderHover.setPrefHeight(10);
+            borderHover.prefHeightProperty().bind(FactoryBeanService.heigth);
         }
 
         show = new Button();

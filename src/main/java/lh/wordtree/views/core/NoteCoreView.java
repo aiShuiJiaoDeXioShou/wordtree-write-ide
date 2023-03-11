@@ -19,8 +19,8 @@ public class NoteCoreView extends BorderPane {
             menusSide.setName("扩展功能");
             menusSide.setId("code-right");
             borderHover.setFunc(() -> this.setRight(menusSide));
-            this.setRight(borderHover);
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
+            this.setRight(borderHover);
         }
 
         var menus = FileTreeView.newInstance();
@@ -31,8 +31,8 @@ public class NoteCoreView extends BorderPane {
             menusSide.title.setGraphic(new WTIcon(new Image("static/icon/33资源.png")));
             menusSide.setId("code-left");
             borderHover.setFunc(() -> this.setLeft(menusSide));
+            menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 1))));
             this.setLeft(menusSide);
-            menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
         }
         this.setBottom(BottomStateView.newInstance());
     }

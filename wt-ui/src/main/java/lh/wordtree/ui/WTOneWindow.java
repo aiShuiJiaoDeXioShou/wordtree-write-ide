@@ -96,6 +96,7 @@ public class WTOneWindow extends Stage {
         StackPane.setAlignment(label, Pos.CENTER);
         top.setPadding(new Insets(10));
         root.getChildren().add(top);
+        root.setStyle("-fx-border-width: 1;-fx-border-color: #adb5bd;");
         scene = new Scene(root, MIN_WIDTH, MIN_HEIGHT);
         Config.setStyle(scene);
         this.setScene(scene);

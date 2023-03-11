@@ -22,7 +22,7 @@ public class ToolkitsView extends AnchorPane {
 
     private void view() {
         this.getStyleClass().add("right-toolkits");
-        this.setPrefSize(NoteCoreView.WIDTH * 0.17, NoteCoreView.HEIGHT);
+        this.setPrefWidth(NoteCoreView.WIDTH * 0.17);
         var pane = new TabPane();
         pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         var tabTask = new Tab();
