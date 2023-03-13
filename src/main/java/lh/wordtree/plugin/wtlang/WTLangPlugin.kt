@@ -21,7 +21,7 @@ import lh.wordtree.plugin.WTPluginConfig
 import lh.wordtree.plugin.WTPluginType
 import lh.wordtree.service.factory.FactoryBeanService
 import lh.wordtree.service.plugin.WTPluginService
-import lh.wordtree.ui.WTNetwork
+import lh.wordtree.ui.controls.WTNetwork
 import lh.wordtree.views.core.TabMenuBarView
 import org.fxmisc.wellbehaved.event.EventPattern
 import org.fxmisc.wellbehaved.event.InputMap

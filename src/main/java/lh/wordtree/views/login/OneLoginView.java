@@ -16,8 +16,8 @@ import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.component.CpMessage;
 import lh.wordtree.entity.Author;
-import lh.wordtree.ui.WTIcon;
-import lh.wordtree.ui.WTInputPro;
+import lh.wordtree.ui.controls.WTIcon;
+import lh.wordtree.ui.controls.WTInputPro;
 
 import java.io.File;
 import java.io.FileInputStream;

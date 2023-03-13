@@ -1,4 +1,4 @@
-package lh.wordtree.ui;
+package lh.wordtree.ui.controls;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;

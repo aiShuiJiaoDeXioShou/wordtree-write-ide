@@ -25,7 +25,7 @@ import lh.wordtree.service.language.LanguageConstructorService;
 import lh.wordtree.service.language.LanguageConstructorServiceImpl;
 import lh.wordtree.service.task.TaskService;
 import lh.wordtree.task.ITask;
-import lh.wordtree.ui.WTFxInputAlert;
+import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.utils.SvgUtils;
 import lh.wordtree.views.core.FileTreeView;
 import lh.wordtree.views.core.TabMenuBarView;

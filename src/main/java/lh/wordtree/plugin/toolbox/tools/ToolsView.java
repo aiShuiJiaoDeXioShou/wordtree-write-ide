@@ -2,7 +2,7 @@ package lh.wordtree.plugin.toolbox.tools;
 
 import javafx.scene.layout.VBox;
 import lh.wordtree.App;
-import lh.wordtree.ui.WTToolsLabel;
+import lh.wordtree.ui.controls.WTToolsLabel;
 import lh.wordtree.views.root.NoteBookScene;
 
 public class ToolsView extends VBox {

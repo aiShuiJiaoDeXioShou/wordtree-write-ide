@@ -10,6 +10,10 @@ public interface ClassLoaderUtils {
         return ClassLoaderUtils.class.getClassLoader().getResourceAsStream(path);
     }
 
+    static String loadUrl(String path) {
+        return ClassLoaderUtils.class.getClassLoader().getResource(path).toString();
+    }
+
     static String url(String path) {
         return Objects.requireNonNull(ClassLoaderUtils.class.getClassLoader().getResource(path)).toExternalForm();
     }

@@ -59,6 +59,11 @@ public class TimerTask implements WTTask {
         });
     }
 
+    // 读取任务管理器中的时间属性,判断该任务是否到时间了
+    public void getTask() {
+
+    }
+
     public void end() {
         var nowWorkPlan = timerService.getNowWorkPlan();
         nowWorkPlan.setNumber(nowNumber);

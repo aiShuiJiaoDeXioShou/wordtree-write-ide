@@ -1,4 +1,4 @@
-package lh.wordtree.ui;
+package lh.wordtree.ui.controls;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.thread.ThreadUtil;

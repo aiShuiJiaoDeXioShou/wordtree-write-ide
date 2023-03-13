@@ -1,9 +1,9 @@
-package lh.wordtree.ui;
+package lh.wordtree.ui.controls;
 
 import javafx.scene.control.Label;
 
-public class WLabel extends Label {
-    public WLabel(String text, WTLabelState wtLabelState) {
+public class WTLabel extends Label {
+    public WTLabel(String text, WTLabelState wtLabelState) {
         super(text);
         this.getStyleClass().add("wt-label");
 
@@ -19,7 +19,7 @@ public class WLabel extends Label {
         }
     }
 
-    public WLabel(String text) {
+    public WTLabel(String text) {
         super(text);
         this.getStyleClass().add("wt-label");
         this.getStyleClass().add("wt-label-white");

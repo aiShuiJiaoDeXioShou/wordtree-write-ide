@@ -4,6 +4,7 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class AuthorTask {
     private Integer id;
@@ -49,7 +50,11 @@ public class AuthorTask {
     }
 
     public void setStartDateTime(String startDateTime) {
-        this.startDateTime = LocalDateTimeUtil.parse(startDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        try {
+            this.startDateTime = LocalDateTimeUtil.parse(startDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        } catch (DateTimeParseException e) {
+            this.startDateTime = LocalDateTimeUtil.parse(startDateTime);
+        }
     }
 
     public LocalDateTime getEndDateTime() {
@@ -57,7 +62,11 @@ public class AuthorTask {
     }
 
     public void setEndDateTime(String endDateTime) {
-        this.endDateTime = LocalDateTimeUtil.parse(endDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        try {
+            this.endDateTime = LocalDateTimeUtil.parse(endDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss"));
+        } catch (DateTimeParseException e) {
+            this.endDateTime = LocalDateTimeUtil.parse(endDateTime);
+        }
     }
 
     public String getAuthorName() {

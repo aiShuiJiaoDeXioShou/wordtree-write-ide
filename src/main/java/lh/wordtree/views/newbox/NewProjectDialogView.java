@@ -21,7 +21,7 @@ import lh.wordtree.App;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.entity.NovelProject;
 import lh.wordtree.comm.utils.ConfigUtils;
-import lh.wordtree.ui.WTInputPro;
+import lh.wordtree.ui.controls.WTInputPro;
 import lh.wordtree.views.core.FileTreeView;
 
 import java.io.File;

@@ -28,7 +28,7 @@ public class EditorLanguageFactory {
         this.registered("地图.json", f -> {
             WebView webView = FactoryBeanService.getWebView();
             WebEngine engine = webView.getEngine();
-            engine.load(ClassLoaderUtils.url("static/template/map/map.html"));
+            engine.load("https://azgaar.github.io/Fantasy-Map-Generator/");
             return webView;
         });
         this.registered("任务.json", f -> {

@@ -30,7 +30,6 @@ public class App extends Application {
         TaskService.INSTANCE.start(ITask.INIT);
     }
 
-    @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         this.setStyle();

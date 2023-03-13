@@ -8,7 +8,7 @@ import javafx.scene.paint.Paint;
 import lh.wordtree.plugin.toolbox.library.LibraryView;
 import lh.wordtree.plugin.toolbox.setting.SettingView;
 import lh.wordtree.plugin.toolbox.tools.ToolsView;
-import lh.wordtree.ui.WTMenu;
+import lh.wordtree.ui.controls.WTMenu;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,2 +1,0 @@
-package lh.wordtree.ui
-

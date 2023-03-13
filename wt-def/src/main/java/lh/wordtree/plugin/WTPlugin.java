@@ -3,9 +3,15 @@ package lh.wordtree.plugin;
 import javafx.scene.Node;
 
 public interface WTPlugin {
-    void init();
+    default void init() {
+    }
 
-    void apply();
+    ;
+
+    default void apply() {
+    }
+
+    ;
 
     default void write() {
         throw new UnsupportedOperationException();
@@ -27,7 +33,10 @@ public interface WTPlugin {
         throw new UnsupportedOperationException();
     }
 
-    void end();
+    default void end() {
+    }
+
+    ;
 
     WTPluginConfig config();
 }

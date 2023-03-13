@@ -1,4 +1,4 @@
-package lh.wordtree.ui;
+package lh.wordtree.ui.controls;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

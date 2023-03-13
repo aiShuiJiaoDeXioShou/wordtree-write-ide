@@ -11,8 +11,8 @@ import lh.wordtree.App;
 import lh.wordtree.component.CpMessage;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.CountryService;
-import lh.wordtree.ui.WTIcon;
-import lh.wordtree.ui.WTOneWindow;
+import lh.wordtree.ui.controls.WTIcon;
+import lh.wordtree.ui.controls.WTOneWindow;
 import lh.wordtree.views.bookrack.BookHistoryListView;
 import lh.wordtree.views.newbox.NewProjectDialogView;
 

@@ -1,0 +1,18 @@
+.wt-button {
+    -fx-min-height: 30;
+    -fx-min-width: 100;
+}
+
+.wt-button:armed,
+.wt-button:hover,
+.wt-button:focused,
+.wt-button {
+    -fx-background-radius: 3px;
+    -fx-background-insets: 0px;
+}
+
+.wt-button,
+.wt-button:armed,
+.wt-button:focused {
+    -fx-background-color: white;
+}

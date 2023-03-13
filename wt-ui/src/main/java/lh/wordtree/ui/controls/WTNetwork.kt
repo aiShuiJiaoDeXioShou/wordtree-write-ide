@@ -1,4 +1,4 @@
-package lh.wordtree.ui
+package lh.wordtree.ui.controls
 
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleObjectProperty

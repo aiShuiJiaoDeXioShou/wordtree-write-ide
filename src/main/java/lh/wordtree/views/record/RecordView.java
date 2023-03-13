@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lh.wordtree.entity.Record;
-import lh.wordtree.ui.WTOneWindow;
+import lh.wordtree.ui.controls.WTOneWindow;
 
 
 public class RecordView extends BorderPane {

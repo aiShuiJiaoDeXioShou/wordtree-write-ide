@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.control.Button
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
@@ -15,6 +16,10 @@ import javafx.scene.paint.Color
 import javafx.scene.shape.ArcType
 import javafx.stage.Stage
 import javafx.util.Duration
+import lh.wordtree.ui.controls.Role
+import lh.wordtree.ui.controls.RoleView
+import lh.wordtree.ui.controls.WTButton
+import lh.wordtree.ui.controls.WTNetwork
 
 class UiTest : Application() {
     val bi = Button("画笔")
@@ -169,6 +174,21 @@ class UiTest4 : Application() {
 
 }
 
+class UiTest5 : Application() {
+    val root = BorderPane()
+    val scene = Scene(root, 500.0, 600.0)
+    override fun start(primaryStage: Stage?) {
+        primaryStage!!.title = "UI TEST"
+        val box = HBox()
+        val button = WTButton("按钮")
+        box.children.add(button)
+        root.center = box
+        primaryStage.scene = scene
+        primaryStage.show()
+    }
+
+}
+
 fun main() {
-    Application.launch(UiTest4::class.java)
+    Application.launch(UiTest5::class.java)
 }

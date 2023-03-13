@@ -5,8 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import lh.wordtree.component.CpMessage;
 import lh.wordtree.service.plugin.WTPluginServiceImpl;
-import lh.wordtree.ui.WTFxInputAlert;
-import lh.wordtree.ui.WTOneWindow;
+import lh.wordtree.ui.controls.WTFxInputAlert;
+import lh.wordtree.ui.controls.WTOneWindow;
 import lh.wordtree.views.record.RecordView;
 import org.junit.jupiter.api.Test;
 

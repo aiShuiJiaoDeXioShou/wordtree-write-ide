@@ -5,7 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import lh.wordtree.component.CpHide;
 import lh.wordtree.component.CpSideBar;
-import lh.wordtree.ui.WTIcon;
+import lh.wordtree.ui.controls.WTIcon;
 
 public class NoteCoreView extends BorderPane {
     private NoteCoreView() {

@@ -17,9 +17,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import lh.wordtree.component.CpBook;
 import lh.wordtree.component.CpMessage;
-import lh.wordtree.ui.WLabel;
-import lh.wordtree.ui.WTCalendar;
-import lh.wordtree.ui.WTNoteList;
+import lh.wordtree.ui.controls.WTCalendar;
+import lh.wordtree.ui.controls.WTLabel;
+import lh.wordtree.ui.controls.WTNoteList;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -93,7 +93,7 @@ public class BookRackView extends BorderPane {
         flowPane1.setVgap(5);
         flowPane1.setHgap(10);
         flowPane1.setPadding(new Insets(10, 0, 10, 0));
-        bm.user().tag().forEach(data -> flowPane1.getChildren().add(new WLabel(data)));
+        bm.user().tag().forEach(data -> flowPane1.getChildren().add(new WTLabel(data)));
         authorBox.getChildren().addAll(view, box2, edit, wtNoteList, flowPane1);
         authorBox.setSpacing(15);
         leftbox.getChildren().add(authorBox);
