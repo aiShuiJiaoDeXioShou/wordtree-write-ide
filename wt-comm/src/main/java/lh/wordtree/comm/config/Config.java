@@ -3,6 +3,7 @@ package lh.wordtree.comm.config;
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
@@ -17,6 +18,9 @@ public interface Config {
 
     String APP_ICON = "static/icon/icon.png";
     String APP_NAME = "WordTree";
+    Double APP_WIDTH = 1480.0;
+    Double APP_HEIGHT = 750.0;
+
     /**
      * 用户主目录
      */
@@ -141,6 +145,19 @@ public interface Config {
             metro = new JMetro(Style.LIGHT);
         } else metro = new JMetro(Style.DARK);
         metro.setScene(scene);
+        // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
+        metro.getOverridingStylesheets().addAll(
+                getStyle("static/style/light.css"),
+                getStyle("static/style/base.css")
+        );
+    }
+
+    static void setStyle(Parent parent) {
+        JMetro metro;
+        if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
+            metro = new JMetro(Style.LIGHT);
+        } else metro = new JMetro(Style.DARK);
+        metro.setParent(parent);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
         metro.getOverridingStylesheets().addAll(
                 getStyle("static/style/light.css"),

@@ -31,7 +31,7 @@ public class PluginView extends BorderPane {
     private final Tab install = new Tab(language.get("已安装"));
     private final Tab pluginMarket = new Tab(language.get("插件市场"));
 
-    public PluginView() {
+    private PluginView() {
         init();
     }
 

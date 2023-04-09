@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import lh.wordtree.views.nowfileoutline.NowFileOutlineView;
 import lh.wordtree.views.task.TaskView;
 
 // 右侧的小组件栏
@@ -29,7 +30,7 @@ public class ToolkitsView extends AnchorPane {
         tabTask.setText("任务管理");
         var outlineTab = new Tab();
         outlineTab.setText("大纲管理");
-        outlineTab.setContent(new Label("大纲管理"));
+        outlineTab.setContent(NowFileOutlineView.newInstance());
         var toolsTab = new Tab();
         toolsTab.setText("小工具");
         toolsTab.setContent(new Label("小工具"));

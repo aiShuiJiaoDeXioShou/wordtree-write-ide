@@ -48,7 +48,7 @@ public class OutlineServiceImpl implements OutlineService {
      * 大事件
      */
     private ListView<Box> listView;
-    private static SimpleObjectProperty<List<Outline>> outlines = new SimpleObjectProperty<>();
+    private static SimpleObjectProperty<List<Outline>> outlines = new SimpleObjectProperty<>(List.of());
     /**
      * 关系网
      */
@@ -112,6 +112,9 @@ public class OutlineServiceImpl implements OutlineService {
     private void pase() {
         // 读取该文件里面的内容
         var data = FileUtil.readString(nowFile, StandardCharsets.UTF_8);
+        if (data.isBlank()) {
+            FileUtil.writeString("[]", nowFile, StandardCharsets.UTF_8);
+        }
         // 转化成java对象
         try {
             var outlines1 = JSON.parseArray(data, Outline.class);
@@ -154,7 +157,7 @@ public class OutlineServiceImpl implements OutlineService {
         });
         Nodes.addInputMap(codeArea, InputMap.consume(keyPressed(S, CONTROL_DOWN), event -> {
             nowOutline.setContent(codeArea.getText());
-            FileUtil.writeUtf8String(JSON.toJSONString(outlines, JSONWriter.Feature.PrettyFormat), nowFile);
+            FileUtil.writeUtf8String(JSON.toJSONString(outlines.get(), JSONWriter.Feature.PrettyFormat), nowFile);
         }));
     }
 

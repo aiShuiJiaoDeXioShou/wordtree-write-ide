@@ -40,6 +40,7 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static javafx.scene.input.KeyCode.F;
 import static javafx.scene.input.KeyCode.S;
 import static javafx.scene.input.KeyCombination.CONTROL_DOWN;
 import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
@@ -107,6 +108,9 @@ public class WTWriterEditor extends CodeArea {
             var tab = TabMenuBarView.newInstance().getSelectionModel().getSelectedItem();
             var graphic = (Text) tab.getGraphic();
             graphic.setText("");
+        }));
+        Nodes.addInputMap(this, InputMap.consume(keyPressed(F, CONTROL_DOWN), event -> {
+
         }));
     }
 

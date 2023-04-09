@@ -28,6 +28,7 @@ public class BookRackView extends BorderPane {
     private final BookRackViewModel bm = new BookRackViewModel();
 
     private BookRackView() {
+        // 设置样式
         this.myLayout();
     }
 

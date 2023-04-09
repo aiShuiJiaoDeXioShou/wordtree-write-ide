@@ -96,7 +96,10 @@ public class TaskView extends VBox {
             var describe = new Label(autoTask.getDescribe());
             describe.setMinWidth(200);
             var hour = autoTask.getEndDateTime().getHour() - autoTask.getStartDateTime().getHour();
-            var isOk = autoTask.getComplete().equals("true") ? "已完成" : "未完成";
+            var isOk = "未完成";
+            if (autoTask.getComplete() != null) {
+                isOk = autoTask.getComplete().equals("true") ? "已完成" : "未完成";
+            }
             var time = new Label(hour + " h\n" + isOk);
             time.setStyle("-fx-text-fill: red;-fx-font-size: 20;-fx-text-alignment: center;-fx-max-width: 100");
             time.setWrapText(true);

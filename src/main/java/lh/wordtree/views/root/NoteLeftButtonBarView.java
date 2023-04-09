@@ -1,19 +1,26 @@
 package lh.wordtree.views.root;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
 import lh.wordtree.comm.utils.ClassLoaderUtils;
 import lh.wordtree.component.CpButtonItem;
 import lh.wordtree.component.CpIcon;
+import lh.wordtree.plugin.WTPluginExtended;
+import lh.wordtree.service.plugin.WTPluginService;
 import lh.wordtree.views.bookrack.BookRackView;
 import lh.wordtree.views.core.NoteCoreView;
 import lh.wordtree.views.plugin.PluginView;
 import lh.wordtree.views.setting.SettingView;
 
+import java.util.Map;
+
 public class NoteLeftButtonBarView extends HBox {
-    public ListView<Label> listView;
+    public ListView<Node> listView;
+    private WTPluginService ps = WTPluginService.pluginService;
+    // 加载插件
+    private Map<String, WTPluginExtended> wtPlugins = ps.extendedPlugin();
 
     public static NoteLeftButtonBarView newInstance() {
         return NoteLeftButtonBarViewHolder.instance;
@@ -29,10 +36,16 @@ public class NoteLeftButtonBarView extends HBox {
         listView = new ListView<>();
         {
             listView.getStyleClass().add("node-left");
-            listView.getItems().addAll(fliesItem, writeItem, bookshelf, plugins, setting);
+            listView.getItems().addAll(fliesItem, writeItem, plugins);
             listView.setPrefWidth(45);
             listView.setPadding(new Insets(10));
         }
+
+        wtPlugins.forEach((s, extended) -> {
+            var icon = new CpIcon(extended.config().icon(), s);
+            listView.getItems().add(icon);
+        });
+        listView.getItems().add(setting);
         this.getChildren().addAll(listView);
         this.controller();
     }
@@ -43,14 +56,18 @@ public class NoteLeftButtonBarView extends HBox {
                 case "书籍管理" -> {
                     NoteBookRootView.newInstance().setCenter(BookRackView.newInstance());
                 }
-                case "书架管理" -> {
-                }
                 case "写作" -> NoteBookRootView.newInstance().setCenter(NoteCoreView.newInstance());
                 case "插件" -> NoteBookRootView.newInstance().setCenter(PluginView.newInstance());
                 case "设置" -> NoteBookRootView.newInstance().setCenter(new SettingView());
             }
+            if (wtPlugins.size() > 0) {
+                wtPlugins.forEach((s, extended) -> {
+                    if (newValue.getId().equals(s)) {
+                        NoteBookRootView.newInstance().setCenter(extended.view());
+                    }
+                });
+            }
         });
-        listView.getSelectionModel().select(2);
     }
 
     private static class NoteLeftButtonBarViewHolder {

@@ -5,6 +5,8 @@ import cn.hutool.core.util.ReflectUtil;
 import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
+import lh.wordtree.plugin.WTPluginExtended;
+import lh.wordtree.plugin.bookshelf.Bookshelf;
 import lh.wordtree.plugin.wtlang.WTLangPlugin;
 
 import java.io.File;
@@ -20,16 +22,22 @@ public class WTPluginServiceImpl implements WTPluginService {
     private String src;
     private List<WTPlugin> plugins = new ArrayList<>();
     private Map<String, WTPlugLanguage> plugLanguages = new HashMap<>();
+    private Map<String, WTPluginExtended> extendeds = new HashMap<>();
 
     public WTPluginServiceImpl(String src) {
         this.src = src;
         sendJar();
         // 注册自带的插件
         registered(new WTLangPlugin());
+        registered(new Bookshelf());
     }
 
     public Map<String, WTPlugLanguage> getPlugLanguages() {
         return plugLanguages;
+    }
+
+    public Map<String, WTPluginExtended> extendedPlugin() {
+        return extendeds;
     }
 
     /**
@@ -41,6 +49,9 @@ public class WTPluginServiceImpl implements WTPluginService {
         plugins.add(plugin);
         if (plugin instanceof WTPlugLanguage language) {
             plugLanguages.put(language.config().file(), language);
+        }
+        if (plugin instanceof WTPluginExtended extended) {
+            extendeds.put(extended.config().name(), extended);
         }
     }
 
@@ -92,6 +103,9 @@ public class WTPluginServiceImpl implements WTPluginService {
             }
             if (o instanceof WTPlugLanguage plugLanguage) {
                 plugLanguages.put(plugLanguage.config().file(), plugLanguage);
+            }
+            if (o instanceof WTPluginExtended extended) {
+                extendeds.put(extended.config().name(), extended);
             }
             jar.close();
         } catch (IOException e) {

@@ -34,7 +34,7 @@ public class TimerTask implements WTTask {
 
     }
 
-    public void write() {
+    public void write(String source) {
         nowNumber++;
         auto.set(true);
     }
@@ -53,6 +53,8 @@ public class TimerTask implements WTTask {
                     Platform.runLater(() -> {
                         FactoryBeanService.time.set(getDate(nowSecond));
                         FactoryBeanService.number.set("今日已码" + nowNumber + "个字");
+                        System.out.println(getDate(nowSecond));
+                        System.out.println("今日已码" + nowNumber + "个字");
                     });
                 }
             }

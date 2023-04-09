@@ -2,10 +2,11 @@ package lh.wordtree.views.root;
 
 import javafx.scene.Scene;
 import lh.wordtree.App;
+import lh.wordtree.comm.config.Config;
 
 public class NoteBookScene extends Scene {
     public NoteBookScene() {
-        super(App.rootPane);
+        super(App.rootPane, Config.APP_WIDTH, Config.APP_HEIGHT);
         App.rootPane.getChildren().clear();
         App.rootPane.getChildren().add(NoteBookRootView.newInstance());
     }
