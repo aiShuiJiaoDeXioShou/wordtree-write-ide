@@ -6,12 +6,8 @@ public interface WTPlugin {
     default void init() {
     }
 
-    ;
-
     default void apply() {
     }
-
-    ;
 
     default void write() {
         throw new UnsupportedOperationException();
@@ -35,8 +31,6 @@ public interface WTPlugin {
 
     default void end() {
     }
-
-    ;
 
     WTPluginConfig config();
 }

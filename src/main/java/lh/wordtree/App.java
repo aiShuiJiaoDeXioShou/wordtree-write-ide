@@ -79,8 +79,7 @@ public class App extends Application {
 
     private String getStyle(String path) {
         return Objects.requireNonNull(
-                App.class
-                        .getClassLoader()
+                App.class.getClassLoader()
                         .getResource(path)
         ).toExternalForm();
     }

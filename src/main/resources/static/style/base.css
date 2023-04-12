@@ -2,17 +2,14 @@
     -fx-font-family: "Microsoft YaHei UI";
 }
 
-/*====================== Label ===========================*/
 .label {
     -fx-font-family: "Microsoft YaHei UI";
 }
 
-/*====================== Text ===========================*/
 Text {
     -fx-font-family: "Microsoft YaHei UI";
 }
 
-/*=================== Other styles ======================*/
 .text {
     -fx-font-family: "Microsoft YaHei UI";
 }

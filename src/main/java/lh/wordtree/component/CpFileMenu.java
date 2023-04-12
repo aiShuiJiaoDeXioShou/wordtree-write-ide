@@ -29,7 +29,9 @@ import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.utils.SvgUtils;
 import lh.wordtree.views.core.FileTreeView;
 import lh.wordtree.views.core.TabMenuBarView;
+import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
+import org.fxmisc.richtext.StyleClassedTextArea;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -263,7 +265,8 @@ public class CpFileMenu extends TreeItem<Label> {
         FactoryBeanService.nowWorkSpace.set(build);
         if (build instanceof WTWriterEditor code) {
             addCode(tab, code);
-            tab.setContent(code);
+            VirtualizedScrollPane<StyleClassedTextArea> vsPane = new VirtualizedScrollPane<>(code);
+            tab.setContent(vsPane);
             FactoryBeanService.nowCodeArea.set(code);
         } else if (build instanceof WebView webView) {
             tab.setContent(webView);

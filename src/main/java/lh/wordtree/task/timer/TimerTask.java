@@ -1,6 +1,5 @@
 package lh.wordtree.task.timer;
 
-import cn.hutool.core.thread.ThreadUtil;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,6 +8,10 @@ import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.record.TimerService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Task(name = "后台记录任务", value = -1)
 public class TimerTask implements WTTask {
@@ -44,21 +47,17 @@ public class TimerTask implements WTTask {
         nowWork = timerService.getNowWorkPlan();
         nowSecond = nowWork.getTime();
         nowNumber = nowWork.getNumber();
-        ThreadUtil.execAsync(() -> {
-            while (true) {
-                ThreadUtil.sleep(1000);
-                if (auto.get()) {
-                    nowSecond++;
-                    auto.set(false);
-                    Platform.runLater(() -> {
-                        FactoryBeanService.time.set(getDate(nowSecond));
-                        FactoryBeanService.number.set("今日已码" + nowNumber + "个字");
-                        System.out.println(getDate(nowSecond));
-                        System.out.println("今日已码" + nowNumber + "个字");
-                    });
-                }
+        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(() -> {
+            if (auto.get()) {
+                nowSecond++;
+                auto.set(false);
+                Platform.runLater(() -> {
+                    FactoryBeanService.time.set(getDate(nowSecond));
+                    FactoryBeanService.number.set("今日已码" + nowNumber + "个字");
+                });
             }
-        });
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     // 读取任务管理器中的时间属性,判断该任务是否到时间了
