@@ -1,6 +1,8 @@
 package lh.wordtree.comm.config;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
 import javafx.scene.Parent;
@@ -20,6 +22,7 @@ public interface Config {
     String APP_NAME = "WordTree";
     Double APP_WIDTH = 1480.0;
     Double APP_HEIGHT = 750.0;
+    Log log = LogFactory.get();
 
     /**
      * 用户主目录
@@ -135,7 +138,7 @@ public interface Config {
         }
     }
 
-    static String getStyle(String path) {
+    static String stc(String path) {
         return Objects.requireNonNull(Config.class.getClassLoader().getResource(path)).toExternalForm();
     }
 
@@ -147,9 +150,13 @@ public interface Config {
         metro.setScene(scene);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
         metro.getOverridingStylesheets().addAll(
-                getStyle("static/style/light.css"),
-                getStyle("static/style/base.css")
+                stc("static/style/light.css"),
+                stc("static/style/base.css")
         );
+    }
+
+    static void setBaseStyle(Scene scene) {
+        scene.getStylesheets().add(stc("static/style/base.css"));
     }
 
     static void setStyle(Parent parent) {
@@ -160,8 +167,8 @@ public interface Config {
         metro.setParent(parent);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
         metro.getOverridingStylesheets().addAll(
-                getStyle("static/style/light.css"),
-                getStyle("static/style/base.css")
+                stc("static/style/light.css"),
+                stc("static/style/base.css")
         );
     }
 

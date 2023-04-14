@@ -45,7 +45,6 @@ public class Coder extends Application {
         listView.setOnKeyPressed(event -> {
            switch (event.getCode()) {
                case ENTER -> {
-                   System.out.println("触发了这个！");
                    if (popup.isShowing()) {
                        var label = listView.getSelectionModel().getSelectedItems().get(0);
                        // 插入所执行时间的文本,获取当前光标所在位置

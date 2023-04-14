@@ -1,0 +1,20 @@
+.button {
+    -fx-background-radius: 5;
+    -fx-min-width: 90;
+    -fx-min-height: 28;
+}
+
+.primary {
+    -fx-background-color: #be4bdb;
+    -fx-text-fill: #ffff;
+}
+
+.warning {
+    -fx-text-fill: #ffff;
+    -fx-background-color: #fcc419;
+}
+
+.error {
+    -fx-text-fill: #ffff;
+    -fx-background-color: #ff6b6b;
+}

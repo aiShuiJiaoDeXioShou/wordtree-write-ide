@@ -11,6 +11,7 @@ import lh.wordtree.entity.Author;
 import org.fxmisc.richtext.CodeArea;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FactoryBeanService {
@@ -24,7 +25,7 @@ public abstract class FactoryBeanService {
     public static SimpleObjectProperty<CodeArea> nowCodeArea = new SimpleObjectProperty<>();
     public static SimpleObjectProperty<NovelProject> novelProject = new SimpleObjectProperty<>();
     public static SimpleObjectProperty<Author> user = new SimpleObjectProperty<>();
-    public static SimpleObjectProperty<List<Figure>> roles = new SimpleObjectProperty<>();
+    public static SimpleObjectProperty<List<Figure>> roles = new SimpleObjectProperty<>(new ArrayList<>());
     public static SimpleDoubleProperty heigth = new SimpleDoubleProperty();
 
     public static WebView getWebView() {

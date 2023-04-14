@@ -2,7 +2,6 @@ package lh.wordtree.views.core;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.core.util.RuntimeUtil;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -16,6 +15,7 @@ import lh.wordtree.component.editor.WTWriterEditor;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.CountryService;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class BottomStateView extends BorderPane {
@@ -81,7 +81,11 @@ public class BottomStateView extends BorderPane {
 
     {
         terminal.setOnMouseClicked(e -> {
-            RuntimeUtil.exec("cmd /k start");
+            try {
+                Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd " + FactoryBeanService.nowRootFile.getValue().getPath() + "\"");
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         });
     }
 

@@ -6,12 +6,12 @@
     -fx-pref-width: 55;
     -fx-text-alignment: left;
     -fx-background-color: #f2f2f2;
-    -fx-padding: 10 0 10 5;
+    -fx-padding: 10 10 10 0;
 }
 
 .writer-editor .paragraph-text {
     -fx-font-family: "Microsoft YaHei UI" !important;
-    -fx-padding: 10 0 10 20;
+    -fx-padding: 10 0 10 10;
 }
 
 .writer-editor {
@@ -25,4 +25,36 @@
 .text-area {
     -fx-background-color: none;
     -fx-border-width: none;
+}
+
+.keyword {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
+
+.semicolon {
+    -fx-font-weight: bold;
+}
+
+.paren {
+    -fx-fill: firebrick;
+    -fx-font-weight: bold;
+}
+
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+
+.brace {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+
+.string {
+    -fx-fill: blue;
+}
+
+.comment {
+    -fx-fill: cadetblue;
 }
