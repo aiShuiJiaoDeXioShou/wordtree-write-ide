@@ -58,3 +58,13 @@
 .comment {
     -fx-fill: cadetblue;
 }
+
+.select {
+    -rtfx-background-color: #fcd47e;
+}
+
+.focus {
+    -rtfx-border-stroke-color: black;
+    -rtfx-border-stroke-width: 1.0;
+    -rtfx-background-color: #a6d2ff;
+}

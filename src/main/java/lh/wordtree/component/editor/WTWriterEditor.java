@@ -48,10 +48,7 @@ import org.reactfx.Subscription;
 
 import java.io.File;
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
@@ -69,6 +66,12 @@ public class WTWriterEditor extends CodeArea {
             .stream().map(Figure::getName).toList();
     private SimpleObjectProperty<List<Figure>> roles = new SimpleObjectProperty<>();
     private String KEYWORD_PATTERN = "(" + String.join("|", KEYWORDS) + ")";
+    private String PAREN_PATTERN = "\\(|\\)";
+    private String BRACE_PATTERN = "\\{|\\}";
+    private String BRACKET_PATTERN = "\\[|\\]";
+    private String SEMICOLON_PATTERN = "\\;";
+    private String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+    private String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
     private Pattern PATTERN = Pattern.compile(
             "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
                     + "|(?<PAREN>" + PAREN_PATTERN + ")"
@@ -78,14 +81,8 @@ public class WTWriterEditor extends CodeArea {
                     + "|(?<STRING>" + STRING_PATTERN + ")"
                     + "|(?<COMMENT>" + COMMENT_PATTERN + ")"
     );
-    private String PAREN_PATTERN = "\\(|\\)";
-    private String BRACE_PATTERN = "\\{|\\}";
-    private String BRACKET_PATTERN = "\\[|\\]";
-    private String SEMICOLON_PATTERN = "\\;";
-    private String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
 
     private File file = null;
-    private String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
     private final CoderPopup popup = new CoderPopup(this);
     private String source = null;
     private Tools tools = null;
@@ -196,6 +193,7 @@ public class WTWriterEditor extends CodeArea {
 
     private void applyHighlighting(StyleSpans<Collection<String>> highlighting) {
         this.setStyleSpans(0, highlighting);
+        if (tools != null && !tools.t.getText().isBlank()) tools.f_e.run();
     }
 
     private Task<StyleSpans<Collection<String>>> computeHighlightingAsync() {
@@ -407,33 +405,91 @@ public class WTWriterEditor extends CodeArea {
     }
 
     private static class Tools extends Stage {
-        MFXButton f = new MFXButton("查找");
+        MFXButton f = new MFXButton("下一个");
+        MFXButton p = new MFXButton("上一个");
         MFXButton th = new MFXButton("替换");
         MFXButton thAll = new MFXButton("全部替换");
         MFXTextField y = new MFXTextField();
         MFXTextField t = new MFXTextField();
         WTWriterEditor we;
-        EventHandler<MouseEvent> f_e = (e) -> {
+        StyleSpans<Collection<String>> 原样式 = null;
+        StyleSpans<Collection<String>> 高亮样式 = null;
+        int wordIndex = 0;
+
+        Runnable f_e = () -> {
             StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
             int lastIndex = 0;
             Pattern pattern = Pattern.compile(y.getText());
-            Matcher matcher = pattern.matcher(we.source());
+            Matcher matcher = pattern.matcher(we.getText());
             while (matcher.find()) {
                 spansBuilder.add(Collections.emptyList(), matcher.start() - lastIndex);
-                spansBuilder.add(Collections.singleton("highlight"), matcher.end() - matcher.start());
+                spansBuilder.add(Collections.singleton("select"), matcher.end() - matcher.start());
                 lastIndex = matcher.end();
             }
-            spansBuilder.add(Collections.emptyList(), we.source().length() - lastIndex);
-            we.setStyleSpans(0, spansBuilder.create());
+            spansBuilder.add(Collections.emptyList(), we.getText().length() - lastIndex);
+            StyleSpans<Collection<String>> spans = spansBuilder.create();
+            // 每次使用原样式去覆盖新的样式
+            高亮样式 = 原样式.overlay(spans, (oldStyles, newStyles) -> {
+                List<String> styles = new ArrayList<>(oldStyles);
+                styles.addAll(newStyles);
+                return styles;
+            });
+            we.setStyleSpans(0, 高亮样式);
+        };
+
+        Runnable f_e_next = () -> {
+            int index = 0;
+            if (高亮样式 == null) 高亮样式 = 原样式;
+            StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+            int lastIndex = 0;
+            Pattern pattern = Pattern.compile(y.getText());
+            Matcher matcher = pattern.matcher(we.getText());
+            while (matcher.find()) {
+                index++;
+                if (index == wordIndex) {
+                    spansBuilder.add(Collections.emptyList(), matcher.start() - lastIndex);
+                    spansBuilder.add(Collections.singleton("focus"), matcher.end() - matcher.start());
+                    lastIndex = matcher.end();
+                }
+            }
+            if (wordIndex > index) wordIndex = 0;
+            spansBuilder.add(Collections.emptyList(), we.getText().length() - lastIndex);
+            StyleSpans<Collection<String>> spans = spansBuilder.create();
+            // 每次使用原样式去覆盖新的样式
+            StyleSpans<Collection<String>> combinedSpans = 高亮样式.overlay(spans, (oldStyles, newStyles) -> {
+                List<String> styles = new ArrayList<>(oldStyles);
+                styles.addAll(newStyles);
+                return styles;
+            });
+            we.setStyleSpans(0, combinedSpans);
+        };
+
+        EventHandler<MouseEvent> ms = (e) -> {
+            Pattern pattern = Pattern.compile(y.getText());
+            Matcher matcher = pattern.matcher(we.getText());
+            if (matcher.find()) {
+                we.replaceText(matcher.start(), matcher.end(), t.getText());
+            }
+            wordIndex = 0;
+        };
+
+        EventHandler<MouseEvent> msAll = (e) -> {
+            Pattern pattern = Pattern.compile(y.getText());
+            Matcher matcher = pattern.matcher(we.getText());
+            while (matcher.find()) {
+                we.replaceText(matcher.start(), matcher.end(), t.getText());
+            }
+            wordIndex = 0;
         };
 
         public Tools(WTWriterEditor we) {
             this.we = we;
+            原样式 = we.getStyleSpans(0, we.getText().length());
 
             // 实现界面初始化
             this.setAlwaysOnTop(true);
-            double w = 400;
-            double h = 200;
+            double w = 540;
+            double h = 250;
             BorderPane pane = new BorderPane();
             VBox root = new VBox();
             pane.setCenter(root);
@@ -444,7 +500,7 @@ public class WTWriterEditor extends CodeArea {
             HBox box = new HBox();
             th.getStyleClass().add("primary");
             thAll.getStyleClass().add("error");
-            box.getChildren().addAll(f, th, thAll);
+            box.getChildren().addAll(p, f, th, thAll);
             box.setSpacing(15);
             box.setAlignment(Pos.CENTER);
             root.setSpacing(15);
@@ -454,10 +510,28 @@ public class WTWriterEditor extends CodeArea {
             this.setScene(scene);
             Config.setBaseStyle(scene);
             scene.getStylesheets().add(Config.stc("static/style/self.css"));
-            this.setTitle("查找字符");
-
+            this.setTitle("注意这是[" + we.file.getName() + "]文件的替换窗口");
+            this.setOnCloseRequest(e -> {
+                this.y.setText("");
+                this.t.setText("");
+            });
             // 对界面功能的实现
-            f.setOnMouseClicked(f_e);
+            y.textProperty().addListener((observable, oldValue, newValue) -> {
+                f_e.run();
+            });
+            f.setOnMouseClicked(e -> {
+                wordIndex++;
+                f_e_next.run();
+            });
+            p.setOnMouseClicked(e -> {
+                wordIndex--;
+                if (wordIndex == -1) wordIndex = 1;
+                f_e_next.run();
+            });
+            th.setOnMouseClicked(e -> {
+                ms.handle(e);
+            });
+            thAll.setOnMouseClicked(msAll);
         }
     }
 }
