@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Task {
-    ITask iTask() default ITask.NONE;
+    ITask iTask() default ITask.GLOBAL;
 
     /**
      * 优先级

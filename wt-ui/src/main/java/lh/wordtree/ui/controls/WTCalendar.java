@@ -93,11 +93,30 @@ public class WTCalendar extends BorderPane {
         }
     }
 
+    public enum NumberFrequency {
+        LESS0(10, "#c3fae8"),
+        LESS1(100, "#96f2d7"),
+        MORE0(1000, "#63e6be"),
+        MORE1(3000, "#38d9a9"),
+        MORE2(6000, "#20c997");
+        public int value;
+        public String color;
+
+        NumberFrequency(int value, String color) {
+            this.value = value;
+            this.color = color;
+        }
+    }
+
     static class CalendarLabel extends Label {
         public CalendarLabel(int fre, LocalDateTime time) {
             var item = this;
             item.getStyleClass().add("time-item");
             // 设置对应的颜色频率
+            if (fre > NumberFrequency.LESS0.value) {
+                var style = NumberFrequency.LESS0.color;
+                item.setStyle("-fx-background-color: " + style + ";-fx-border-color: " + style);
+            }
             if (fre >= NumberFrequency.LESS1.value) {
                 var style = NumberFrequency.LESS1.color;
                 item.setStyle("-fx-background-color: " + style + ";-fx-border-color: " + style);
@@ -128,21 +147,6 @@ public class WTCalendar extends BorderPane {
                         -fx-padding: 10;
                     """);
             new WTPopup(this, area);
-        }
-    }
-
-    public enum NumberFrequency {
-        LESS0(0, "#e9ecef"),
-        LESS1(100, "#0e4429"),
-        MORE0(1000, "#006d32"),
-        MORE1(3000, "#31ab4b"),
-        MORE2(6000, "#39d353");
-        public int value;
-        public String color;
-
-        NumberFrequency(int value, String color) {
-            this.value = value;
-            this.color = color;
         }
     }
 

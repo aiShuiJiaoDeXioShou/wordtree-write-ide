@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;

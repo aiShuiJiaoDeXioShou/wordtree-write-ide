@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package lh.wordtree.task.edit;
+package lh.wordtree.task.init;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;

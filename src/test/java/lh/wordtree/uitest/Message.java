@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 import cn.hutool.core.thread.ThreadUtil;
 import javafx.animation.FadeTransition;

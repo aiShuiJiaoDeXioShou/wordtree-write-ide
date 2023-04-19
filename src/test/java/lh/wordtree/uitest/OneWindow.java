@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

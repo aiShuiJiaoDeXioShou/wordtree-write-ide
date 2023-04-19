@@ -14,7 +14,7 @@ public class RecordMapperImpl implements RecordMapper {
     @Override
     public int insert(Record record) {
         try {
-            return DbUtils.db().insert(new Entity().setTableName(tableName).parseBean(record));
+            return DbUtils.db().insert(new Entity().setTableName(tableName).parseBean(record, false, true));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

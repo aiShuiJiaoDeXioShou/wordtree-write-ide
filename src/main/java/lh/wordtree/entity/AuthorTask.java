@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class AuthorTask {
+public class AuthorTask implements AutoTask {
     private Integer id;
     // 开始时间
     private LocalDateTime startDateTime;
@@ -18,23 +18,23 @@ public class AuthorTask {
     // 任务描述
     private String describe;
     // 是否采用强制手段
-    private String isMandatory;
+    private String mandatory;
     // 目标字数
     private Integer number;
     // 是否完成了该任务
-    private String isComplete;
+    private String complete;
 
     public AuthorTask() {
     }
 
-    public AuthorTask(LocalDateTime startDateTime, LocalDateTime endDateTime, String authorName, String describe, String isMandatory, Integer number, String isComplete) {
+    public AuthorTask(LocalDateTime startDateTime, LocalDateTime endDateTime, String authorName, String describe, String mandatory, Integer number, String complete) {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.authorName = authorName;
         this.describe = describe;
-        this.isMandatory = isMandatory;
+        this.mandatory = mandatory;
         this.number = number;
-        this.isComplete = isComplete;
+        this.complete = complete;
     }
 
     public Integer getId() {
@@ -86,11 +86,11 @@ public class AuthorTask {
     }
 
     public String getMandatory() {
-        return isMandatory;
+        return mandatory;
     }
 
     public void setMandatory(String mandatory) {
-        isMandatory = mandatory;
+        mandatory = mandatory;
     }
 
     public Integer getNumber() {
@@ -102,11 +102,11 @@ public class AuthorTask {
     }
 
     public String getComplete() {
-        return isComplete;
+        return complete;
     }
 
     public void setComplete(String complete) {
-        isComplete = complete;
+        complete = complete;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class AuthorTask {
                 ", endDateTime='" + endDateTime + '\'' +
                 ", authorName='" + authorName + '\'' +
                 ", describe='" + describe + '\'' +
-                ", isMandatory=" + isMandatory +
+                ", isMandatory=" + mandatory +
                 ", number=" + number +
                 '}';
     }

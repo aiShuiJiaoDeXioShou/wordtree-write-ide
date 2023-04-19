@@ -189,6 +189,18 @@ class UiTest5 : Application() {
 
 }
 
+class UiTest6 : Application() {
+    override fun start(primaryStage: Stage?) {
+        primaryStage!!.title = "UI测试"
+        val root = BorderPane()
+        val box = VBox()
+        root.center = box
+        val scene = Scene(root)
+        primaryStage.scene = scene
+        primaryStage.show()
+    }
+
+}
 
 fun main() {
     Application.launch(UiTest5::class.java)

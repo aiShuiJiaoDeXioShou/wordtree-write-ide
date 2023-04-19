@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 public class WTCoder {
 

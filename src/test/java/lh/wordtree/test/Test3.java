@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.FileUtil;

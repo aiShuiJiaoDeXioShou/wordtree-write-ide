@@ -31,3 +31,18 @@ Text {
     -fx-background-color: -def-border-color;
     -fx-pref-width: 1;
 }
+
+.tab .tab-close-button {
+    -fx-opacity: 0;
+    -fx-background-color: derive(#495057, -40%);
+
+}
+
+.tab:hover .tab-close-button,
+.tab:selected .tab-close-button {
+    -fx-opacity: 1;
+}
+
+.tab .tab-close-button:hover {
+    -fx-background-color: red;
+}

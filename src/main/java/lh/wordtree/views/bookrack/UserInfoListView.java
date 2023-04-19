@@ -16,11 +16,11 @@ import lh.wordtree.service.record.WorkSpaceService;
 import java.io.File;
 import java.util.List;
 
-public class BookHistoryListView extends VBox {
+public class UserInfoListView extends VBox {
     public List<RecentFiles> recentFiles = WorkSpaceService.get();
     private ListView<Label> bookHistoryList = new ListView<>();
 
-    public BookHistoryListView() {
+    public UserInfoListView() {
         this.myLayout();
     }
 

@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -485,6 +486,7 @@ public class WTWriterEditor extends CodeArea {
         public Tools(WTWriterEditor we) {
             this.we = we;
             原样式 = we.getStyleSpans(0, we.getText().length());
+            this.getIcons().add(new Image(Config.APP_ICON));
 
             // 实现界面初始化
             this.setAlwaysOnTop(true);

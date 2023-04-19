@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import impl.jfxtras.styles.jmetro.FluentButtonSkin;
 import javafx.application.Application;

@@ -1,8 +1,10 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
 import lh.wordtree.dao.impl.AuthorTaskMapperImpl;
+import lh.wordtree.dao.impl.UserAutoTaskMapperImpl;
 import lh.wordtree.entity.AuthorTask;
+import lh.wordtree.entity.UserAutoTask;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -42,4 +44,26 @@ public class Test7 {
                 .collect(Collectors.toList());
         System.out.println(sortedStrings);
     }
+
+    @Test
+    public void find() {
+        UserAutoTaskMapperImpl userAutoTaskMapper = new UserAutoTaskMapperImpl();
+        UserAutoTask userAutoTask = new UserAutoTask();
+        userAutoTask.setExecutionTime("1000s");
+        userAutoTask.setDescription("test");
+        userAutoTask.setUrl("./");
+        userAutoTask.setIsStart(1);
+        userAutoTask.setTitle("test");
+        boolean insert = userAutoTaskMapper.insert(userAutoTask);
+        System.out.println(insert);
+        List<UserAutoTask> tasks = userAutoTaskMapper.tasks();
+        System.out.println(tasks);
+        userAutoTaskMapper.closeOrStart(0, 0);
+    }
+
+    @Test
+    public void auto() {
+
+    }
+
 }

@@ -1,6 +1,8 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import javafx.application.Application;
+import lh.wordtree.uitest.JavaCoder;
+import lh.wordtree.uitest.TooltipDemo;
 import org.junit.jupiter.api.Test;
 
 public class Test2 {

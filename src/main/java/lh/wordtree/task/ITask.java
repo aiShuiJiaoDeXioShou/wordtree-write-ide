@@ -31,5 +31,5 @@ public enum ITask {
      * 在项目关闭之后执行的操作
      */
     END,
-    NONE
+    GLOBAL
 }

@@ -13,7 +13,7 @@ import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.CountryService;
 import lh.wordtree.ui.controls.WTIcon;
 import lh.wordtree.ui.controls.WTOneWindow;
-import lh.wordtree.views.bookrack.BookHistoryListView;
+import lh.wordtree.views.bookrack.UserInfoListView;
 import lh.wordtree.views.newbox.NewProjectDialogView;
 
 import java.io.File;
@@ -105,7 +105,7 @@ public class MenuView extends BorderPane {
         this.setCenter(toggleWorkSpace);
         toggleWorkSpace.setOnMouseClicked(e -> {
             var stage = new WTOneWindow(language.get("历史工作空间"));
-            stage.getRoot().getChildren().addAll(new BookHistoryListView());
+            stage.getRoot().getChildren().addAll(new UserInfoListView());
             stage.getLabel().setStyle("-fx-text-fill: #ffff");
             stage.getTop().setStyle("-fx-background-color: #495057");
             stage.show();

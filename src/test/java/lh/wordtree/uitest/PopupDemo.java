@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.uitest;
 
 import cn.hutool.core.io.FileUtil;
 import javafx.application.Application;

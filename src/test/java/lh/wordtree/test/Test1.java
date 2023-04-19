@@ -1,8 +1,9 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import javafx.application.Application;
 import javafx.scene.control.TreeItem;
 import javafx.scene.text.Text;
+import lh.wordtree.uitest.JavaCoder;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;

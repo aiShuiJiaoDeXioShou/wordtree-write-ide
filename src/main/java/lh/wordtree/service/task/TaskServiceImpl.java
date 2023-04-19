@@ -8,6 +8,7 @@ import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,7 @@ public class TaskServiceImpl implements TaskService {
     private final List<OrdinaryFunction> saveTasks = new LinkedList<>();
     private final List<OrdinaryFunction> initTasks = new LinkedList<>();
     private final List<OrdinaryFunction> endTasks = new LinkedList<>();
+    private final LinkedHashMap<String, WTTask> tasks = new LinkedHashMap<>();
 
     public TaskServiceImpl() {
         annotationParse();
@@ -48,6 +50,7 @@ public class TaskServiceImpl implements TaskService {
                     var annotation = aClass.getAnnotation(Task.class);
                     var iTask = annotation.iTask();
                     if (o instanceof WTTask wtTask) {
+                        if (!annotation.name().isBlank()) tasks.put(annotation.name(), wtTask);
                         switch (iTask) {
                             case LOOP -> loopTasks.add(wtTask::apply);
                             case SAVE -> saveTasks.add(wtTask::apply);
@@ -55,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
                             case TOGGLE_FILE -> toggleFileTasks.add(wtTask::apply);
                             case INIT -> initTasks.add(wtTask::apply);
                             case END -> endTasks.add(wtTask::apply);
-                            case NONE -> {
+                            case GLOBAL -> {
                                 loopTasks.add(wtTask::loop);
                                 saveTasks.add(wtTask::save);
                                 writeTasks.add(wtTask::write);

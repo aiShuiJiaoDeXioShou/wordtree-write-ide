@@ -32,6 +32,9 @@ dependencies {
     implementation('org.xerial:sqlite-jdbc:3.34.0')
     implementation('org.jfxtras:jmetro:11.6.14')
     implementation('cn.hutool:hutool-cron:5.7.10')
+    // java监听鼠标键盘事件库
+    implementation('net.java.dev.jna:jna-platform:5.12.1')
+    implementation('net.java.dev.jna:jna:5.12.1')
     // 删除到回收站操作
     implementation('net.java.dev.jna:jna-platform:4.0.0')
     implementation("org.ktorm:ktorm-core:3.6.0")

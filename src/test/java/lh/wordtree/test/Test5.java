@@ -1,4 +1,4 @@
-package lh.wordtree;
+package lh.wordtree.test;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
