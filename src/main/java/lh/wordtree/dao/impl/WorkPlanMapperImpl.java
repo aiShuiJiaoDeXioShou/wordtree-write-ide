@@ -77,8 +77,8 @@ public class WorkPlanMapperImpl implements WorkPlanMapper {
     public long selectDateNumber(String startTime, String endTime) {
         try {
             return DbUtils.db()
-                    .queryOne("SELECT SUM(number) AS number FROM WorkPlace WHERE id BETWEEN %s AND %s".formatted(startTime, endTime))
-                    .getLong("number");
+                    .queryNumber("SELECT SUM(number) AS number FROM WorkPlace WHERE id BETWEEN '%s' AND '%s'".formatted(startTime, endTime))
+                    .longValue();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -30,4 +30,6 @@ public interface WorkPlanMapper {
      * 获取最后一条数据
      */
     WorkPlan selectOfLast();
+
+    long selectDateNumber(String startTime, String endTime);
 }
