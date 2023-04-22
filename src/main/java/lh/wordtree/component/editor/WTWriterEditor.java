@@ -1,6 +1,10 @@
 package lh.wordtree.component.editor;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.extra.tokenizer.Result;
+import cn.hutool.extra.tokenizer.TokenizerUtil;
+import cn.hutool.extra.tokenizer.Word;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
@@ -52,6 +56,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -252,11 +257,35 @@ public class WTWriterEditor extends CodeArea {
         // 鼠标停浮事件
         this.setMouseOverTextDelay(Duration.ofSeconds(1));
         this.addEventHandler(MouseOverTextEvent.MOUSE_OVER_TEXT_BEGIN, e -> {
-            int chIdx = e.getCharacterIndex();
-            Point2D pos = e.getScreenPosition();
-            this.popup.info.setText("Character '" + this.getText(chIdx, chIdx + 1) + "' at " + pos);
-            popup.isSelect.setValue(false);
-            popup.show(this, pos.getX(), pos.getY() + 10);
+            ThreadUtil.execAsync(() -> {
+                int chIdx = e.getCharacterIndex();
+                Point2D pos = e.getScreenPosition();
+                String source = this.getText(chIdx - 3, chIdx + 2);
+                // 使用分词，获取可靠的词语
+                Result parse = TokenizerUtil.createEngine().parse(source);
+                AtomicReference<Word> nowWord = new AtomicReference<>();
+                parse.forEach(word -> {
+                    if (word.getText().contains(this.getText(chIdx, chIdx + 1))) {
+                        nowWord.set(word);
+                    }
+                });
+                Platform.runLater(() -> {
+                    if (nowWord.get() != null) {
+                        this.popup.info.setText("""
+                                @ 词语小助手：
+                                                                
+                                -- 词语： %s,
+                                -- 词性：%s,
+                                -- 解释：%s,
+                                -- 出自: %s,
+                                """.formatted(nowWord.get().getText(), "", "", ""));
+                        popup.isSelect.setValue(false);
+                        popup.show(this, pos.getX(), pos.getY() + 10);
+                    }
+
+                });
+            });
+
         });
         this.addEventHandler(MouseOverTextEvent.MOUSE_OVER_TEXT_END, e -> {
             if (popup.isSelect.getValue()) return;

@@ -1,6 +1,7 @@
 package lh.wordtree.views.core;
 
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.RuntimeUtil;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -8,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import lh.wordtree.App;
+import lh.wordtree.comm.config.Config;
 import lh.wordtree.component.CpMessage;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.language.CountryService;
@@ -20,7 +22,8 @@ import java.io.File;
 import java.util.Map;
 
 public class MenuView extends BorderPane {
-    private final FileTreeView lnbf = FileTreeView.newInstance();// 右侧编译文件树
+    //文件树
+    private final FileTreeView lnbf = FileTreeView.newInstance();
 
     private MenuView() {
         this.getStyleClass().add("note-book-menu");
@@ -44,7 +47,7 @@ public class MenuView extends BorderPane {
     private Menu edit = new Menu(language.get("编辑") + "(E)");
     private Menu help = new Menu(language.get("帮助") + "(h)");
     private MenuBar menuBar = new MenuBar();
-    private Label update;
+    private Label ok;
     private ChoiceBox<String> choiceBox = new ChoiceBox<>();
 
     {
@@ -87,14 +90,28 @@ public class MenuView extends BorderPane {
 
     {
         // 这里有一个选择button
-        update = new Label();
-        update.getStyleClass().add("wt-button");
-        update.setGraphic(new WTIcon("static/icon/执行.svg"));
+        ok = new Label();
+        ok.getStyleClass().add("wt-button");
+        ok.setGraphic(new WTIcon("static/icon/执行.svg"));
         // 创建选择框组件
-        choiceBox.getItems().addAll("上传", "编译");
+        choiceBox.getItems().addAll("编译", "上传");
+        choiceBox.setPrefWidth(90);
         choiceBox.getSelectionModel().select(0);
-        actionBar.getChildren().addAll(choiceBox, update);
+        actionBar.getChildren().addAll(choiceBox, ok);
         actionBar.setSpacing(10);
+        ok.setOnMouseClicked(e -> {
+            if (choiceBox.getValue().equals("编译")) {
+                String wtRootPath = FactoryBeanService.nowRootFile.getValue().getPath();
+                String cmd = "%s -path %s -tmpl %s -create -outpath %s"
+                        .formatted(
+                                Config.stc("static/tool/build/build.exe").replace("file:/", ""),
+                                wtRootPath,
+                                Config.stc("static/tool/build/book.tmpl").replace("file:/", ""),
+                                "%s/.wordtree/out".formatted(wtRootPath));
+                System.out.println(cmd);
+                RuntimeUtil.exec(cmd);
+            }
+        });
     }
 
     {
