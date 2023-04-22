@@ -32,7 +32,9 @@ import java.util.*
 
 class WTLangPlugin() : WTPlugLanguage {
     private val parser: WtParser = SimpleParser()
-    override fun init() {}
+    override fun init() {
+
+    }
 
     override fun parse(source: String?): List<Figure> {
         if (source != null) parser.parser(source)

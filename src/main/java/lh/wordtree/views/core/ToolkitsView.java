@@ -37,9 +37,7 @@ public class ToolkitsView extends AnchorPane {
         tabTask.setContent(new TaskBoxView());
         pane.getTabs().addAll(tabTask, outlineTab, toolsTab);
         this.getChildren().add(pane);
+        NowFileOutlineView.newInstance().prefHeightProperty().bind(pane.prefHeightProperty());
     }
 
-    private void controller() {
-
-    }
 }

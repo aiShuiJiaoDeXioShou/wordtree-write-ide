@@ -117,7 +117,7 @@ public class BottomStateView extends BorderPane {
 
             });
         });
-        chartViews.setStyle("-fx-pref-height: 170");
+        chartViews.setStyle("-fx-pref-height: 170;-fx-background-color: #e7f5ff;-fx-effect: dropshadow(three-pass-box,#8c8c8c, 10.0,0, -1, -2);-fx-background-radius: 5;-fx-padding: 8;");
         chartPopup.getContent().add(chartViews);
     }
 

@@ -31,7 +31,6 @@ import lh.wordtree.views.core.FileTreeView;
 import lh.wordtree.views.core.TabMenuBarView;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
-import org.fxmisc.richtext.StyleClassedTextArea;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -40,14 +39,13 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 
-public class CpFileMenu extends TreeItem<Label> {
+public class CpFileItem extends TreeItem<Label> {
     private final File file;
     private final FileService fileService = FileTreeView.newInstance().fileService;
     private final Label label;
-
     private final TabMenuBarView tabMenuBar = TabMenuBarView.newInstance();
 
-    public CpFileMenu(File file) {
+    public CpFileItem(File file) {
         this.file = file;
         label = new Label();
         addIcon(label, file);
@@ -55,7 +53,6 @@ public class CpFileMenu extends TreeItem<Label> {
         label.setText(file.getName());
         this.setValue(label);
         label.setMinWidth(230);
-        label.setMinHeight(30);
         this.setAction(this);
     }
 
@@ -133,7 +130,7 @@ public class CpFileMenu extends TreeItem<Label> {
                         } else return 0;
                     }
                 }).toList()) {
-                    var menu = new CpFileMenu(f);
+                    var menu = new CpFileItem(f);
                     this.getChildren().add(menu);
                 }
             } else {
@@ -239,7 +236,7 @@ public class CpFileMenu extends TreeItem<Label> {
             var idStr = parent.getValue().getId() + "/" + textField.getText();
             var b = type == 0 ? fileService.createFile(idStr) : fileService.createFolder(idStr);
             if (b) {
-                var treeItem = new CpFileMenu(new File(idStr));
+                var treeItem = new CpFileItem(new File(idStr));
                 parent.getChildren().add(treeItem);
             }
         });
@@ -253,7 +250,6 @@ public class CpFileMenu extends TreeItem<Label> {
      * 每当双击该文件树的时候添加一个tab导航
      */
     private void addTab() {
-        FactoryBeanService.nowFile.set(file);
         LanguageConstructorService lsc = new LanguageConstructorServiceImpl(file);
         ThreadUtil.execAsync(() -> TaskService.INSTANCE.start(ITask.TOGGLE_FILE));
         Node build = lsc.build();
@@ -265,9 +261,8 @@ public class CpFileMenu extends TreeItem<Label> {
         FactoryBeanService.nowWorkSpace.set(build);
         if (build instanceof WTWriterEditor code) {
             addCode(tab, code);
-            VirtualizedScrollPane<StyleClassedTextArea> vsPane = new VirtualizedScrollPane<>(code);
+            VirtualizedScrollPane<CodeArea> vsPane = new VirtualizedScrollPane<>(code);
             tab.setContent(vsPane);
-            FactoryBeanService.nowCodeArea.set(code);
         } else if (build instanceof WebView webView) {
             tab.setContent(webView);
         } else if (build instanceof SplitPane box) {

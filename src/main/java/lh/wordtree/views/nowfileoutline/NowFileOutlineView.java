@@ -9,6 +9,8 @@ import cn.hutool.extra.tokenizer.Word;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
@@ -44,7 +46,15 @@ public class NowFileOutlineView extends VBox {
                 }
                 for (int i = 1; i <= split.length; i++) {
                     int finalI = i;
-                    Platform.runLater(() -> listView.getItems().add(new Paragraphs(split[finalI - 1], finalI)));
+                    Platform.runLater(() -> {
+                        Paragraphs paragraphs = new Paragraphs(split[finalI - 1], finalI);
+                        listView.getItems().add(paragraphs);
+                        paragraphs.setOnMouseClicked(e -> {
+                            if (FactoryBeanService.nowCodeArea.getValue() != null) {
+                                FactoryBeanService.nowCodeArea.getValue().moveTo(finalI - 1, 0);
+                            }
+                        });
+                    });
                 }
             });
 
@@ -91,15 +101,19 @@ public class NowFileOutlineView extends VBox {
         label.setPadding(new Insets(10, 0, 10, 20));
         center.getChildren().addAll(label1, listView);
         listView.setPrefHeight(400);
-
         TabPane tabPane = new TabPane();
-        Tab dl = new Tab("段落统计");
-        Tab word = new Tab("字符统计");
+        Tab dl = new Tab("Word");
+        Tab word = new Tab("Paragraph");
         tabPane.getTabs().addAll(dl, word);
         dl.setContent(top);
         word.setContent(center);
+        tabPane.setSide(Side.LEFT);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         this.getChildren().add(tabPane);
+        this.setAlignment(Pos.BOTTOM_LEFT);
+        tabPane.prefHeightProperty().bind(this.heightProperty());
+        listView.prefHeightProperty().bind(this.heightProperty());
+        totalView.prefHeightProperty().bind(this.heightProperty());
     }
 
     public static NowFileOutlineView newInstance() {

@@ -17,16 +17,18 @@ public class NoteCoreView extends BorderPane {
             CpHide borderHover = new CpHide();
             var menusSide = new CpSideBar(task, () -> this.setRight(borderHover));
             menusSide.setName("扩展功能");
+            menusSide.title.setGraphic(new WTIcon(new Image("static/icon/扩展.png")));
             menusSide.setId("code-right");
             borderHover.setFunc(() -> this.setRight(menusSide));
             menusSide.setBorder(new Border(new BorderStroke(Paint.valueOf("#f8f9fa"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(1, 1, 0, 0))));
-            this.setRight(borderHover);
+            this.setRight(menusSide);
         }
 
         var menus = FileTreeView.newInstance();
         {
             CpHide borderHover = new CpHide();
             var menusSide = new CpSideBar(menus, () -> this.setLeft(borderHover));
+            menus.prefHeightProperty().bind(menusSide.prefHeightProperty());
             menusSide.setName("资源管理器");
             menusSide.title.setGraphic(new WTIcon(new Image("static/icon/33资源.png")));
             menusSide.setId("code-left");

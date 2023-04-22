@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.entity.NovelProject;
+import lh.wordtree.plugin.wtlang.WtLangView;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.ITask;
@@ -80,6 +81,16 @@ public class WorkTask implements WTTask {
                             }
                         });
                     }
+                }
+            });
+        }
+        if (contains) {
+            // 加载人物关系插件，解析人物对象关系
+            ThreadUtil.execAsync(() -> {
+                String path = FactoryBeanService.nowRootFile.get().getPath() + "/大纲/人物.json";
+                File file = new File(path);
+                if (file.exists()) {
+                    new WtLangView(file);
                 }
             });
         }

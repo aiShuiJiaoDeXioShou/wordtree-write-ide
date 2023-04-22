@@ -22,6 +22,9 @@
 
 #code-right .task-top-title {
     -fx-text-fill: -node-right-top-title;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-pref-width: 140;
 }
 
 #code-left .task-top {

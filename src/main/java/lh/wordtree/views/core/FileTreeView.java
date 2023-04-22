@@ -5,7 +5,7 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import lh.wordtree.component.CpFileMenu;
+import lh.wordtree.component.CpFileItem;
 import lh.wordtree.entity.RecentFiles;
 import lh.wordtree.service.factory.FactoryBeanService;
 import lh.wordtree.service.file.FileService;
@@ -36,7 +36,7 @@ public class FileTreeView extends TreeView<Label> {
             Platform.runLater(() -> {
                 // 回收垃圾保存内存不溢出
                 this.gc();
-                this.tree = new CpFileMenu(this.nowFile);
+                this.tree = new CpFileItem(this.nowFile);
                 this.setRoot(this.tree);
                 if (this.getRoot().getChildren().size() > 0) {
                     this.getRoot().setExpanded(true);
