@@ -28,14 +28,17 @@ public class ToolkitsView extends AnchorPane {
         pane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         var tabTask = new Tab();
         tabTask.setText("任务管理");
+        tabTask.setContent(new TaskBoxView());
+
         var outlineTab = new Tab();
         outlineTab.setText("大纲管理");
         outlineTab.setContent(NowFileOutlineView.newInstance());
+
         var toolsTab = new Tab();
         toolsTab.setText("小工具");
         toolsTab.setContent(new Label("小工具"));
-        tabTask.setContent(new TaskBoxView());
-        pane.getTabs().addAll(tabTask, outlineTab, toolsTab);
+
+        pane.getTabs().addAll(tabTask, outlineTab);
         this.getChildren().add(pane);
         NowFileOutlineView.newInstance().prefHeightProperty().bind(pane.prefHeightProperty());
     }

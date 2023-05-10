@@ -4,12 +4,14 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import lh.wordtree.component.CpMessage;
+import lh.wordtree.plugin.bookshelf.ReaderTextBuilder;
 import lh.wordtree.service.plugin.WTPluginServiceImpl;
 import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.controls.WTOneWindow;
 import lh.wordtree.views.record.RecordView;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Test5 {
 
@@ -92,6 +96,30 @@ public class Test5 {
         alert.setOnMouseClicked(e -> {
             alert1.show();
         });
+    }
+
+    @Test
+    public void test4() {
+        // 创建 Pattern 对象
+        Pattern p = Pattern.compile("(^第\\d+章|^第[一二三四五六七八九十]|^\\d+).+[^\\r\\n]+");
+        String[] split = "2、诡秘自主\n你是主...\n3、诡秘自主2\n你是主2...".split("\n");
+        for (String s : split) {
+            // 创建 Matcher 对象
+            Matcher m = p.matcher(s);
+            // 查找匹配的标题
+            while (m.find()) {
+                System.out.println("找到标题: " + m.group());
+            }
+        }
+    }
+
+    @Test
+    public void test5() {
+        String s = "C:\\Users\\28322\\Documents\\Book\\诡秘之主.txt";
+        ReaderTextBuilder readerTextBuilder = ReaderTextBuilder.builder(new File(s));
+        List<ReaderTextBuilder.C> cs = readerTextBuilder.find();
+        String 第二章_情况 = readerTextBuilder.findTitleByContent("第二章 情况");
+        System.out.println(第二章_情况);
     }
 
 

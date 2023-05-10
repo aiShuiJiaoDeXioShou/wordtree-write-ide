@@ -70,6 +70,10 @@ public class WTFileUtils {
         return filename.substring(filename.lastIndexOf("."));
     }
 
+    public static String fileName(File file) {
+        return file.getName().substring(0, file.getName().lastIndexOf("."));
+    }
+
     public static String lastName(String fileName) {
         //文件没有后缀名的情况
         if (fileName.lastIndexOf(".") == -1) {

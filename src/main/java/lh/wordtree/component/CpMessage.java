@@ -30,15 +30,33 @@ public interface CpMessage {
     }
 
     static void sendWarning(String msg) {
-        init(msg, Paint.valueOf("#ffe066"),new MDL2IconFont("\uE7BA"));
+        init(msg, Paint.valueOf("#ffe066"), new MDL2IconFont("\uE7BA"));
     }
 
     static void sendLoading(String msg) {
-        init(msg, Paint.valueOf("#74c0fc"),new MDL2IconFont("\uE895"));
+        init(msg, Paint.valueOf("#74c0fc"), new MDL2IconFont("\uE895"));
+    }
+
+    static void loading(String msg) {
+        var stackPane = App.rootPane;
+        var label = new Label(msg);
+        stackPane.getChildren().add(label);
+        stackPane.setAlignment(Pos.CENTER);
+        FadeTransition ft = new FadeTransition(Duration.millis(2000), label);
+        ft.setFromValue(1.0);
+        ft.setToValue(0.1);
+        ft.setCycleCount(Timeline.INDEFINITE);
+        ft.setAutoReverse(true);
+        ft.play();
+    }
+
+    static void close() {
+        var stackPane = App.rootPane;
+        stackPane.getChildren().remove(1);
     }
 
 
-    static void init(String msg,Paint color, MDL2IconFont iconFont) {
+    static void init(String msg, Paint color, MDL2IconFont iconFont) {
         var stackPane = App.rootPane;
 
         // 提示本体
@@ -83,7 +101,6 @@ public interface CpMessage {
                 });
             });
         }
-
     }
 
 }

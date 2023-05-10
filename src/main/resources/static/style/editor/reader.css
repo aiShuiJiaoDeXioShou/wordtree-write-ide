@@ -1,0 +1,66 @@
+.reader .paragraph-text {
+    -fx-padding: 0 5 5 5;
+}
+
+.reader {
+    -fx-font-size: 15;
+}
+
+.reader .text {
+    -fx-line-spacing: 5;
+}
+
+.reader {
+    -fx-background-color: white;
+    -fx-border-width: none;
+}
+
+.keyword {
+    -fx-fill: purple;
+    -fx-font-weight: bold;
+}
+
+.semicolon {
+    -fx-font-weight: bold;
+}
+
+.paren {
+    -fx-fill: firebrick;
+    -fx-font-weight: bold;
+}
+
+.bracket {
+    -fx-fill: darkgreen;
+    -fx-font-weight: bold;
+}
+
+.brace {
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+
+.string {
+    -fx-fill: blue;
+}
+
+.comment {
+    -fx-fill: cadetblue;
+}
+
+.select {
+    -rtfx-background-color: #fcd47e;
+}
+
+.focus {
+    -rtfx-border-stroke-color: black;
+    -rtfx-border-stroke-width: 1.0;
+    -rtfx-background-color: #a6d2ff;
+}
+
+.paragraph-box:has-caret {
+    -fx-background-color: #fcfaed;
+}
+
+.styled-text-area .selection {
+    -fx-fill: #a6d2ff;
+}

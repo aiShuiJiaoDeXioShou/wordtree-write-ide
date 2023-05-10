@@ -280,7 +280,7 @@ public class WTWriterEditor extends CodeArea {
                                 -- 出自: %s,
                                 """.formatted(nowWord.get().getText(), "", "", ""));
                         popup.isSelect.setValue(false);
-                        popup.show(this, pos.getX(), pos.getY() + 10);
+                        popup.show(this, pos.getX(), pos.getY() + 20);
                     }
 
                 });

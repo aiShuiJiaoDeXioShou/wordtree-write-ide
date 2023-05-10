@@ -1,13 +1,17 @@
 package lh.wordtree.test;
 
 import cn.hutool.core.date.LocalDateTimeUtil;
+import javafx.application.Application;
+import javafx.stage.Stage;
 import lh.wordtree.dao.impl.AuthorTaskMapperImpl;
 import lh.wordtree.dao.impl.UserAutoTaskMapperImpl;
 import lh.wordtree.entity.AuthorTask;
 import lh.wordtree.entity.UserAutoTask;
+import lh.wordtree.plugin.bookshelf.WTReader;
 import lh.wordtree.utils.DbUtils;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Test7 {
+public class Test7 extends Application {
     @Test
     public void dao1() throws SQLException {
         var authorTaskMapper = new AuthorTaskMapperImpl();
@@ -68,4 +72,9 @@ public class Test7 {
         System.out.println(query.longValue());
     }
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        WTReader reader = new WTReader(new File("C:\\Users\\28322\\Documents\\Book\\诡秘之主.txt"));
+        reader.show();
+    }
 }
