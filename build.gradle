@@ -50,8 +50,8 @@ dependencies {
     // 引入md文件解析器
     implementation('com.vladsch.flexmark:flexmark-all:0.64.0')
     // 引入爬虫框架
-    implementation('us.codecraft:webmagic-core:0.7.3')
-    implementation('us.codecraft:webmagic-extension:0.7.3')
+    implementation('us.codecraft:webmagic-core:0.8.0')
+    implementation('us.codecraft:webmagic-extension:0.8.0')
     // 加载svg文件
     implementation('org.apache.xmlgraphics:batik-all:1.14')
     // 汉语相关

@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
-import lh.wordtree.comm.utils.ClassLoaderUtils;
 import lh.wordtree.component.CpButtonItem;
 import lh.wordtree.component.CpIcon;
 import lh.wordtree.plugin.WTPluginExtended;
@@ -32,7 +31,6 @@ public class NoteLeftButtonBarView extends HBox {
         writeItem = new CpButtonItem("\uE70F", "写作");
         plugins = new CpButtonItem("\uE74C", "插件");
         setting = new CpButtonItem("\uE713", "设置");
-        var bookshelf = new CpIcon(ClassLoaderUtils.url("static/icon/书架管理.png"), "书架管理");
         listView = new ListView<>();
         {
             listView.getStyleClass().add("node-left");

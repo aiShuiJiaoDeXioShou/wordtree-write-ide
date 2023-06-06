@@ -11,7 +11,9 @@ public interface ClassLoaderUtils {
     }
 
     static String url(String path) {
-        return Objects.requireNonNull(ClassLoaderUtils.class.getClassLoader().getResource(path)).toExternalForm();
+        return Objects.requireNonNull(
+                ClassLoaderUtils.class.getClassLoader().getResource(path)
+        ).toExternalForm();
     }
 
 }
