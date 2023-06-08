@@ -2,6 +2,7 @@ package lh.wordtree.service.plugin;
 
 import cn.hutool.core.util.ClassLoaderUtil;
 import cn.hutool.core.util.ReflectUtil;
+import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
@@ -11,6 +12,8 @@ import lh.wordtree.plugin.wtlang.WTLangPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +28,14 @@ public class WTPluginServiceImpl implements WTPluginService {
     private Map<String, WTPluginExtended> extendeds = new HashMap<>();
 
     public WTPluginServiceImpl(String src) {
+        Path of = Path.of(src);
+        if (!Files.exists(of)) {
+            try {
+                Files.createDirectory(of);
+            } catch (IOException e) {
+                Config.log.error("创建文件失败！");
+            }
+        }
         this.src = src;
         sendJar();
         // 注册自带的插件

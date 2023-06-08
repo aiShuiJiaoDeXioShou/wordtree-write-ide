@@ -3,7 +3,7 @@ package lh.wordtree.test;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import lh.wordtree.component.CpMessage;
+import lh.wordtree.component.SystemMessage;
 import lh.wordtree.plugin.bookshelf.ReaderTextBuilder;
 import lh.wordtree.service.plugin.WTPluginServiceImpl;
 import lh.wordtree.ui.controls.WTFxInputAlert;
@@ -80,7 +80,7 @@ public class Test5 {
             stage.show();
         });
         button.setOnMouseClicked(e -> {
-            CpMessage.sendError("无法使用该模块，因为没有开发！");
+            SystemMessage.sendError("无法使用该模块，因为没有开发！");
         });
         List<WTFxInputAlert.AlertTask> alertTasks = new ArrayList<>();
         alertTasks.add(new WTFxInputAlert.AlertTask("章节", "static/icon/default_file.svg", alert1 -> {

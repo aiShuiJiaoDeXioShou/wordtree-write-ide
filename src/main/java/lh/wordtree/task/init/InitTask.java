@@ -7,8 +7,8 @@ import javafx.application.Platform;
 import lh.wordtree.comm.config.CodeLauncherConfig;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ClassLoaderUtils;
-import lh.wordtree.entity.Author;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.archive.entity.Author;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
@@ -36,7 +36,7 @@ public class InitTask implements WTTask {
             if (!user.exists()) {
                 Platform.runLater(() -> new OneLoginView().show());
             } else {
-                FactoryBeanService.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
+                BeanFactory.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
             }
             if (appConfigDirFile.exists()) return;
             var countryLanguage = new File(Config.COUNTRY_LANGUAGE);

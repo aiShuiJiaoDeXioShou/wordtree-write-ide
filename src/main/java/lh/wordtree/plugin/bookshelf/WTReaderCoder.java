@@ -6,7 +6,7 @@ import org.fxmisc.richtext.CodeArea;
 
 public class WTReaderCoder extends CodeArea {
     public WTReaderCoder() {
-        this.getStylesheets().add(Config.stc("static/style/editor/reader.css"));
+        this.getStylesheets().add(Config.src("static/style/editor/reader.css"));
         this.getStyleClass().addAll("reader");
         this.setPrefWidth(500);
         this.setPrefHeight(700);

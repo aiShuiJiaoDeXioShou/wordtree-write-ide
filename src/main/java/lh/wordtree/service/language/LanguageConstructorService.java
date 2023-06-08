@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSON;
 import javafx.scene.Node;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.WTFileUtils;
-import lh.wordtree.entity.LanguageConfig;
+import lh.wordtree.archive.entity.LanguageConfig;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -22,13 +22,13 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.component.CpButtonItem;
-import lh.wordtree.component.CpMessage;
-import lh.wordtree.dao.AuthorTaskMapper;
-import lh.wordtree.dao.WorkPlanMapper;
-import lh.wordtree.dao.impl.AuthorTaskMapperImpl;
-import lh.wordtree.dao.impl.WorkPlanMapperImpl;
-import lh.wordtree.entity.AuthorTask;
+import lh.wordtree.component.ButtonItemComponent;
+import lh.wordtree.component.SystemMessage;
+import lh.wordtree.archive.mapper.AuthorTaskMapper;
+import lh.wordtree.archive.mapper.WorkPlanMapper;
+import lh.wordtree.archive.mapper.impl.AuthorTaskMapperImpl;
+import lh.wordtree.archive.mapper.impl.WorkPlanMapperImpl;
+import lh.wordtree.archive.entity.AuthorTask;
 import lh.wordtree.views.core.NoteCoreView;
 
 import java.time.Duration;
@@ -79,7 +79,7 @@ public class TaskBoxView extends VBox {
         effect.setOffsetX(5);
         effect.setOffsetY(5);
         ImageView img = new ImageView();
-        img.setImage(new Image(Config.stc("static/icon/target_task.png")));
+        img.setImage(new Image(Config.src("static/icon/target_task.png")));
         img.setFitWidth(15);
         img.setFitHeight(15);
         title.setGraphic(img);
@@ -101,7 +101,7 @@ public class TaskBoxView extends VBox {
     }
 
     private class ShowBox extends BorderPane {
-        CpButtonItem edit = new CpButtonItem("\uE70F", "写作");
+        ButtonItemComponent edit = new ButtonItemComponent("\uE70F", "写作");
 
         /**
          * 新增窗口的弹出窗
@@ -131,7 +131,7 @@ public class TaskBoxView extends VBox {
             Label end = new Label(endStr);
             HBox hBox = new HBox();
             Label icon = new Label();
-            ImageView iImage = new ImageView(new Image(Config.stc("static/icon/右箭头.png")));
+            ImageView iImage = new ImageView(new Image(Config.src("static/icon/右箭头.png")));
             iImage.setFitHeight(15);
             iImage.setFitWidth(15);
             icon.setGraphic(iImage);
@@ -148,7 +148,7 @@ public class TaskBoxView extends VBox {
             ImageView img = new ImageView();
             img.setFitHeight(15);
             img.setFitWidth(15);
-            img.setImage(new Image(Config.stc("static/icon/info.png")));
+            img.setImage(new Image(Config.src("static/icon/info.png")));
             remember.setGraphic(img);
             remember.setStyle("-fx-text-fill: #adb5bd;-fx-font-size: 10;");
             var describe = new Label(autoTask.getDescribe());
@@ -227,15 +227,15 @@ public class TaskBoxView extends VBox {
 
             save.setOnMouseClicked(e -> {
                 if (der.getText().isBlank()) {
-                    CpMessage.sendError("任务详情描述不能为空！");
+                    SystemMessage.sendError("任务详情描述不能为空！");
                     return;
                 }
                 if (name.getText().isBlank()) {
-                    CpMessage.sendError("任务名称不能为空！");
+                    SystemMessage.sendError("任务名称不能为空！");
                     return;
                 }
                 if (endTime.getValue() == null) {
-                    CpMessage.sendError("结束时间不能为空！");
+                    SystemMessage.sendError("结束时间不能为空！");
                     return;
                 }
                 var authorTask = new AuthorTask();
@@ -281,7 +281,7 @@ public class TaskBoxView extends VBox {
             ImageView img = new ImageView();
             img.setFitWidth(15);
             img.setFitHeight(15);
-            img.setImage(new Image(Config.stc("static/icon/task-color.png")));
+            img.setImage(new Image(Config.src("static/icon/task-color.png")));
             label.setGraphic(img);
             var del = new Label("删除");
             del.setStyle("-fx-text-fill: red;");

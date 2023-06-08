@@ -5,9 +5,9 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import lh.wordtree.component.CpFileItem;
-import lh.wordtree.entity.RecentFiles;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.component.FileItemComponent;
+import lh.wordtree.archive.entity.RecentFiles;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.views.root.NoteLeftButtonBarView;
@@ -27,7 +27,7 @@ public class FileTreeView extends TreeView<Label> {
 
     public void toggleFile(File file) {
         // 变更全局根目录
-        FactoryBeanService.nowRootFile.set(file);
+        BeanFactory.nowRootFile.set(file);
         this.nowFile = file;
         // 改变路由状态
         NoteLeftButtonBarView.newInstance().listView.getSelectionModel().select(1);
@@ -36,7 +36,7 @@ public class FileTreeView extends TreeView<Label> {
             Platform.runLater(() -> {
                 // 回收垃圾保存内存不溢出
                 this.gc();
-                this.tree = new CpFileItem(this.nowFile);
+                this.tree = new FileItemComponent(this.nowFile);
                 this.setRoot(this.tree);
                 if (this.getRoot().getChildren().size() > 0) {
                     this.getRoot().setExpanded(true);
@@ -47,8 +47,7 @@ public class FileTreeView extends TreeView<Label> {
         ThreadUtil.execAsync(this::flushWorkSpace);
     }
 
-    public FileService fileService = new FileService() {
-    };
+    public FileService fileService = new FileService() {};
     public File nowFile;
     private TreeItem<Label> tree;
 
@@ -66,7 +65,7 @@ public class FileTreeView extends TreeView<Label> {
 
     private void flushWorkSpace() {
         // 对工作空间的保存操作
-        var file = FactoryBeanService.nowRootFile.getValue();
+        var file = BeanFactory.nowRootFile.getValue();
         List<RecentFiles> recentFiles = WorkSpaceService.get();
         var filesStream = recentFiles.stream().filter(re -> re.getFilePath().equals(file.getPath())).toList();
         if (filesStream.size() == 0) return;

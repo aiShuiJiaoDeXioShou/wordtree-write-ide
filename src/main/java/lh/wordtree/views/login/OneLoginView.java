@@ -14,8 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.component.CpMessage;
-import lh.wordtree.entity.Author;
+import lh.wordtree.component.SystemMessage;
+import lh.wordtree.archive.entity.Author;
 import lh.wordtree.ui.controls.WTIcon;
 import lh.wordtree.ui.controls.WTInputPro;
 
@@ -42,7 +42,7 @@ public class OneLoginView extends Stage {
             try {
                 wtIcon.setImage(new Image(new FileInputStream(file.get().getPath()), 64, 64, true, true));
             } catch (FileNotFoundException ex) {
-                CpMessage.sendError("这个文件不能作为您的头像");
+                SystemMessage.sendError("这个文件不能作为您的头像");
             }
         });
         root.setPadding(new Insets(30));
@@ -68,7 +68,7 @@ public class OneLoginView extends Stage {
                             basePassword.getTextField().getText(),
                             new ArrayList<>(), new ArrayList<>());
                 } catch (Exception e2) {
-                    CpMessage.sendError("必须要输入全部信息！");
+                    SystemMessage.sendError("必须要输入全部信息！");
                 }
                 if (author != null) {
                     var bytes = JSON.toJSONBytes(author, JSONWriter.Feature.PrettyFormat);

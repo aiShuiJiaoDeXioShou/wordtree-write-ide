@@ -10,8 +10,8 @@ import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import lh.wordtree.App;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.component.CpMessage;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.component.SystemMessage;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.language.CountryService;
 import lh.wordtree.ui.controls.WTIcon;
 import lh.wordtree.ui.controls.WTOneWindow;
@@ -101,12 +101,12 @@ public class MenuView extends BorderPane {
         actionBar.setSpacing(10);
         ok.setOnMouseClicked(e -> {
             if (choiceBox.getValue().equals("编译")) {
-                String wtRootPath = FactoryBeanService.nowRootFile.getValue().getPath();
+                String wtRootPath = BeanFactory.nowRootFile.getValue().getPath();
                 String cmd = "%s -path %s -tmpl %s -create -outpath %s"
                         .formatted(
-                                Config.stc("static/tool/build/build.exe").replace("file:/", ""),
+                                Config.src("static/tool/build/build.exe").replace("file:/", ""),
                                 wtRootPath,
-                                Config.stc("static/tool/build/book.tmpl").replace("file:/", ""),
+                                Config.src("static/tool/build/book.tmpl").replace("file:/", ""),
                                 "%s/.wordtree/out".formatted(wtRootPath));
                 System.out.println(cmd);
                 RuntimeUtil.exec(cmd);
@@ -115,7 +115,7 @@ public class MenuView extends BorderPane {
     }
 
     {
-        FactoryBeanService.nowRootFile.addListener((observable, oldValue, newValue) -> {
+        BeanFactory.nowRootFile.addListener((observable, oldValue, newValue) -> {
             toggleWorkSpace.setText(newValue.getName());
         });
         toggleWorkSpace.getStyleClass().add("toggle-work-space");
@@ -157,7 +157,7 @@ public class MenuView extends BorderPane {
             File file = fileChooser.showDialog(App.primaryStage);
             if (file == null) return;
             if (file.getPath().equals(lnbf.nowFile.getPath())) {
-                CpMessage.sendWarning("请不要选择重复的工作空间!");
+                SystemMessage.sendWarning("请不要选择重复的工作空间!");
             } else {
                 ThreadUtil.execute(() -> {
                     lnbf.toggleFile(file);

@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.WTFileUtils;
-import lh.wordtree.component.CpIcon;
+import lh.wordtree.component.IconComponent;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +28,10 @@ public class WTReader extends Stage {
     private ListView<Label> titleEl;
     private WTReaderCoder readerCoder;
     private VirtualizedScrollPane<CodeArea> vsPane;
-    private CpIcon setting;
-    private CpIcon search;
-    private CpIcon next;
-    private CpIcon pre;
+    private IconComponent setting;
+    private IconComponent search;
+    private IconComponent next;
+    private IconComponent pre;
     private SimpleBooleanProperty visible = new SimpleBooleanProperty(false);
 
     public WTReader(@NotNull File file) {
@@ -44,23 +44,23 @@ public class WTReader extends Stage {
         var sk = new StackPane();
         sk.getChildren().add(vsPane);
 
-        setting = new CpIcon("static/icon/setting.png", "设置");
+        setting = new IconComponent("static/icon/setting.png", "设置");
         sk.getChildren().add(setting);
         StackPane.setAlignment(setting, Pos.TOP_RIGHT);
         StackPane.setMargin(setting, new Insets(10, 20, 0, 0));
 
-        search = new CpIcon("static/icon/搜索.png", "设置");
+        search = new IconComponent("static/icon/搜索.png", "设置");
         sk.getChildren().add(search);
         StackPane.setAlignment(search, Pos.TOP_RIGHT);
         StackPane.setMargin(search, new Insets(30, 20, 0, 0));
         search.visibleProperty().bind(visible);
 
-        next = new CpIcon("static/icon/next.png", "上一张", 33, 33);
+        next = new IconComponent("static/icon/next.png", "上一张", 33, 33);
         next.visibleProperty().bind(visible);
         sk.getChildren().add(next);
         StackPane.setAlignment(next, Pos.CENTER_RIGHT);
 
-        pre = new CpIcon("static/icon/上一个.png", "上一个", 30, 30);
+        pre = new IconComponent("static/icon/上一个.png", "上一个", 30, 30);
         pre.visibleProperty().bind(visible);
         sk.getChildren().add(pre);
         StackPane.setAlignment(pre, Pos.CENTER_LEFT);
@@ -85,7 +85,7 @@ public class WTReader extends Stage {
             Button add = new Button("+");
             Button jian = new Button("-");
             Button bt = new Button("系统字体");
-            bt.setGraphic(new CpIcon("static/icon/上一个.png", "上一个"));
+            bt.setGraphic(new IconComponent("static/icon/上一个.png", "上一个"));
             h2.getChildren().addAll(字号, add, font, jian, bt);
             h2.setSpacing(10);
             h2.setAlignment(Pos.CENTER_LEFT);

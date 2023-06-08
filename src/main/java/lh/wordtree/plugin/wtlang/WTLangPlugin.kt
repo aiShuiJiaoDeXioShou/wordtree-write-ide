@@ -15,11 +15,11 @@ import javafx.scene.input.KeyEvent
 import javafx.scene.text.Text
 import lh.wordtree.comm.config.Config
 import lh.wordtree.comm.entity.Figure
-import lh.wordtree.component.editor.WTLangCodeArea
+import lh.wordtree.editor.LangEditor
 import lh.wordtree.plugin.WTPlugLanguage
 import lh.wordtree.plugin.WTPluginConfig
 import lh.wordtree.plugin.WTPluginType
-import lh.wordtree.service.factory.FactoryBeanService
+import lh.wordtree.comm.BeanFactory
 import lh.wordtree.service.plugin.WTPluginService
 import lh.wordtree.ui.controls.WTNetwork
 import lh.wordtree.views.core.TabMenuBarView
@@ -87,7 +87,7 @@ class WtLangView(private val file: File) {
     private var parseObject: JSONObject? = null
     private var sourceWt: String? = null
     private val splitPane = SplitPane()
-    private val codeArea = WTLangCodeArea()
+    private val codeArea = LangEditor()
     private var wtNetwork: WTNetwork? = null
 
     init {
@@ -109,7 +109,7 @@ class WtLangView(private val file: File) {
         sourceWt = parseObject!!.getString("wt")
         // 如果是一个空文件就创造相关的关系
         parseData = plugin!!.parse(sourceWt) as List<Figure>?
-        FactoryBeanService.roles.set(parseData)
+        BeanFactory.roles.set(parseData)
     }
 
     fun view(): Node {

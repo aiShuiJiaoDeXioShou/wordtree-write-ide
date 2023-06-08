@@ -23,7 +23,7 @@ import lh.wordtree.App
 import lh.wordtree.comm.config.Config
 import lh.wordtree.comm.utils.ClassLoaderUtils
 import lh.wordtree.comm.utils.WTFileUtils
-import lh.wordtree.component.CpIcon
+import lh.wordtree.component.IconComponent
 import lh.wordtree.plugin.WTPluginConfig
 import lh.wordtree.plugin.WTPluginExtended
 import lh.wordtree.plugin.WTPluginType
@@ -70,19 +70,28 @@ class View() : StackPane() {
 
         val iconSize = 25.0
 
-        val sort = CpIcon(Image(ClassLoaderUtils.url("static/icon/排序.png")), "排序").apply {
+        val sort = IconComponent(
+            Image(ClassLoaderUtils.url("static/icon/排序.png")),
+            "排序"
+        ).apply {
             this.imageView().fitWidth = iconSize
             this.imageView().fitHeight = iconSize
             this.cursor = Cursor.HAND
         }
 
-        val setting = CpIcon(Image(ClassLoaderUtils.url("static/icon/setting.png")), "设置").apply {
+        val setting = IconComponent(
+            Image(ClassLoaderUtils.url("static/icon/setting.png")),
+            "设置"
+        ).apply {
             this.imageView().fitWidth = iconSize
             this.imageView().fitHeight = iconSize
             this.cursor = Cursor.HAND
         }
 
-        val flush = CpIcon(Image(ClassLoaderUtils.url("static/icon/刷新.png")), "刷新").apply {
+        val flush = IconComponent(
+            Image(ClassLoaderUtils.url("static/icon/刷新.png")),
+            "刷新"
+        ).apply {
             this.imageView().fitWidth = iconSize
             this.imageView().fitHeight = iconSize
             this.cursor = Cursor.HAND
@@ -96,7 +105,10 @@ class View() : StackPane() {
             val field = TextField()
             field.prefWidth = 144.0
             field.prefHeight = 25.0
-            val searchButton = CpIcon(Image(ClassLoaderUtils.url("static/icon/搜索.png")), "搜索")
+            val searchButton = IconComponent(
+                Image(ClassLoaderUtils.url("static/icon/搜索.png")),
+                "搜索"
+            )
             searchButton.imageView().fitHeight = 25.0
             searchButton.imageView().fitWidth = 25.0
             style = "-fx-background-color: #ededed;-fx-background-radius: 25;-fx-text-fill: #ffff;-fx-padding: 8 15;"
@@ -122,14 +134,17 @@ class View() : StackPane() {
                 flowPane.children.add(book)
             }
             this.rippleRadius = 25.0
-            style =
-                "-fx-background-color: #4b4b4b;-fx-background-radius: 25;-fx-pref-height: 35;-fx-pref-width: 144;-fx-text-fill: #ffff;"
+            style = "-fx-background-color: #4b4b4b;-fx-background-radius: 25;-fx-pref-height: 35;-fx-pref-width: 144;-fx-text-fill: #ffff;"
         }
 
         val resume = MFXButton("网络下载").apply {
             this.rippleRadius = 25.0
-            style =
-                "-fx-background-color: #ffff;-fx-background-radius: 25;-fx-pref-height: 35; -fx-pref-width: 144;-fx-border-color: #4b4b4b;-fx-border-radius: 25;-fx-border-width: 1;"
+            style = "-fx-background-color: #ffff;-fx-background-radius: 25;-fx-pref-height: 35; -fx-pref-width: 144;-fx-border-color: #4b4b4b;-fx-border-radius: 25;-fx-border-width: 1;"
+            var netCrawler: NetCrawler? = null
+            this.onMouseClicked = EventHandler {
+                if (netCrawler == null) netCrawler = NetCrawler()
+                netCrawler!!.show()
+            }
         }
 
         children.addAll(icon, search, sort, setting, flush, import, resume)

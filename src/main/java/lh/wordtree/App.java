@@ -3,6 +3,7 @@ package lh.wordtree;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import javafx.application.Application;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
@@ -11,7 +12,8 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ConfigUtils;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.component.SystemMessage;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.task.TaskService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.views.root.NoteBookScene;
@@ -36,9 +38,24 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle(Config.APP_NAME);
         primaryStage.getIcons().add(new Image(Config.APP_ICON));
+        primaryStage.setMinHeight(Config.APP_HEIGHT + 20);
+        primaryStage.setMinWidth(Config.APP_WIDTH + 20);
+        primaryStage.heightProperty().addListener(this::changed);
         primaryStage.show();
-        FactoryBeanService.heigth.bind(primaryStage.heightProperty());
+        BeanFactory.heigth.bind(primaryStage.heightProperty());
         log.info("应用程序启动成功...");
+    }
+
+    /**
+     * 监听高度的变化
+     * @param observable
+     * @param oldValue
+     * @param newValue
+     */
+    public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        if (newValue.doubleValue() == (Config.APP_HEIGHT + 20)) {
+            SystemMessage.sendError("这已经是最小宽高了不能继续变低了！");
+        }
     }
 
     /**

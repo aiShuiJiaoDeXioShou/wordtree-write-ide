@@ -18,7 +18,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import lh.wordtree.comm.utils.ChineseNumberUtils;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.comm.BeanFactory;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -33,7 +33,7 @@ public class NowFileOutlineView extends VBox {
         ListView<HBox> totalView = new ListView<>();
         // 获取当前工作空间的文件,每当文件发生更改的时候，它随着文件变化
         // 根据文件的内容解析出有效信息
-        SimpleObjectProperty<File> nowFile = FactoryBeanService.nowFile;
+        SimpleObjectProperty<File> nowFile = BeanFactory.nowFile;
         nowFile.addListener((observable, oldValue, newValue) -> {
             // 读取该文件内容
             String data = FileUtil.readString(newValue, StandardCharsets.UTF_8);
@@ -50,8 +50,8 @@ public class NowFileOutlineView extends VBox {
                         Paragraphs paragraphs = new Paragraphs(split[finalI - 1], finalI);
                         listView.getItems().add(paragraphs);
                         paragraphs.setOnMouseClicked(e -> {
-                            if (FactoryBeanService.nowCodeArea.getValue() != null) {
-                                FactoryBeanService.nowCodeArea.getValue().moveTo(finalI - 1, 0);
+                            if (BeanFactory.nowCodeArea.getValue() != null) {
+                                BeanFactory.nowCodeArea.getValue().moveTo(finalI - 1, 0);
                             }
                         });
                     });

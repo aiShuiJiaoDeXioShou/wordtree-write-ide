@@ -3,8 +3,8 @@ package lh.wordtree.task.timer;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import lh.wordtree.entity.WorkPlan;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.archive.entity.WorkPlan;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.record.TimerService;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
@@ -53,8 +53,8 @@ public class TimerTask implements WTTask {
                 nowSecond++;
                 auto.set(false);
                 Platform.runLater(() -> {
-                    FactoryBeanService.time.set(getDate(nowSecond));
-                    FactoryBeanService.number.set("今日已码" + nowNumber + "个字");
+                    BeanFactory.time.set(getDate(nowSecond));
+                    BeanFactory.number.set("今日已码" + nowNumber + "个字");
                 });
             }
         }, 0, 1, TimeUnit.SECONDS);

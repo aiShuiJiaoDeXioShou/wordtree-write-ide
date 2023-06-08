@@ -9,8 +9,8 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import lh.wordtree.entity.RecentFiles;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.archive.entity.RecentFiles;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.record.WorkSpaceService;
 
 import java.io.File;
@@ -103,9 +103,9 @@ public class UserInfoListView extends VBox {
 
     // 跳转到IDE区域
     private void jump(Label label) {
-        if (label.getId().equals(FactoryBeanService.nowRootFile.getValue().getPath())) {
+        if (label.getId().equals(BeanFactory.nowRootFile.getValue().getPath())) {
             return;
         }
-        FactoryBeanService.nowRootFile.set(new File(label.getId()));
+        BeanFactory.nowRootFile.set(new File(label.getId()));
     }
 }

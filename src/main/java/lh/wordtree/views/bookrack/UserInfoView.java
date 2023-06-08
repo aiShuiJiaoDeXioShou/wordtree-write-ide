@@ -15,8 +15,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import lh.wordtree.component.CpBook;
-import lh.wordtree.component.CpMessage;
+import lh.wordtree.component.BookComponent;
+import lh.wordtree.component.SystemMessage;
 import lh.wordtree.ui.controls.WTCalendar;
 import lh.wordtree.ui.controls.WTLabel;
 import lh.wordtree.ui.controls.WTNoteList;
@@ -67,7 +67,7 @@ public class UserInfoView extends BorderPane {
                     view.setClip(circle);
                 });
             } catch (FileNotFoundException e) {
-                Platform.runLater(() -> CpMessage.sendError("加载头像失败，请确认头像图片所在位置！"));
+                Platform.runLater(() -> SystemMessage.sendError("加载头像失败，请确认头像图片所在位置！"));
             }
         });
         var box2 = new VBox();
@@ -108,7 +108,7 @@ public class UserInfoView extends BorderPane {
         flowPane.setStyle("-fx-background-color: -def-backgroud-color");
         ThreadUtil.execAsync(() -> {
             bm.novelProjects().forEach(np -> {
-                Platform.runLater(() -> flowPane.getChildren().add(new CpBook(np)));
+                Platform.runLater(() -> flowPane.getChildren().add(new BookComponent(np)));
             });
         });
         var scrollPane = new ScrollPane();

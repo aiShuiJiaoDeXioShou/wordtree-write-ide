@@ -10,7 +10,7 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import lh.wordtree.entity.Record;
+import lh.wordtree.archive.entity.Record;
 import lh.wordtree.ui.controls.WTOneWindow;
 
 

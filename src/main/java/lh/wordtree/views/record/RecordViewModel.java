@@ -3,8 +3,8 @@ package lh.wordtree.views.record;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import lh.wordtree.dao.RecordMapper;
-import lh.wordtree.entity.Record;
+import lh.wordtree.archive.mapper.RecordMapper;
+import lh.wordtree.archive.entity.Record;
 
 public class RecordViewModel {
     private final SimpleListProperty<Record> listProperty = new SimpleListProperty<>();

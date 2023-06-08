@@ -8,8 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.entity.Figure;
-import lh.wordtree.component.editor.WTWriterEditor;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.editor.WriterEditor;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
 
@@ -33,9 +33,9 @@ public class AutoTask implements WTTask {
     @Override
     public void write(String source) {
         var pattern = new StringBuilder();
-        if (FactoryBeanService.nowCodeArea.get() instanceof WTWriterEditor wtWriterEditor) {
+        if (BeanFactory.nowCodeArea.get() instanceof WriterEditor writerEditor) {
             if (!source.isBlank() && source.length() < 20) {
-                var figures = FactoryBeanService.roles.get();
+                var figures = BeanFactory.roles.get();
                 pattern.append(".*").append(source).append(".*");
                 if (Objects.isNull(figures)) return;
                 if (figures.size() == 0) return;
@@ -46,7 +46,7 @@ public class AutoTask implements WTTask {
                         .distinct()
                         .map(Label::new)
                         .peek(label -> {
-                            ImageView img = new ImageView(new Image(Config.stc("static/icon/关系网.png")));
+                            ImageView img = new ImageView(new Image(Config.src("static/icon/关系网.png")));
                             img.setFitHeight(18);
                             img.setFitWidth(18);
                             HBox h = new HBox();
@@ -59,10 +59,10 @@ public class AutoTask implements WTTask {
                         })
                         .toList();
                 if (labels.size() > 0) {
-                    wtWriterEditor.popup().update(FXCollections.observableArrayList(labels), source);
-                    wtWriterEditor.popup().popupShow();
+                    writerEditor.popup().update(FXCollections.observableArrayList(labels), source);
+                    writerEditor.popup().popupShow();
                 }
-            } else wtWriterEditor.popup().hide();
+            } else writerEditor.popup().hide();
         }
     }
 

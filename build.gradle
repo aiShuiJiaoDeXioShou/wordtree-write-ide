@@ -59,6 +59,7 @@ dependencies {
     implementation('org.apache.lucene:lucene-core:8.10.1')
     implementation('org.apache.lucene:lucene-analyzers-smartcn:8.10.1')
     implementation('org.apache.lucene:lucene-queryparser:8.10.1')
+    implementation("org.jsoup:jsoup:1.15.3")
 
     // 检测文件编码工具
     implementation("com.googlecode.juniversalchardet:juniversalchardet:1.0.3")

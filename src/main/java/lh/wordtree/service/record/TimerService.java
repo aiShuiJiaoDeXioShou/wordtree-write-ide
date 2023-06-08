@@ -1,6 +1,6 @@
 package lh.wordtree.service.record;
 
-import lh.wordtree.entity.WorkPlan;
+import lh.wordtree.archive.entity.WorkPlan;
 
 public interface TimerService {
     TimerService INSTANCE = new TimerServiceImpl();

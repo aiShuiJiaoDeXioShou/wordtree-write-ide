@@ -16,56 +16,57 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-public interface Config {
+public class Config {
 
-    String APP_ICON = "static/icon/icon.png";
-    String APP_NAME = "WordTree";
-    Double APP_WIDTH = 1480.0;
-    Double APP_HEIGHT = 750.0;
-    Log log = LogFactory.get();
+    public static String APP_ICON = "static/icon/icon.png";
+    public static String APP_NAME = "WordTree";
+    public static Double APP_WIDTH = 1480.0;
+    public static Double APP_HEIGHT = 750.0;
+    public static Log log = LogFactory.get();
 
     /**
      * 用户主目录
      */
-    String APP_CONFIG_DIR = System.getProperty("user.home") + "/" + ".wordtree";
-    String WT_CONFIG_DIR = ".wordtree";
-    String COUNTRY_LANGUAGE = APP_CONFIG_DIR + "/" + "country-language";
+    public static String APP_CONFIG_DIR = System.getProperty("user.home") + "/" + ".wordtree";
+    public static String APP_PLUGINS_DIR = APP_CONFIG_DIR + "/plugin";
+    public static String WT_CONFIG_DIR = ".wordtree";
+    public static String COUNTRY_LANGUAGE = APP_CONFIG_DIR + "/country-language";
 
     /**
      * 嵌入式数据库路径，如果不存在则创建该数据库
      */
-    String SQLITE_PATH = APP_CONFIG_DIR + "/wordtree.db";
+    public static String SQLITE_PATH = APP_CONFIG_DIR + "/wordtree.db";
     /**
      * 嵌入式数据库jdbc配置路径
      */
-    String SQLITE_JDBC_CONFIG_PATH = "jdbc:sqlite:" + SQLITE_PATH;
+    public static String SQLITE_JDBC_CONFIG_PATH = "jdbc:sqlite:" + SQLITE_PATH;
     /**
      * 初始化配置文件路径
      */
-    String INIT_PATH = APP_CONFIG_DIR + "/init.properties";
+    public static String INIT_PATH = APP_CONFIG_DIR + "/init.properties";
     /**
      * 用户信息储存位置
      */
-    String USER_CONFIG_PATH = APP_CONFIG_DIR + "/user.json";
+    public static String USER_CONFIG_PATH = APP_CONFIG_DIR + "/user.json";
     /**
      * 历史空间配置文件
      */
-    String WORKSPACE_PATH = APP_CONFIG_DIR + "/workspace.json";
+    public static  String WORKSPACE_PATH = APP_CONFIG_DIR + "/workspace.json";
 
     /**
      * 语言资源包文件路径
      */
-    String LANGUAGE_CODE_PATH = APP_CONFIG_DIR + "/language-code";
+    public static  String LANGUAGE_CODE_PATH = APP_CONFIG_DIR + "/language-code";
 
     /**
      * base工作空间
      */
-    String BASE_WORKSPACE = APP_CONFIG_DIR + "/WorkSpace";
+    public static String BASE_WORKSPACE = APP_CONFIG_DIR + "/WorkSpace";
 
     /**
      * 初始化配置文件
      */
-    String INIT_DATA = """
+    public static String INIT_DATA = """
             #-- 常规设置 --#
             #默认用户名称
             username=YangTeng
@@ -83,7 +84,7 @@ public interface Config {
     /**
      * 初始化WORKSPACE数据
      */
-    String WORKSPACE_DATA = """
+    public static String WORKSPACE_DATA = """
             [
                 {
                     "filePath": "C:/Users/28322/.wordtree/WorkSpace",
@@ -96,7 +97,7 @@ public interface Config {
     /**
      * 初始化wt文件
      */
-    String WtSourString = """
+    public static String WtSourString = """
                 {
                     "wt": "",
                     "title":"",
@@ -105,7 +106,7 @@ public interface Config {
             """;
 
     // 初始化写作工作空间项目
-    static void initWriteWorkSpace(File file, NovelProject novelProject) {
+    public static void initWriteWorkSpace(File file, NovelProject novelProject) {
         file.mkdirs();
 
         var outline = new File(file.getPath() + "/大纲");
@@ -138,11 +139,11 @@ public interface Config {
         }
     }
 
-    static String stc(String path) {
+    public static String src(String path) {
         return Objects.requireNonNull(Config.class.getClassLoader().getResource(path)).toExternalForm();
     }
 
-    static void setStyle(Scene scene) {
+    public static void setStyle(Scene scene) {
         JMetro metro;
         if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
             metro = new JMetro(Style.LIGHT);
@@ -150,16 +151,16 @@ public interface Config {
         metro.setScene(scene);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
         metro.getOverridingStylesheets().addAll(
-                stc("static/style/light.css"),
-                stc("static/style/base.css")
+                src("static/style/light.css"),
+                src("static/style/base.css")
         );
     }
 
-    static void setBaseStyle(Scene scene) {
-        scene.getStylesheets().add(stc("static/style/base.css"));
+    public static void setBaseStyle(Scene scene) {
+        scene.getStylesheets().add(src("static/style/base.css"));
     }
 
-    static void setStyle(Parent parent) {
+    public static void setStyle(Parent parent) {
         JMetro metro;
         if (ConfigUtils.getProperties("defThemeColor").equals("light")) {
             metro = new JMetro(Style.LIGHT);
@@ -167,12 +168,12 @@ public interface Config {
         metro.setParent(parent);
         // 必须要在setScene下面,得先设置了场景,才能设置覆盖样式
         metro.getOverridingStylesheets().addAll(
-                stc("static/style/light.css"),
-                stc("static/style/base.css")
+                src("static/style/light.css"),
+                src("static/style/base.css")
         );
     }
 
-    enum THEME {
+    public enum THEME {
         THEME_LIGHT(0), THEME_DART(1);
         public Integer value = 0;
 

@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.entity.Outline;
+import lh.wordtree.archive.entity.Outline;
 import lh.wordtree.ui.controls.WTIcon;
 import lh.wordtree.ui.controls.WTInputPro;
 import lh.wordtree.ui.controls.WTLabel;

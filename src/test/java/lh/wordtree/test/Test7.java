@@ -3,12 +3,12 @@ package lh.wordtree.test;
 import cn.hutool.core.date.LocalDateTimeUtil;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import lh.wordtree.dao.impl.AuthorTaskMapperImpl;
-import lh.wordtree.dao.impl.UserAutoTaskMapperImpl;
-import lh.wordtree.entity.AuthorTask;
-import lh.wordtree.entity.UserAutoTask;
+import lh.wordtree.archive.mapper.impl.AuthorTaskMapperImpl;
+import lh.wordtree.archive.mapper.impl.UserAutoTaskMapperImpl;
+import lh.wordtree.archive.entity.AuthorTask;
+import lh.wordtree.archive.entity.UserAutoTask;
 import lh.wordtree.plugin.bookshelf.WTReader;
-import lh.wordtree.utils.DbUtils;
+import lh.wordtree.comm.Db;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -68,7 +68,7 @@ public class Test7 extends Application {
 
     @Test
     public void auto() throws SQLException {
-        Number query = DbUtils.db().queryNumber("SELECT SUM(number) FROM WorkPlace WHERE id BETWEEN '2023-04-09' AND '2023-04-13'");
+        Number query = Db.db().queryNumber("SELECT SUM(number) FROM WorkPlace WHERE id BETWEEN '2023-04-09' AND '2023-04-13'");
         System.out.println(query.longValue());
     }
 

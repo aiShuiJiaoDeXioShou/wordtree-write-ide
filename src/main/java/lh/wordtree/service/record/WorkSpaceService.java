@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONWriter;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.entity.RecentFiles;
+import lh.wordtree.archive.entity.RecentFiles;
 
 import java.io.FileInputStream;
 import java.io.IOException;

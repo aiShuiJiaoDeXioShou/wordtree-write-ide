@@ -12,9 +12,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import lh.wordtree.App;
 import lh.wordtree.comm.config.Config;
-import lh.wordtree.component.editor.WTLangCodeArea;
+import lh.wordtree.editor.LangEditor;
 import lh.wordtree.plugin.WTPlugLanguage;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.plugin.WTPluginService;
 import lh.wordtree.views.core.TabMenuBarView;
 import netscape.javascript.JSObject;
@@ -42,7 +42,7 @@ public class WTLanguageServiceImpl {
     private JSONObject parseObject;
     private String sourceWt;
     private SplitPane splitPane = new SplitPane();
-    private WTLangCodeArea codeArea = new WTLangCodeArea();
+    private LangEditor codeArea = new LangEditor();
 
     public WTLanguageServiceImpl(File file) {
         this.file = file;
@@ -86,7 +86,7 @@ public class WTLanguageServiceImpl {
     }
 
     private void layout() {
-        WebView webView = FactoryBeanService.getWebView();
+        WebView webView = BeanFactory.getWebView();
         WebEngine engine = webView.getEngine();
         JSObject win = (JSObject) engine.executeScript("window");
         win.setMember("figureJSON", parseText);//设置变量
@@ -100,7 +100,7 @@ public class WTLanguageServiceImpl {
         this.parse();
         splitPane.getItems().remove(1);
         // 将java获取到的数据发送到该WebEngine
-        WebView webView = FactoryBeanService.getWebView();
+        WebView webView = BeanFactory.getWebView();
         WebEngine engine = webView.getEngine();
         JSObject win = (JSObject) engine.executeScript("window");
         win.setMember("figureJSON", parseText);//设置变量

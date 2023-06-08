@@ -9,7 +9,7 @@ import javafx.scene.image.ImageView;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.entity.NovelProject;
 import lh.wordtree.plugin.wtlang.WtLangView;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
@@ -33,7 +33,7 @@ public class WorkTask implements WTTask {
         // 初始化成功之后读取WT任务
         parseWT();
         // 对根源目录进行监听，如果路径发生改变，则重新刷新
-        FactoryBeanService.nowRootFile.addListener((observable, oldValue, newValue) -> {
+        BeanFactory.nowRootFile.addListener((observable, oldValue, newValue) -> {
             FileTreeView.newInstance().toggleFile(newValue);
             parseWT();
         });
@@ -42,19 +42,19 @@ public class WorkTask implements WTTask {
     private void fileInit() {
         var recentFiles = WorkSpaceService.get();
         var size = recentFiles.size();
-        if (size > 0) FactoryBeanService.nowRootFile.set(new File(recentFiles.get(0).getFilePath()));
-        else FactoryBeanService.nowRootFile.set(new File(Config.BASE_WORKSPACE));
-        File nowRootFile = FactoryBeanService.nowRootFile.get();
+        if (size > 0) BeanFactory.nowRootFile.set(new File(recentFiles.get(0).getFilePath()));
+        else BeanFactory.nowRootFile.set(new File(Config.BASE_WORKSPACE));
+        File nowRootFile = BeanFactory.nowRootFile.get();
         FileTreeView.newInstance().toggleFile(nowRootFile);
     }
 
     private void parseWT() {
-        File nowRootFile = FactoryBeanService.nowRootFile.get();
-        var contains = Arrays
-                .stream(Objects.requireNonNull(nowRootFile.list()))
+        File nowRootFile = BeanFactory.nowRootFile.get();
+        if (nowRootFile == null || nowRootFile.list() == null) return;
+        var contains = Arrays.stream(nowRootFile.list())
                 .toList()
                 .contains(Config.WT_CONFIG_DIR);
-        FactoryBeanService.isWt.set(contains);
+        BeanFactory.isWt.set(contains);
         if (contains) {
             // 读取相关文件并且转化为全局对象
             var configDir = new File(nowRootFile.getPath() + "/" + Config.WT_CONFIG_DIR);
@@ -67,7 +67,7 @@ public class WorkTask implements WTTask {
                         ThreadUtil.execAsync(() -> {
                             var bytes = FileUtil.readBytes(file);
                             var novelProject = JSON.parseObject(bytes, NovelProject.class);
-                            Platform.runLater(() -> FactoryBeanService.novelProject.set(novelProject));
+                            Platform.runLater(() -> BeanFactory.novelProject.set(novelProject));
                             if (FileUtil.exist(novelProject.getImg())) {
                                 ImageView imageView;
                                 try {
@@ -87,7 +87,7 @@ public class WorkTask implements WTTask {
         if (contains) {
             // 加载人物关系插件，解析人物对象关系
             ThreadUtil.execAsync(() -> {
-                String path = FactoryBeanService.nowRootFile.get().getPath() + "/大纲/人物.json";
+                String path = BeanFactory.nowRootFile.get().getPath() + "/大纲/人物.json";
                 File file = new File(path);
                 if (file.exists()) {
                     new WtLangView(file);

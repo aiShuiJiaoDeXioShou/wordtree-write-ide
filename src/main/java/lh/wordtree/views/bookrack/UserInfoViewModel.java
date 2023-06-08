@@ -2,12 +2,12 @@ package lh.wordtree.views.bookrack;
 
 import javafx.beans.property.SimpleObjectProperty;
 import lh.wordtree.comm.entity.NovelProject;
-import lh.wordtree.dao.WorkPlanMapper;
-import lh.wordtree.dao.impl.WorkPlanMapperImpl;
-import lh.wordtree.entity.Author;
-import lh.wordtree.entity.RecentFiles;
-import lh.wordtree.entity.WorkPlan;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.archive.mapper.WorkPlanMapper;
+import lh.wordtree.archive.mapper.impl.WorkPlanMapperImpl;
+import lh.wordtree.archive.entity.Author;
+import lh.wordtree.archive.entity.RecentFiles;
+import lh.wordtree.archive.entity.WorkPlan;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.record.WorkSpaceService;
 
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class UserInfoViewModel {
     // 获取当前的用户信息
-    private final SimpleObjectProperty<Author> user = FactoryBeanService.user;
+    private final SimpleObjectProperty<Author> user = BeanFactory.user;
     private final List<RecentFiles> recentFiles = WorkSpaceService.get();
     private final WorkPlanMapper workPlanMapper = new WorkPlanMapperImpl();
 

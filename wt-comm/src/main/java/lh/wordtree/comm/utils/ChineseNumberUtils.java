@@ -2,12 +2,12 @@ package lh.wordtree.comm.utils;
 
 public abstract class ChineseNumberUtils {
     public static String translateToChineseNumerals(int number) {
-        String[] chineseNumerals = {"é›¶", "ä¸€", "äºŒ", "ä¸‰", "å››", "äº”", "å…­", "ä¸ƒ", "å…«", "ä¹"};
+        String[] chineseNumerals = {"Áã", "Ò»", "¶ş", "Èı", "ËÄ", "Îå", "Áù", "Æß", "°Ë", "¾Å", "Ê®"};
         if (number == 0) {
             return chineseNumerals[0];
         }
         StringBuilder sb = new StringBuilder();
-        int digit = 0;
+        int digit;
         while (number > 0) {
             digit = number % 10;
             sb.insert(0, chineseNumerals[digit]);

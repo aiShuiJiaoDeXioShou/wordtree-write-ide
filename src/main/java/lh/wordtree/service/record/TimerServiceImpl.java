@@ -2,11 +2,11 @@ package lh.wordtree.service.record;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import lh.wordtree.dao.WorkPlanMapper;
-import lh.wordtree.dao.impl.WorkPlanMapperImpl;
-import lh.wordtree.entity.WorkPlan;
+import lh.wordtree.archive.mapper.WorkPlanMapper;
+import lh.wordtree.archive.mapper.impl.WorkPlanMapperImpl;
+import lh.wordtree.archive.entity.WorkPlan;
 import lh.wordtree.service.InitializationService;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.comm.BeanFactory;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -36,7 +36,7 @@ public class TimerServiceImpl implements TimerService, InitializationService {
         workPlan.setId(nowTime.toString())
                 .setTime(0)
                 .setNumber(0)
-                .setWorks(FactoryBeanService.nowRootFile.get().getName());
+                .setWorks(BeanFactory.nowRootFile.get().getName());
         workPlanMapper.insert(workPlan);
         log.info("正在插入完毕！！！");
     }

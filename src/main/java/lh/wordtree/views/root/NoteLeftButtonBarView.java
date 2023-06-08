@@ -4,8 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.HBox;
-import lh.wordtree.component.CpButtonItem;
-import lh.wordtree.component.CpIcon;
+import lh.wordtree.component.ButtonItemComponent;
+import lh.wordtree.component.IconComponent;
 import lh.wordtree.plugin.WTPluginExtended;
 import lh.wordtree.service.plugin.WTPluginService;
 import lh.wordtree.views.bookrack.BookRackView;
@@ -26,11 +26,11 @@ public class NoteLeftButtonBarView extends HBox {
     }
 
     private NoteLeftButtonBarView() {
-        CpButtonItem fliesItem, writeItem, setting, plugins;
-        fliesItem = new CpButtonItem("\uE7F4", "书籍管理");
-        writeItem = new CpButtonItem("\uE70F", "写作");
-        plugins = new CpButtonItem("\uE74C", "插件");
-        setting = new CpButtonItem("\uE713", "设置");
+        ButtonItemComponent fliesItem, writeItem, setting, plugins;
+        fliesItem = new ButtonItemComponent("\uE7F4", "书籍管理");
+        writeItem = new ButtonItemComponent("\uE70F", "写作");
+        plugins = new ButtonItemComponent("\uE74C", "插件");
+        setting = new ButtonItemComponent("\uE713", "设置");
         listView = new ListView<>();
         {
             listView.getStyleClass().add("node-left");
@@ -40,7 +40,7 @@ public class NoteLeftButtonBarView extends HBox {
         }
 
         wtPlugins.forEach((s, extended) -> {
-            var icon = new CpIcon(extended.config().icon(), s);
+            var icon = new IconComponent(extended.config().icon(), s);
             listView.getItems().add(icon);
         });
         listView.getItems().add(setting);

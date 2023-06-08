@@ -1,7 +1,7 @@
 package lh.wordtree.views.core;
 
 import javafx.scene.control.TabPane;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.comm.BeanFactory;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 
@@ -15,13 +15,13 @@ public class TabMenuBarView extends TabPane {
         this.setTabDragPolicy(TabDragPolicy.REORDER);
         this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.getContent() instanceof VirtualizedScrollPane content) {
-                FactoryBeanService.nowCodeArea.set((CodeArea) content.getContent());
+                BeanFactory.nowCodeArea.set((CodeArea) content.getContent());
             }
             String path = newValue.getId();
             if (!path.isBlank()) {
                 File file = new File(path);
                 if (file.exists()) {
-                    FactoryBeanService.nowFile.set(file);
+                    BeanFactory.nowFile.set(file);
                 }
             }
         });

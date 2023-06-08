@@ -11,8 +11,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Popup;
 import lh.wordtree.comm.utils.CharsetDetectUtil;
-import lh.wordtree.component.editor.WTWriterEditor;
-import lh.wordtree.service.factory.FactoryBeanService;
+import lh.wordtree.editor.WriterEditor;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.language.CountryService;
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class BottomStateView extends BorderPane {
     private BottomStateView() {
-        FactoryBeanService.nowFile.addListener((observable, oldValue, newValue) -> {
+        BeanFactory.nowFile.addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 charsetName = CharsetDetectUtil.detect(newValue);
                 code.setText(charsetName);
@@ -61,13 +61,13 @@ public class BottomStateView extends BorderPane {
     private String charsetName;
 
     {
-        nowRow.textProperty().bind(FactoryBeanService.rowLine);
+        nowRow.textProperty().bind(BeanFactory.rowLine);
     }
 
     {
         lock.setOnMouseClicked(e -> {
-            var nowWorkSpace = FactoryBeanService.nowWorkSpace.get();
-            if (nowWorkSpace instanceof WTWriterEditor writerEditor) {
+            var nowWorkSpace = BeanFactory.nowWorkSpace.get();
+            if (nowWorkSpace instanceof WriterEditor writerEditor) {
                 if (lock.getStyle().contains("-fx-text-fill: #e03131")) {
                     lock.setStyle("-fx-text-fill: white");
                     writerEditor.setEditable(true);
@@ -82,7 +82,7 @@ public class BottomStateView extends BorderPane {
     {
         terminal.setOnMouseClicked(e -> {
             try {
-                Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd " + FactoryBeanService.nowRootFile.getValue().getPath() + "\"");
+                Runtime.getRuntime().exec("cmd /c start cmd.exe /K \"cd " + BeanFactory.nowRootFile.getValue().getPath() + "\"");
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -109,7 +109,7 @@ public class BottomStateView extends BorderPane {
                     alert.setContentText("将" + charsetName + "转化为" + item.getText() + "\n转化编码格式，此过程将不可逆转！");
                     var buttonType = alert.showAndWait();
                     if (buttonType.isPresent() && buttonType.get().equals(ButtonType.OK)) {
-                        ThreadUtil.execAsync(() -> CharsetUtil.convert(FactoryBeanService.nowFile.get(), CharsetUtil.charset(charsetName), CharsetUtil.charset(item.getText())));
+                        ThreadUtil.execAsync(() -> CharsetUtil.convert(BeanFactory.nowFile.get(), CharsetUtil.charset(charsetName), CharsetUtil.charset(item.getText())));
                         code.setText(item.getText());
                         alert.close();
                     }
@@ -122,11 +122,11 @@ public class BottomStateView extends BorderPane {
     }
 
     {
-        workTime.textProperty().bind(FactoryBeanService.time);
+        workTime.textProperty().bind(BeanFactory.time);
     }
 
     {
-        workNumber.textProperty().bind(FactoryBeanService.number);
+        workNumber.textProperty().bind(BeanFactory.number);
     }
 
     private static class BottomStateViewHolder {

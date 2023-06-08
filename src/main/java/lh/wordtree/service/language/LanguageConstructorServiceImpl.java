@@ -2,7 +2,7 @@ package lh.wordtree.service.language;
 
 import javafx.scene.Node;
 import lh.wordtree.App;
-import lh.wordtree.handler.editor.EditorLanguageFactory;
+import lh.wordtree.handler.EditorLanguageFactory;
 
 import java.io.File;
 import java.util.Objects;
