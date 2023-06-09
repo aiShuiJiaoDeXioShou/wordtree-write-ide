@@ -77,8 +77,10 @@ public class Config {
             codeFont=15
             #默认删除到回收站
             isDelRecycling=true
-            #默认的语言
+            #默认的语言chinese or English
             language=chinese
+            #默认任务栏打开
+            
             """;
 
     /**

@@ -52,6 +52,8 @@ dependencies {
     // 引入爬虫框架
     implementation('us.codecraft:webmagic-core:0.8.0')
     implementation('us.codecraft:webmagic-extension:0.8.0')
+    // 引入制作系统托盘类库
+    implementation("com.dorkbox:SystemTray:4.2.1")
     // 加载svg文件
     implementation('org.apache.xmlgraphics:batik-all:1.14')
     // 汉语相关
