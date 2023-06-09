@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.component.IconComponent;
+import lh.wordtree.component.TreeStage;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.CodeArea;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.List;
 
-public class WTReader extends Stage {
+public class WTReader extends TreeStage {
     private File file;
     private BorderPane root;
     private Scene scene;

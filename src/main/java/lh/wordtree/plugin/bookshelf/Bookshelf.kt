@@ -204,7 +204,9 @@ class Bookshelf() : WTPluginExtended {
     override fun config(): WTPluginConfig {
         return object : WTPluginConfig {
             override fun name(): String {
-                return "阅读器服务"
+                return """
+                   WT阅读器
+                """.trimIndent()
             }
 
             override fun version(): String {
@@ -219,9 +221,14 @@ class Bookshelf() : WTPluginExtended {
                 return Image(ClassLoaderUtils.url("static/icon/书架管理.png"))
             }
 
+            override fun cover(): Image {
+                return Image(ClassLoaderUtils.url("static/icon/reader_icon.png"))
+            }
+
             override fun introduce(): String {
                 return """
-                    书架管理
+                    这是一个阅读器。
+                    支持网络下载图书，阅读图书，添加书签，笔记功能。
                 """.trimIndent()
             }
 

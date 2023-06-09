@@ -20,7 +20,7 @@ import lh.wordtree.component.SystemMessage;
 import lh.wordtree.ui.controls.WTCalendar;
 import lh.wordtree.ui.controls.WTLabel;
 import lh.wordtree.ui.controls.WTNoteList;
-import lh.wordtree.views.login.OneLoginView;
+import lh.wordtree.views.user.EditUserView;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -86,7 +86,7 @@ public class UserInfoView extends BorderPane {
         var edit = new Button("编辑个人信息");
         edit.getStyleClass().add("edit");
         edit.setOnMouseClicked(e -> {
-            OneLoginView login = new OneLoginView();
+            EditUserView login = new EditUserView();
             login.show();
         });
 

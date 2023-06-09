@@ -91,7 +91,6 @@ public final class ReaderTextBuilder {
                             break;
                         }
                     if (bol) buffer.append(s).append('\n');
-                    ;
                 }
             } catch (FileNotFoundException e) {
                 System.err.println("文件读取异常：\n" + e.getMessage());

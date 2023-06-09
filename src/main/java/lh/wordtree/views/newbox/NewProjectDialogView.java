@@ -16,11 +16,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import lh.wordtree.App;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.entity.NovelProject;
 import lh.wordtree.comm.utils.ConfigUtils;
+import lh.wordtree.component.TreeDialog;
 import lh.wordtree.ui.controls.WTInputPro;
 import lh.wordtree.views.core.FileTreeView;
 
@@ -30,14 +30,14 @@ import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class NewProjectDialogView extends Stage {
+public class NewProjectDialogView extends TreeDialog {
     private SplitPane splitPane;
     private ListView<Label> listView;
     private BorderPane novel;
 
     public NewProjectDialogView() {
         splitPane = new SplitPane();
-        listView = new ListView<Label>();
+        listView = new ListView<>();
         {
             var label = new Label();
             label.setId("小说项目");
@@ -50,8 +50,6 @@ public class NewProjectDialogView extends Stage {
         splitPane.setDividerPosition(0, 0.3);
         var scene = new Scene(splitPane);
         Config.setStyle(scene);
-        this.initOwner(App.primaryStage);
-        this.initModality(Modality.WINDOW_MODAL);
         this.setScene(scene);
         this.controller();
     }

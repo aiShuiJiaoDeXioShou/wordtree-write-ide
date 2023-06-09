@@ -1,5 +1,6 @@
 package lh.wordtree.plugin.bookshelf;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
@@ -8,17 +9,27 @@ import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXListView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.component.SystemMessage;
+import lh.wordtree.component.TreeDialog;
+import lh.wordtree.component.TreeStage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,19 +37,30 @@ import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
-public class NetCrawler extends Stage {
+public class NetCrawler extends TreeDialog {
     private String netBook = "http://www.gashuw.com/modules/article/search.php?searchkey=%s";
     private final BorderPane pane = new BorderPane();
-    public double width = 800;
+    public double width = 650;
     public double height = 700;
     private ExecutorService service = Executors.newFixedThreadPool(10);
     private final Scene scene = new Scene(pane, width, height);
     private String baseButtonStyle = "-fx-background-color: #2980b9;-fx-text-fill: #ffff;-fx-min-height: 35;-fx-min-width: 80";
     private String bookshelfUrl = Config.APP_CONFIG_DIR + "/bookshelf";
-    private final MFXListView<NovelBox> data = new MFXListView<>();
+    private final MFXListView<NovelBox> data = new MFXListView<>();{
+        // 制作表格标题
+        NovelBox novelBox = new NovelBox(new Novel());
+        novelBox.setStyle("-fx-background-color: #3498db;-fx-text-fill: #ffff");
+        novelBox.hover.setValue(true);
+        data.getItems().add(novelBox);
+    }
     private final MFXTextField input = new MFXTextField();
     private final MFXButton search = new MFXButton("搜索");
     private final MFXTextField downUrl = new MFXTextField("C:\\Users\\28322\\Documents\\书籍");
@@ -56,7 +78,9 @@ public class NetCrawler extends Stage {
         // 搜索框
         input.setFloatingText("搜索指定名称小说：");
         input.setMinWidth(200);
-
+        input.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) this.search(null);
+        });
         search.setStyle(baseButtonStyle);
         search.setOnMouseClicked(this::search);
 
@@ -89,7 +113,6 @@ public class NetCrawler extends Stage {
 
     public void init() {
         this.setTitle("网络下载");
-        this.getIcons().add(new Image(Config.src("static/icon/icon.png")));
         this.resizableProperty().setValue(Boolean.FALSE);
         Config.setBaseStyle(scene);
         this.setScene(scene);
@@ -104,7 +127,11 @@ public class NetCrawler extends Stage {
             SystemMessage.sendWarning("不能搜索为空！");
             return;
         }
-        if (data.getItems().size() > 0) data.getItems().clear();
+        if (data.getItems().size() > 0) {
+            data.getItems()
+                    .removeIf(box ->
+                            !box.novel.title.equals("标题") && !box.novel.number.equals("字数(千字)"));
+        }
         service.execute(()-> {
             String word = input.getText();
             Connection connect = Jsoup.connect(netBook.formatted(word));
@@ -165,19 +192,33 @@ public class NetCrawler extends Stage {
         private double labelWidth = 70;
         private MFXButton down = new MFXButton("下载");
         private MFXButton updateDown = new MFXButton("更新");
+        public SimpleBooleanProperty hover = new SimpleBooleanProperty(false);
         public NovelBox(Novel novel) {
             this.novel = novel;
             Label title = new Label(novel.title);
             Label author = new Label(novel.author);
             Label number = new Label(novel.number);
             Label state = new Label(novel.state);
-            Label update = new Label(String.valueOf(novel.update));
+            Label update = new Label();
 
-            title.setMinWidth(labelWidth * 2);
-            author.setMinWidth(labelWidth);
-            number.setMinWidth(labelWidth);
-            state.setMinWidth(labelWidth);
-            update.setMinWidth(labelWidth);
+            if (novel.update != 0L) {
+                // 时间转化
+                Date date = new Date(novel.update);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+                update.setText(format.format(date));
+            } else {
+                update.setText("最后更新时间");
+            }
+
+            title.setPrefWidth(labelWidth * 2);
+            List.of(author, number, state, update)
+                            .forEach(label -> label.setPrefWidth(labelWidth));
+
+            List.of(title, author, number, state, update)
+                    .forEach(label -> {
+                        label.setTextOverrun(OverrunStyle.ELLIPSIS);
+                        label.setPadding(new Insets(4, 0,0, 0));
+                    });
 
             down.setStyle("-fx-background-color: #1abc9c;-fx-text-fill: #ffff;");
             updateDown.setStyle("-fx-background-color: #3498db;-fx-text-fill: #ffff;");
@@ -185,11 +226,23 @@ public class NetCrawler extends Stage {
             this.setSpacing(15);
 
             down.setOnMouseClicked(this::downFun);
+
+            hover.addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    List.of(title, author, number, state, update)
+                            .forEach(label -> {
+                                label.setTextFill(Color.WHITE);
+                                down.setStyle("-fx-background-color: #3498db;-fx-text-fill: #ffff;");
+                                updateDown.setStyle("-fx-background-color: #3498db;-fx-text-fill: #ffff;");
+                            });
+                }
+            });
         }
 
 
         private void downFun(MouseEvent mouseEvent) {
             service.execute(()-> {
+                if (novel.url.equals("无下载链接")) return;
                 Platform.runLater(()-> down.setText("正在下载...."));
                 try {
                     Element body = Jsoup.connect(novel.url).get().body();
@@ -215,11 +268,11 @@ public class NetCrawler extends Stage {
     }
 
     public static class Novel {
-        public String title = "无";
-        public String author = "无";
-        public String url = "无";
-        public String number = "无";
-        public String state = "无";
+        public String title = "标题";
+        public String author = "作者";
+        public String url = "无下载链接";
+        public String number = "字数(千字)";
+        public String state = "状态";
         public long update = 0L;
 
         public String toString() {

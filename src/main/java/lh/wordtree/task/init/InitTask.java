@@ -12,7 +12,7 @@ import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
-import lh.wordtree.views.login.OneLoginView;
+import lh.wordtree.views.user.EditUserView;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class InitTask implements WTTask {
             var user = new File(Config.USER_CONFIG_PATH);
             // 如果不存在则打开初始化用户界面，要求填入用户信息
             if (!user.exists()) {
-                Platform.runLater(() -> new OneLoginView().show());
+                Platform.runLater(() -> new EditUserView().show());
             } else {
                 BeanFactory.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
             }

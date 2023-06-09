@@ -21,14 +21,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import lh.wordtree.comm.config.Config;
-import lh.wordtree.component.ButtonItemComponent;
-import lh.wordtree.component.SystemMessage;
+import lh.wordtree.archive.entity.AuthorTask;
 import lh.wordtree.archive.mapper.AuthorTaskMapper;
 import lh.wordtree.archive.mapper.WorkPlanMapper;
 import lh.wordtree.archive.mapper.impl.AuthorTaskMapperImpl;
 import lh.wordtree.archive.mapper.impl.WorkPlanMapperImpl;
-import lh.wordtree.archive.entity.AuthorTask;
+import lh.wordtree.comm.config.Config;
+import lh.wordtree.component.ButtonItemComponent;
+import lh.wordtree.component.SystemMessage;
+import lh.wordtree.component.TreeDialog;
 import lh.wordtree.views.core.NoteCoreView;
 
 import java.time.Duration;
@@ -106,19 +107,16 @@ public class TaskBoxView extends VBox {
         /**
          * 新增窗口的弹出窗
          */
-        Stage window = new Stage();
+        TreeDialog window = new TreeDialog();
 
         public ShowBox(AuthorTask autoTask) {
             edit.setOnMouseClicked(e -> {
                 var pane = new AddPane();
                 var scene = new Scene(pane, 500, 500);
                 lh.wordtree.comm.config.Config.setBaseStyle(scene);
-                window.setAlwaysOnTop(true);
-                window.setMaximized(false);
                 window.setTitle("新增一条目标任务");
                 window.setScene(scene);
-                window.getIcons().add(new Image(Config.APP_ICON));
-                window.show();
+                window.showAndWait();
             });
             if (autoTask == null) {
                 this.setCenter(edit);

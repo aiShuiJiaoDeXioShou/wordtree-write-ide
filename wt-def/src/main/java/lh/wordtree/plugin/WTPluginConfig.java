@@ -11,6 +11,8 @@ public interface WTPluginConfig {
 
     Image icon();
 
+    Image cover();
+
     /**
      * 有关插件的介绍
      *

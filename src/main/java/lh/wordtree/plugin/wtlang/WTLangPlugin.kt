@@ -58,7 +58,12 @@ class WTLangPlugin() : WTPlugLanguage {
             override fun author(): String = "林河"
 
             override fun icon(): Image {
-                val stream = javaClass.classLoader.getResourceAsStream("static/icon/33资源.png")
+                val stream = javaClass.classLoader.getResourceAsStream("static/icon/icon.png")
+                return Image(stream)
+            }
+
+            override fun cover(): Image {
+                val stream = javaClass.classLoader.getResourceAsStream("static/icon/icon.png")
                 return Image(stream)
             }
 

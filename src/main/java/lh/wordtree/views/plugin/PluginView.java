@@ -17,21 +17,13 @@ import lh.wordtree.service.plugin.WTPluginService;
 import java.util.Map;
 
 public class PluginView extends BorderPane {
-    public static PluginView newInstance() {
-        return PluginViewHolder.instance;
-    }
-
-    private static class PluginViewHolder {
-        public static PluginView instance = new PluginView();
-    }
-
     private final double tabW = 130;
     private final TabPane tabPane = new TabPane();
     private Map<String, String> language = CountryService.language;
     private final Tab install = new Tab(language.get("已安装"));
     private final Tab pluginMarket = new Tab(language.get("插件市场"));
 
-    private PluginView() {
+    public PluginView() {
         init();
     }
 
@@ -77,7 +69,7 @@ public class PluginView extends BorderPane {
         public PluginInfo(WTPlugin wtPlugin) {
             var config = wtPlugin.config();
             var box = new HBox();
-            var img = new ImageView(config.icon());
+            var img = new ImageView(config.cover());
             img.setFitHeight(150);
             img.setFitWidth(150);
 
@@ -128,7 +120,7 @@ public class PluginView extends BorderPane {
             this.getStyleClass().add("wt-plugin");
             this.wtPlugin = wtPlugin;
             var config = wtPlugin.config();
-            var imageView = new ImageView(config.icon());
+            var imageView = new ImageView(config.cover());
             imageView.setFitWidth(85);
             imageView.setFitHeight(85);
 
