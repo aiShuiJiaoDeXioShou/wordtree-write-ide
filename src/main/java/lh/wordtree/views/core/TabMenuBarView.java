@@ -14,6 +14,7 @@ public class TabMenuBarView extends TabPane {
         this.setTabClosingPolicy(TabClosingPolicy.ALL_TABS);
         this.setTabDragPolicy(TabDragPolicy.REORDER);
         this.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) return;
             if (newValue.getContent() instanceof VirtualizedScrollPane content) {
                 BeanFactory.nowCodeArea.set((CodeArea) content.getContent());
             }

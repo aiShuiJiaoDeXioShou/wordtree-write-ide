@@ -26,7 +26,7 @@ public class WTCalendar extends BorderPane {
         this.frequency = frequency;
         this.getStyleClass().add("wt-calendar");
         ThreadUtil.execAsync(() -> {
-            // ´´½¨ĞÇÆÚ£¬ÔÂ·İ
+            // åˆ›å»ºæ˜ŸæœŸï¼Œæœˆä»½
             for (int i = 1; i <= 12; i++) {
                 var moth = new Label();
                 if (i % 2 == 0) {
@@ -44,12 +44,12 @@ public class WTCalendar extends BorderPane {
                 Platform.runLater(() -> root.add(day, finalI + 1, 1));
             }
         });
-        //  »ñÈ¡±¾Äê¶ÈËùÓĞµÄÊ±¼ä,°Ñ»ñÈ¡µÄÊ±¼ä·Åµ½¹¹Ôì¹¤³§»ñÈ¡¶ÔÓ¦µÄlabel
+        //  è·å–æœ¬å¹´åº¦æ‰€æœ‰çš„æ—¶é—´,æŠŠè·å–çš„æ—¶é—´æ”¾åˆ°æ„é€ å·¥å‚è·å–å¯¹åº”çš„label
         root.setHgap(5);
         root.setVgap(6);
         this.timeFactory();
         this.setCenter(root);
-        var label = new Label("¹¤×÷ÁĞ±í£º");
+        var label = new Label("å·¥ä½œåˆ—è¡¨ï¼š");
         label.getStyleClass().add("title");
         this.setTop(label);
         this.setPadding(new Insets(10, 0, 0, 0));
@@ -64,27 +64,27 @@ public class WTCalendar extends BorderPane {
         Platform.runLater(() -> root.add(item, day + 1, moth + 1));
     }
 
-    // »ñÈ¡±¾Äê¶ÈËùÓĞµÄÈÕÆÚ
+    // è·å–æœ¬å¹´åº¦æ‰€æœ‰çš„æ—¥æœŸ
     private void timeFactory() {
-        //ÈÕÆÚ¸ñÊ½»¯
+        //æ—¥æœŸæ ¼å¼åŒ–
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         try {
-            // »ñÈ¡ÏÖÔÚµÄÄê·İ
+            // è·å–ç°åœ¨çš„å¹´ä»½
             var year = LocalDateTime.now().getYear();
-            // ÆğÊ¼ÈÕÆÚ
+            // èµ·å§‹æ—¥æœŸ
             Date d1 = sdf.parse(year + "-1-1");
-            // ½áÊøÈÕÆÚ
+            // ç»“æŸæ—¥æœŸ
             Date d2 = sdf.parse(year + "-12-31");
             final Date[] tmp = {d1};
             Calendar dd = Calendar.getInstance();
             dd.setTime(d1);
             ThreadUtil.execAsync(() -> {
-                // ´òÓ¡2001Äê10ÔÂ1ÈÕµ½2001Äê11ÔÂ4ÈÕµÄÈÕÆÚ
+                // æ‰“å°2001å¹´10æœˆ1æ—¥åˆ°2001å¹´11æœˆ4æ—¥çš„æ—¥æœŸ
                 while (tmp[0].getTime() <= d2.getTime()) {
                     tmp[0] = dd.getTime();
                     var dateTime = LocalDateTimeUtil.of(tmp[0]);
                     itemFactory(dateTime);
-                    //ÌìÊı¼ÓÉÏ1
+                    //å¤©æ•°åŠ ä¸Š1
                     dd.add(Calendar.DAY_OF_MONTH, 1);
                 }
             });
@@ -112,7 +112,7 @@ public class WTCalendar extends BorderPane {
         public CalendarLabel(int fre, LocalDateTime time) {
             var item = this;
             item.getStyleClass().add("time-item");
-            // ÉèÖÃ¶ÔÓ¦µÄÑÕÉ«ÆµÂÊ
+            // è®¾ç½®å¯¹åº”çš„é¢œè‰²é¢‘ç‡
             if (fre > NumberFrequency.LESS0.value) {
                 var style = NumberFrequency.LESS0.color;
                 item.setStyle("-fx-background-color: " + style + ";-fx-border-color: " + style);
@@ -135,9 +135,9 @@ public class WTCalendar extends BorderPane {
             }
             var area = new VBox();
             area.setSpacing(10);
-            var timeLabel = new Label(LocalDateTimeUtil.format(time, "yyyyÄêMMÔÂddÈÕ"));
+            var timeLabel = new Label(LocalDateTimeUtil.format(time, "yyyyå¹´MMæœˆddæ—¥"));
             timeLabel.setStyle("-fx-text-fill: #74c0fc;-fx-font-size: 15;-fx-font-family: monaco");
-            var numberLabel = new Label("×ÖÊı£º" + fre);
+            var numberLabel = new Label("å­—æ•°ï¼š" + fre);
             numberLabel.setStyle("-fx-font-size: 10");
             area.getChildren().addAll(timeLabel, numberLabel);
             area.setStyle("""

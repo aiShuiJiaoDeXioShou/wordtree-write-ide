@@ -2,7 +2,7 @@ package lh.wordtree.comm.utils;
 
 public abstract class ChineseNumberUtils {
     public static String translateToChineseNumerals(int number) {
-        String[] chineseNumerals = {"Áã", "Ò»", "¶ş", "Èı", "ËÄ", "Îå", "Áù", "Æß", "°Ë", "¾Å", "Ê®"};
+        String[] chineseNumerals = {"é›¶", "ä¸€", "äºŒ", "ä¸‰", "å››", "äº”", "å…­", "ä¸ƒ", "å…«", "ä¹", "å"};
         if (number == 0) {
             return chineseNumerals[0];
         }

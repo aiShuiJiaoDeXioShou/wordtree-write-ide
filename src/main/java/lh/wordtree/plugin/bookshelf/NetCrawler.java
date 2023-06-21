@@ -1,6 +1,5 @@
 package lh.wordtree.plugin.bookshelf;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.http.HttpUtil;
 import com.alibaba.fastjson.JSON;
@@ -10,25 +9,18 @@ import io.github.palexdev.materialfx.controls.MFXListView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.OverrunStyle;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.component.SystemMessage;
-import lh.wordtree.component.TreeDialog;
 import lh.wordtree.component.TreeStage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -42,10 +34,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
-public class NetCrawler extends TreeDialog {
+public class NetCrawler extends TreeStage {
     private String netBook = "http://www.gashuw.com/modules/article/search.php?searchkey=%s";
     private final BorderPane pane = new BorderPane();
     public double width = 650;

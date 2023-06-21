@@ -2,6 +2,7 @@ package lh.wordtree.views.core;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.RuntimeUtil;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -101,15 +102,19 @@ public class MenuView extends BorderPane {
         actionBar.setSpacing(10);
         ok.setOnMouseClicked(e -> {
             if (choiceBox.getValue().equals("编译")) {
-                String wtRootPath = BeanFactory.nowRootFile.getValue().getPath();
-                String cmd = "%s -path %s -tmpl %s -create -outpath %s"
-                        .formatted(
-                                Config.src("static/tool/build/build.exe").replace("file:/", ""),
-                                wtRootPath,
-                                Config.src("static/tool/build/book.tmpl").replace("file:/", ""),
-                                "%s/.wordtree/out".formatted(wtRootPath));
-                System.out.println(cmd);
-                RuntimeUtil.exec(cmd);
+                ThreadUtil.execAsync(()-> {
+                    Platform.runLater(()-> ok.setGraphic(new WTIcon(new Image("static/icon/加载.png"))));
+                    String wtRootPath = BeanFactory.nowRootFile.getValue().getPath();
+                    String cmd = "%s -path %s -tmpl %s -create -outpath %s"
+                            .formatted(
+                                    Config.src("static/tool/build/main.exe").replace("file:/", ""),
+                                    wtRootPath,
+                                    Config.src("static/tool/build/book.tmpl").replace("file:/", ""),
+                                    "%s\\.wordtree\\out".formatted(wtRootPath));
+                    System.out.println(cmd);
+                    RuntimeUtil.exec(cmd);
+                    Platform.runLater(()-> ok.setGraphic(new WTIcon("static/icon/执行.svg")));
+                });
             }
         });
     }

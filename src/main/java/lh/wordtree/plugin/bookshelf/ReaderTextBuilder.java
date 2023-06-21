@@ -1,8 +1,11 @@
 package lh.wordtree.plugin.bookshelf;
 
+import cn.hutool.core.util.StrUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,7 +24,7 @@ public final class ReaderTextBuilder {
 
     public List<C> find() {
         Pattern p = Pattern.compile("(^第\\d+章|^第[一二三四五六七八九十]|^\\d+).+[^\\r\\n]+");
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
             StringBuilder buffer = new StringBuilder();
             C c = null;
             for (String s = reader.readLine(); s != null; s = reader.readLine()) {
@@ -51,7 +54,7 @@ public final class ReaderTextBuilder {
     public List<String> findTitle() {
         if (cs.isEmpty()) {
             Pattern p = Pattern.compile("(^第\\d+章|^第[一二三四五六七八九十]|^\\d+).+[^\\r\\n]+");
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
                 for (String s = reader.readLine(); s != null; s = reader.readLine()) {
                     Matcher matcher = p.matcher(s);
                     if (matcher.find()) {
@@ -81,7 +84,7 @@ public final class ReaderTextBuilder {
             int i = titles.indexOf(title);
             int next = i + 1;
             StringBuilder buffer = new StringBuilder();
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
                 boolean bol = false;
                 for (String s = reader.readLine(); s != null; s = reader.readLine()) {
                     if (s.trim().equals(titles.get(i))) bol = true;
