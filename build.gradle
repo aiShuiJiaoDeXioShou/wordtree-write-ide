@@ -7,10 +7,12 @@ plugins {
 ext {
     junitVersion = '5.9.1'
     objectboxVersion = "3.5.1"
+    jxBrowserVersion = '7.33.2'
 }
 
 repositories {
     mavenCentral()
+    maven { url = 'https://europe-maven.pkg.dev/jxbrowser/releases' }
 }
 
 tasks.withType(JavaCompile) {
@@ -24,6 +26,8 @@ dependencies {
     implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
         exclude(group: 'org.openjfx')
     }
+    implementation "com.teamdev.jxbrowser:jxbrowser-cross-platform:${jxBrowserVersion}"
+    implementation "com.teamdev.jxbrowser:jxbrowser-javafx:${jxBrowserVersion}"
     // 文本编辑器组件
     implementation('org.fxmisc.richtext:richtextfx:0.11.0')
     implementation('io.reactivex.rxjava3:rxjava:3.1.6')
