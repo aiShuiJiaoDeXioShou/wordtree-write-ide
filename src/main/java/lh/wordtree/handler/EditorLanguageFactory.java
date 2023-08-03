@@ -21,7 +21,6 @@ import java.util.Objects;
 
 public class EditorLanguageFactory {
     private final HashMap<String, EditorLanguageHandler<Node, File>> map = new HashMap<>();
-
     private EditorLanguageFactory() {
         this.registered(".txt", WriterEditor::new);
         this.registered("outer", WriterEditor::new);

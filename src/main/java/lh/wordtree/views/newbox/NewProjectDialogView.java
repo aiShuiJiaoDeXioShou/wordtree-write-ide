@@ -40,9 +40,12 @@ public class NewProjectDialogView extends TreeDialog {
         listView = new ListView<>();
         {
             var label = new Label();
-            label.setId("小说项目");
-            label.setText("小说项目");
-            label.setGraphic(new ImageView("static/icon/flies.png"));
+            label.setId("WordTree项目");
+            label.setText("WordTree项目");
+            ImageView icon = new ImageView("static/icon/icon.png");
+            icon.setFitHeight(35);
+            icon.setFitWidth(35);
+            label.setGraphic(icon);
             listView.getItems().addAll(label);
         }
         splitPane.getItems().addAll(listView, novelInit());
@@ -138,7 +141,7 @@ public class NewProjectDialogView extends TreeDialog {
     private void controller() {
         listView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             switch (newValue.getId()) {
-                case "小说项目" -> toggle(novelInit());
+                case "WordTree项目" -> toggle(novelInit());
             }
         });
     }
