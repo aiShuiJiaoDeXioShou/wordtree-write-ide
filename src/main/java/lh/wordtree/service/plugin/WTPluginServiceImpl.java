@@ -9,6 +9,7 @@ import lh.wordtree.plugin.WTPlugin;
 import lh.wordtree.plugin.WTPluginExtended;
 import lh.wordtree.plugin.action.ActionPlugin;
 import lh.wordtree.plugin.bookshelf.Bookshelf;
+import lh.wordtree.plugin.randomname.RandomNamePlugin;
 import lh.wordtree.plugin.wtlang.WTLangPlugin;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public class WTPluginServiceImpl implements WTPluginService {
         registered(new WTLangPlugin());
         registered(new ActionPlugin());
         registered(new Bookshelf());
+        registered(new RandomNamePlugin());
     }
 
     public Map<String, WTPlugLanguage> getPlugLanguages() {

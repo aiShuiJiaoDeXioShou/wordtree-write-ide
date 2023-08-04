@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import lh.wordtree.component.ButtonItemComponent;
 import lh.wordtree.component.IconComponent;
 import lh.wordtree.plugin.WTPluginExtended;
+import lh.wordtree.plugin.WTPluginType;
 import lh.wordtree.service.plugin.WTPluginService;
 import lh.wordtree.views.bookrack.BookRackView;
 import lh.wordtree.views.core.NoteCoreView;
@@ -40,8 +41,10 @@ public class NoteLeftButtonBarView extends HBox {
         }
 
         wtPlugins.forEach((s, extended) -> {
-            var icon = new IconComponent(extended.config().icon(), s);
-            listView.getItems().add(icon);
+            if (extended.config().type().equals(WTPluginType.menu)) {
+                var icon = new IconComponent(extended.config().icon(), s);
+                listView.getItems().add(icon);
+            }
         });
         listView.getItems().add(setting);
         this.getChildren().addAll(listView);

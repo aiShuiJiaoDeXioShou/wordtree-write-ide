@@ -1,11 +1,15 @@
 package lh.wordtree.views.core;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
+import lh.wordtree.plugin.WTPluginExtended;
+import lh.wordtree.plugin.WTPluginType;
+import lh.wordtree.service.plugin.WTPluginService;
 import lh.wordtree.views.nowfileoutline.NowFileOutlineView;
 import lh.wordtree.views.task.TaskBoxView;
+
+import java.util.Map;
 
 // 右侧的小组件栏
 public class ToolkitsView extends AnchorPane {
@@ -34,13 +38,27 @@ public class ToolkitsView extends AnchorPane {
         outlineTab.setText("大纲管理");
         outlineTab.setContent(NowFileOutlineView.newInstance());
 
-        var toolsTab = new Tab();
-        toolsTab.setText("小工具");
-        toolsTab.setContent(new Label("小工具"));
-
         pane.getTabs().addAll(tabTask, outlineTab);
+        registerToolbarPlugin(pane);
+
         this.getChildren().add(pane);
         NowFileOutlineView.newInstance().prefHeightProperty().bind(pane.prefHeightProperty());
+    }
+
+    /**
+     * 注册工具栏插件
+     */
+    private void registerToolbarPlugin(TabPane tabPane) {
+        WTPluginService ps = WTPluginService.pluginService;
+        // 加载插件
+        Map<String, WTPluginExtended> wtPlugins = ps.extendedPlugin();
+        wtPlugins.forEach((pluginName, wtPluginExtended) -> {
+            if (wtPluginExtended.config().type().equals(WTPluginType.toolBar)) {
+                Tab tab = new Tab(pluginName);
+                tab.setContent(wtPluginExtended.view());
+                tabPane.getTabs().add(tab);
+            }
+        });
     }
 
 }
