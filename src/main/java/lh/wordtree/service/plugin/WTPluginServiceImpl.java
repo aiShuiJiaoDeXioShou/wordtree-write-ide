@@ -7,6 +7,7 @@ import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.plugin.WTPlugin;
 import lh.wordtree.plugin.WTPluginExtended;
+import lh.wordtree.plugin.action.ActionPlugin;
 import lh.wordtree.plugin.bookshelf.Bookshelf;
 import lh.wordtree.plugin.wtlang.WTLangPlugin;
 
@@ -40,6 +41,7 @@ public class WTPluginServiceImpl implements WTPluginService {
         sendJar();
         // 注册自带的插件
         registered(new WTLangPlugin());
+        registered(new ActionPlugin());
         registered(new Bookshelf());
     }
 

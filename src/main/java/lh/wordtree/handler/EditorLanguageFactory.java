@@ -1,24 +1,23 @@
 package lh.wordtree.handler;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebView;
+import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ClassLoaderUtils;
 import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.editor.ProgrammingEditor;
 import lh.wordtree.editor.WriterEditor;
 import lh.wordtree.plugin.wtlang.WtLangView;
-import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.language.MdParseService;
 import lh.wordtree.service.language.OutlineServiceImpl;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
@@ -61,6 +60,30 @@ public class EditorLanguageFactory {
                 .map(WTFileUtils::firstName).toList();
         programmings.forEach(name -> this.registered(name, f -> new ProgrammingEditor()));
     }
+
+    private  <T> T loadLayout(String res) throws IOException {
+        T page = FXMLLoader.load(getClass().getResource(res));
+        return page;
+    }
+
+    private static void addLibraryDir(String libraryPath) throws Exception {
+        Field userPathsField = ClassLoader.class.getDeclaredField("usr_paths");
+        userPathsField.setAccessible(true);
+        String[] paths = (String[]) userPathsField.get(null);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < paths.length; i++) {
+            if (libraryPath.equals(paths[i])) {
+                continue;
+            }
+            sb.append(paths[i]).append(File.pathSeparatorChar);
+        }
+        sb.append(libraryPath);
+        System.setProperty("java.library.path", sb.toString());
+        final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
+        sysPathsField.setAccessible(true);
+        sysPathsField.set(null, null);
+    }
+
 
     public static EditorLanguageFactory newInstance() {
         return EditorLanguageHandlerHolder.instance;
