@@ -3,6 +3,7 @@ package lh.wordtree.plugin.randomname;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import lh.wordtree.comm.utils.ClassLoaderUtils;
 import lh.wordtree.plugin.WTPluginConfig;
 import lh.wordtree.plugin.WTPluginExtended;
 import lh.wordtree.plugin.WTPluginType;
@@ -41,12 +42,12 @@ public class RandomNamePlugin implements WTPluginExtended {
 
             @Override
             public Image icon() {
-                return null;
+                return new Image(ClassLoaderUtils.load("static/icon/人物.png"));
             }
 
             @Override
             public Image cover() {
-                return null;
+                return new Image(ClassLoaderUtils.load("static/icon/人物-红.png"));
             }
 
             @Override
