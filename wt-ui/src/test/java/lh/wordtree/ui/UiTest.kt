@@ -5,20 +5,11 @@ import javafx.event.EventHandler
 import javafx.geometry.Orientation
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
-import javafx.scene.control.Button
-import javafx.scene.control.ColorPicker
-import javafx.scene.control.Slider
-import javafx.scene.control.TextField
-import javafx.scene.control.ToggleButton
-import javafx.scene.control.ToggleGroup
+import javafx.scene.control.*
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
-import javafx.scene.layout.BorderPane
-import javafx.scene.layout.FlowPane
-import javafx.scene.layout.HBox
-import javafx.scene.layout.Pane
-import javafx.scene.layout.VBox
+import javafx.scene.layout.*
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.paint.Color
@@ -27,13 +18,8 @@ import javafx.scene.shape.Circle
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import javafx.util.Duration
-import lh.wordtree.comm.utils.ConfigUtils
-import lh.wordtree.ui.controls.Role
-import lh.wordtree.ui.controls.RoleView
-import lh.wordtree.ui.controls.WTButton
-import lh.wordtree.ui.controls.WTNetwork
+import lh.wordtree.ui.controls.*
 import lh.wordtree.ui.utils.ClassLoaderUtils
-import lh.wordtree.ui.utils.Config
 
 
 class UiTest : Application() {
@@ -248,17 +234,22 @@ class UiTest7: Application() {
 
         // 图章工具
         val imageBox = HBox()
-        val imTg = ToggleGroup()
         fun sendButton(txt: String, icon: String) = ToggleButton(txt).apply {
             this.graphic = ImageView(Image(ClassLoaderUtils.url(icon))).apply {
                 fitWidth = 35.0
                 fitHeight = 35.0
             }
         }
-        val cbTb = sendButton("城堡", "static/draw/城堡.png")
-        cbTb.toggleGroup = imTg
+
+        fun sendImage(icon: String) = ImageView(Image(ClassLoaderUtils.url(icon))).apply {
+            fitWidth = 20.0
+            fitHeight = 20.0
+        }
+
+        val cbTb = sendButton("\n城堡", "static/draw/城堡.png")
+        val cbSp = sendImage("static/draw/城堡.png")
+        cbTb.toggleGroup = tg
         imageBox.children.addAll(cbTb)
-        cbTb.isSelected = true
 
         // 橡皮工具
         val xpCircle = Circle()
@@ -299,12 +290,6 @@ class UiTest7: Application() {
                 xpCircle.centerY = slider.value
                 xpCircle.radius = slider.value / 2
                 xpCircle.fill = Color.YELLOW
-                slider.valueProperty().addListener { _, _, nv ->
-                    xpCircle.centerX = nv.toDouble()
-                    xpCircle.centerY = nv.toDouble()
-                    xpCircle.radius = nv.toDouble() / 2
-                    xpCircle.fill = Color.YELLOW
-                }
                 root.children.add(xpCircle)
             }
             canvas.setOnMouseDragged {
@@ -325,12 +310,26 @@ class UiTest7: Application() {
                 root.children.add(txtField)
             txtField.relocate(it.x + canvas.layoutX, it.y)
             txtField.isVisible = true
-            txtField.setOnAction { e ->
+            txtField.setOnAction { _ ->
                 ctx.font = Font.font(slider.value)
                 ctx.fill = colorPicker.value
-                ctx.fillText(txtField.text,it.x,it.y)
+                ctx.fillText(txtField.text, it.x, it.y)
                 ctx.stroke()
                 txtField.isVisible = false
+            }
+        }
+
+        val cbEvent = Runnable {
+            canvas.setOnMouseMoved {
+                if (!root.children.contains(cbSp)) {
+                    root.children.add(cbSp);
+                }
+                val offset = cbSp.fitWidth / 2
+                // 绘制一个精灵跟随鼠标移动
+                cbSp.relocate(it.x - offset + canvas.layoutX, it.y - offset + canvas.layoutY)
+                cbSp.setOnMouseClicked { _ ->
+                    ctx.drawImage(cbSp.image, it.x - offset, it.y - offset, cbSp.fitWidth, cbSp.fitHeight)
+                }
             }
         }
 
@@ -338,22 +337,53 @@ class UiTest7: Application() {
         tg.selectedToggleProperty().addListener { _, _, newValue ->
             // 初始化
             canvas.onMouseMoved = null
+            canvas.onMouseDragged = null
             root.children.remove(xpCircle)
+            root.children.remove(cbSp)
 
             canvas.onMousePressed = when (newValue) {
                 pen -> drawLine
                 xp -> xpEvent
                 txt -> txtEvent
+                cbTb -> {
+                    cbEvent.run()
+                    null
+                }
+
                 else -> drawLine
+            }
+        }
+
+        slider.valueProperty().addListener { _, _, nv ->
+            // 这个是橡皮的程序
+            xpCircle.apply {
+                centerX = nv.toDouble()
+                centerY = nv.toDouble()
+                radius = nv.toDouble() / 2
+                fill = Color.YELLOW
+            }
+
+            // 这个是精灵的程序
+            cbSp.apply {
+                fitWidth = nv.toDouble()
+                fitHeight = nv.toDouble()
             }
         }
 
         stage.title = "地图编辑"
         stage.show()
     }
+}
+
+class UiTest8 : Application() {
+    override fun start(primaryStage: Stage?) {
+        primaryStage!!.title = "地图编辑"
+        primaryStage.scene = Scene(WTDrawMap())
+        primaryStage.show()
+    }
 
 }
 
 fun main() {
-    Application.launch(UiTest7::class.java)
+    Application.launch(UiTest8::class.java)
 }
