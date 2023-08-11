@@ -14,24 +14,22 @@ import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.component.SystemMessage;
-import lh.wordtree.service.task.TaskService;
+import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
+import lh.wordtree.task.init.InitTask;
 import lh.wordtree.views.root.NoteBookScene;
 import lh.wordtree.views.tray.WtSystemTray;
 
 public class App extends Application {
     public final static StackPane rootPane = new StackPane();
     public static Stage primaryStage;
-    public Scene scene = NoteBookScene.newInstance();
+    public Scene scene;
     private final Log log = LogFactory.get();
     private WtSystemTray systemTray = new WtSystemTray();
 
-    public App() {
-        log.info("应用程序开始启动...");
-        TaskService.INSTANCE.start(ITask.INIT);
-    }
-
     public void start(Stage stage) throws Exception {
+        TaskService.INSTANCE.start(ITask.INIT);
+        scene = NoteBookScene.newInstance();
         primaryStage = stage;
         this.style();
         primaryStage.setScene(scene);

@@ -6,20 +6,30 @@ import javafx.geometry.Orientation
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
 import javafx.scene.control.Button
+import javafx.scene.control.ColorPicker
+import javafx.scene.control.Slider
+import javafx.scene.control.TextField
+import javafx.scene.control.ToggleButton
+import javafx.scene.control.ToggleGroup
+import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.paint.Color
 import javafx.scene.shape.ArcType
+import javafx.scene.shape.Circle
+import javafx.scene.text.Font
 import javafx.stage.Stage
 import javafx.util.Duration
 import lh.wordtree.ui.controls.Role
 import lh.wordtree.ui.controls.RoleView
 import lh.wordtree.ui.controls.WTButton
 import lh.wordtree.ui.controls.WTNetwork
+
 
 class UiTest : Application() {
     val bi = Button("画笔")
@@ -199,9 +209,131 @@ class UiTest6 : Application() {
         primaryStage.scene = scene
         primaryStage.show()
     }
+}
+
+class UiTest7: Application() {
+    override fun start(stage: Stage?) {
+        val canvas = Canvas()
+        val pane = BorderPane()
+        val root = Pane()
+        root.children.add(pane)
+        root.prefHeightProperty().bind(pane.heightProperty())
+        root.prefWidthProperty().bind(pane.widthProperty())
+        pane.center = canvas
+        stage!!.scene = Scene(root)
+
+        // 画笔的选项卡
+        val colorPicker = ColorPicker(Color.BLACK)
+        // 粗细
+        val slider = Slider(1.0,100.0,1.0)
+        // 选择框
+        val tg = ToggleGroup()
+        val pen = ToggleButton("画笔")
+        val xp = ToggleButton("橡皮")
+        val circle = ToggleButton("圆形")
+        val rectangle = ToggleButton("方块")
+        val txt = ToggleButton("文字")
+        pen.toggleGroup = tg
+        pen.isSelected = true
+        xp.toggleGroup = tg
+        txt.toggleGroup = tg
+        circle.toggleGroup = tg
+        rectangle.toggleGroup = tg
+
+        // 橡皮工具
+        val xpCircle = Circle()
+        // 文字工具框
+        val txtField = TextField()
+
+        val hbox = HBox()
+        hbox.children.addAll(pen, xp, txt, circle, rectangle)
+
+        val box = VBox()
+        box.children.addAll(colorPicker, slider, hbox)
+        box.spacing = 10.0
+        pane.left = box
+
+        // 画板功能的实现
+        canvas.width = 1080.0
+        canvas.height = 760.0
+        val ctx = canvas.graphicsContext2D
+
+        // 绘制方法
+        val drawLine = EventHandler<MouseEvent> { event->
+            ctx.moveTo(event.x, event.y)
+            canvas.setOnMouseDragged {
+                ctx.lineTo(it.x, it.y)
+                ctx.stroke = colorPicker.value
+                ctx.lineWidth = slider.value
+                ctx.stroke()
+            }
+            canvas.setOnMouseReleased {
+                canvas.onMouseDragged = null
+            }
+            ctx.beginPath()
+        }
+
+        val xpEvent = EventHandler<MouseEvent> {
+            if (!root.children.contains(xpCircle)) {
+                xpCircle.centerX = slider.value
+                xpCircle.centerY = slider.value
+                xpCircle.radius = slider.value / 2
+                xpCircle.fill = Color.YELLOW
+                slider.valueProperty().addListener { _, _, nv ->
+                    xpCircle.centerX = nv.toDouble()
+                    xpCircle.centerY = nv.toDouble()
+                    xpCircle.radius = nv.toDouble() / 2
+                    xpCircle.fill = Color.YELLOW
+                }
+                root.children.add(xpCircle)
+            }
+            canvas.setOnMouseDragged {
+                xpCircle.isVisible = true
+                ctx.clearRect(it.x, it.y, slider.value, slider.value)
+                val offset = slider.value/2
+                // 绘制一个圆跟随鼠标移动
+                xpCircle.relocate(it.x - offset + canvas.layoutX, it.y - offset)
+            }
+            canvas.setOnMouseReleased {
+                canvas.onMouseDragged = null
+                xpCircle.isVisible = false
+            }
+        }
+
+        val txtEvent = EventHandler<MouseEvent> {
+            if (!root.children.contains(txtField))
+                root.children.add(txtField)
+            txtField.relocate(it.x + canvas.layoutX, it.y)
+            txtField.isVisible = true
+            txtField.setOnAction { e ->
+                ctx.font = Font.font(slider.value)
+                ctx.fill = colorPicker.value
+                ctx.fillText(txtField.text,it.x,it.y)
+                ctx.stroke()
+                txtField.isVisible = false
+            }
+        }
+
+        canvas.onMousePressed = drawLine
+        tg.selectedToggleProperty().addListener { _, _, newValue ->
+            // 初始化
+            canvas.onMouseMoved = null
+            root.children.remove(xpCircle)
+
+            canvas.onMousePressed = when (newValue) {
+                pen -> drawLine
+                xp -> xpEvent
+                txt -> txtEvent
+                else -> drawLine
+            }
+        }
+
+        stage.title = "地图编辑"
+        stage.show()
+    }
 
 }
 
 fun main() {
-    Application.launch(UiTest5::class.java)
+    Application.launch(UiTest7::class.java)
 }

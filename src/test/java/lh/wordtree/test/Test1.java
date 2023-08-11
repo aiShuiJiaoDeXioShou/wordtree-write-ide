@@ -1,8 +1,13 @@
 package lh.wordtree.test;
 
+import com.lu.sn.Language;
+import com.lu.sn.RandomNameTool;
+import com.lu.sn.en.EnglishName;
+import com.lu.sn.en.EnglishNameUtil;
 import javafx.application.Application;
 import javafx.scene.control.TreeItem;
 import javafx.scene.text.Text;
+import lh.wordtree.plugin.randomname.ChineseName;
 import lh.wordtree.uitest.JavaCoder;
 import org.junit.jupiter.api.Test;
 
@@ -12,12 +17,16 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 public class Test1 {
+
+
+    @Test
+    public void chineseName() {
+        String name = RandomNameTool.getName(Language.zh, 0);
+        System.out.println(name);
+    }
 
     public static URL getPath() {
         return Test1.class.getClassLoader().getResource("test/resources/config.properties");

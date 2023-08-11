@@ -23,7 +23,7 @@ import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.file.MenuFileServiceImpl;
 import lh.wordtree.service.language.LanguageConstructorService;
 import lh.wordtree.service.language.LanguageConstructorServiceImpl;
-import lh.wordtree.service.task.TaskService;
+import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.utils.SvgUtils;

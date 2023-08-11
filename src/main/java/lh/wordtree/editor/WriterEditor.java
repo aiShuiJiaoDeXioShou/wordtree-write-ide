@@ -38,7 +38,7 @@ import lh.wordtree.comm.entity.Figure;
 import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.language.WTWriterEditorService;
 import lh.wordtree.service.language.WTWriterEditorServiceImpl;
-import lh.wordtree.service.task.TaskService;
+import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.views.core.TabMenuBarView;
 import org.fxmisc.richtext.CodeArea;

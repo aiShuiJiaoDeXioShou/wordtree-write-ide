@@ -1,18 +1,15 @@
-package lh.wordtree.service.task;
+package lh.wordtree.task;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction1;
-import lh.wordtree.task.ITask;
-import lh.wordtree.task.Task;
-import lh.wordtree.task.WTTask;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-
+@Deprecated
 public class TaskServiceImpl implements TaskService {
     private final List<OrdinaryFunction1<String>> writeTasks = new LinkedList<>();
     private final List<OrdinaryFunction> toggleFileTasks = new LinkedList<>();

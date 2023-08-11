@@ -23,7 +23,7 @@ import java.nio.file.Path;
 public class InitTask implements WTTask {
 
     public void apply() {
-        ThreadUtil.execAsync(this::initConfig);
+        this.initConfig();
     }
 
     // 初始化配置对象

@@ -250,7 +250,11 @@ public class NetCrawler extends TreeStage {
                     FileUtil.writeBytes(
                             JSON.toJSONBytes(bookshelfItem, JSONWriter.Feature.PrettyFormat.ordinal()), touch
                     );
-                } catch (IOException e) {
+                } catch (Exception e) {
+                    Platform.runLater(()-> {
+                        SystemMessage.sendError("下载失败！");
+                        down.setText("下载失败");
+                    });
                     e.printStackTrace();
                 }
             });
