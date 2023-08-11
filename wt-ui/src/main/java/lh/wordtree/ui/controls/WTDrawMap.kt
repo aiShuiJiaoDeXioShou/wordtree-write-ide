@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import javafx.scene.shape.ArcType
 import javafx.scene.shape.Circle
 import javafx.scene.text.Font
 import lh.wordtree.ui.utils.ClassLoaderUtils
@@ -78,19 +79,18 @@ class WTDrawMap : Pane() {
         ctx.beginPath()
     }
 
-    // 线条绘制
+    // 绘制圆形
     private val drawCircle = EventHandler<MouseEvent> { event ->
-        ctx.moveTo(event.x, event.y)
+        ctx.stroke = colorPicker.value
+        ctx.lineWidth = slider.value
+        var x = event.x
+        var y = event.y
         canvas.setOnMouseDragged {
-            ctx.arcTo(it.x / 2, it.y / 2, it.x, 0.0, 2 * Math.PI)
-            ctx.stroke = colorPicker.value
-            ctx.lineWidth = slider.value
-            ctx.stroke()
+            ctx.strokeArc(it.x, it.y, 100.0, 100.0, 0.0, 360.0, ArcType.OPEN)
         }
         canvas.setOnMouseReleased {
             canvas.onMouseDragged = null
         }
-        ctx.beginPath()
     }
 
     // 橡皮工具绘制
