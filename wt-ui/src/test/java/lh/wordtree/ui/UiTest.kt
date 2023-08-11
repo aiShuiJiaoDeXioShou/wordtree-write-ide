@@ -226,6 +226,7 @@ class UiTest7: Application() {
         val colorPicker = ColorPicker(Color.BLACK)
         // 粗细
         val slider = Slider(1.0,100.0,1.0)
+
         // 选择框
         val tg = ToggleGroup()
         val pen = ToggleButton("画笔")
@@ -239,6 +240,11 @@ class UiTest7: Application() {
         txt.toggleGroup = tg
         circle.toggleGroup = tg
         rectangle.toggleGroup = tg
+
+        // 图章工具
+        val imageBox = HBox()
+        val imTg = ToggleGroup()
+        ToggleButton()
 
         // 橡皮工具
         val xpCircle = Circle()
