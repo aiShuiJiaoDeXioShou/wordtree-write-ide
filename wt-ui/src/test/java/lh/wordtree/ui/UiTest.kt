@@ -11,6 +11,8 @@ import javafx.scene.control.Slider
 import javafx.scene.control.TextField
 import javafx.scene.control.ToggleButton
 import javafx.scene.control.ToggleGroup
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.FlowPane
@@ -25,10 +27,13 @@ import javafx.scene.shape.Circle
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import javafx.util.Duration
+import lh.wordtree.comm.utils.ConfigUtils
 import lh.wordtree.ui.controls.Role
 import lh.wordtree.ui.controls.RoleView
 import lh.wordtree.ui.controls.WTButton
 import lh.wordtree.ui.controls.WTNetwork
+import lh.wordtree.ui.utils.ClassLoaderUtils
+import lh.wordtree.ui.utils.Config
 
 
 class UiTest : Application() {
@@ -244,7 +249,16 @@ class UiTest7: Application() {
         // 图章工具
         val imageBox = HBox()
         val imTg = ToggleGroup()
-        ToggleButton()
+        fun sendButton(txt: String, icon: String) = ToggleButton(txt).apply {
+            this.graphic = ImageView(Image(ClassLoaderUtils.url(icon))).apply {
+                fitWidth = 35.0
+                fitHeight = 35.0
+            }
+        }
+        val cbTb = sendButton("城堡", "static/draw/城堡.png")
+        cbTb.toggleGroup = imTg
+        imageBox.children.addAll(cbTb)
+        cbTb.isSelected = true
 
         // 橡皮工具
         val xpCircle = Circle()
@@ -255,7 +269,7 @@ class UiTest7: Application() {
         hbox.children.addAll(pen, xp, txt, circle, rectangle)
 
         val box = VBox()
-        box.children.addAll(colorPicker, slider, hbox)
+        box.children.addAll(colorPicker, slider, hbox, imageBox)
         box.spacing = 10.0
         pane.left = box
 
