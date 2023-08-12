@@ -381,9 +381,26 @@ class UiTest8 : Application() {
         primaryStage.scene = Scene(WTDrawMap())
         primaryStage.show()
     }
+}
+
+class UiTest9 : Application() {
+    override fun start(stage: Stage?) {
+        stage!!.title = "窗口操作！"
+        val stackPane = StackPane()
+        val borderPane = BorderPane()
+        borderPane.left = Button("你好世界！")
+        borderPane.prefWidth = 1080.0
+        borderPane.prefHeight = 960.0
+        stackPane.children.add(borderPane)
+        stackPane.prefHeightProperty().bind(borderPane.heightProperty())
+        stackPane.prefWidthProperty().bind(borderPane.widthProperty())
+        stackPane.style = "-fx-background-color: #000000;-fx-opacity: 0.3;"
+        stage.scene = Scene(stackPane, 1080.0, 860.0)
+        stage.show()
+    }
 
 }
 
 fun main() {
-    Application.launch(UiTest8::class.java)
+    Application.launch(UiTest9::class.java)
 }

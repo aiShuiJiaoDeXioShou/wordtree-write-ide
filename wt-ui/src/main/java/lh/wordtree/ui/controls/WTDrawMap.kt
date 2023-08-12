@@ -34,6 +34,7 @@ class WTDrawMap : Pane() {
     val rectangle = ToggleButton("方块")
     val txt = ToggleButton("文字")
     val select = ToggleButton("选择")
+    val ty = ToggleButton("椭圆")
     val hbox = HBox()
     val box = VBox()
 
@@ -85,10 +86,39 @@ class WTDrawMap : Pane() {
         ctx.lineWidth = slider.value
         var x = event.x
         var y = event.y
+        var w = 0.0
+        var h = 0.0
+        var size = 0.0
         canvas.setOnMouseDragged {
-            ctx.strokeArc(it.x, it.y, 100.0, 100.0, 0.0, 360.0, ArcType.OPEN)
+            var nowX = it.x
+            var nowY = it.y
+            w = Math.pow(nowX - x, 2.0)
+            h = Math.pow(nowY - y, 2.0)
+            size = Math.pow(w + h, 1 / 2.0)
         }
         canvas.setOnMouseReleased {
+            ctx.strokeArc(x, y, size, size, 0.0, 360.0, ArcType.OPEN)
+            canvas.onMouseDragged = null
+        }
+    }
+
+    // 绘制椭圆
+    private val drawTy = EventHandler<MouseEvent> { event ->
+        ctx.stroke = colorPicker.value
+        ctx.lineWidth = slider.value
+        var x = event.x
+        var y = event.y
+        var w = 0.0
+        var h = 0.0
+        var size = 0.0
+        canvas.setOnMouseDragged {
+            var nowX = it.x
+            var nowY = it.y
+            w = nowX - x
+            h = nowY - y
+        }
+        canvas.setOnMouseReleased {
+            ctx.strokeArc(x, y, w, h, 0.0, 360.0, ArcType.OPEN)
             canvas.onMouseDragged = null
         }
     }
@@ -168,7 +198,8 @@ class WTDrawMap : Pane() {
         txt.toggleGroup = tg
         circle.toggleGroup = tg
         rectangle.toggleGroup = tg
-        hbox.children.addAll(pen, xp, txt, circle, rectangle, select)
+        ty.toggleGroup = tg
+        hbox.children.addAll(pen, xp, txt, circle, rectangle, select, ty)
 
         // 设置图章工具
         cbTb.toggleGroup = tg
@@ -193,6 +224,7 @@ class WTDrawMap : Pane() {
                 }
 
                 circle -> drawCircle
+                ty -> drawTy
                 else -> drawLine
             }
         }
