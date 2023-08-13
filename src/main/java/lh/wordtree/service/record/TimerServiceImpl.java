@@ -2,8 +2,8 @@ package lh.wordtree.service.record;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import lh.wordtree.archive.mapper.WorkPlanMapper;
-import lh.wordtree.archive.mapper.impl.WorkPlanMapperImpl;
+import lh.wordtree.model.task.WorkPlanMapper;
+import lh.wordtree.model.task.WorkPlanMapperImpl;
 import lh.wordtree.archive.entity.WorkPlan;
 import lh.wordtree.service.InitializationService;
 import lh.wordtree.comm.BeanFactory;

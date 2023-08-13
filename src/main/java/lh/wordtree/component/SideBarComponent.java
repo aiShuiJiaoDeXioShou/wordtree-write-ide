@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import jfxtras.styles.jmetro.MDL2IconFont;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
 import lh.wordtree.comm.BeanFactory;
-import lh.wordtree.views.core.NoteCoreView;
+import lh.wordtree.model.core.NoteCoreView;
 
 public class SideBarComponent extends VBox {
     private String name;

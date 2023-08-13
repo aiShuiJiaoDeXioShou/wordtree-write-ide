@@ -14,8 +14,8 @@ import lh.wordtree.service.record.WorkSpaceService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
-import lh.wordtree.views.core.FileTreeView;
-import lh.wordtree.views.core.MenuView;
+import lh.wordtree.model.core.FileTreeView;
+import lh.wordtree.model.core.MenuView;
 
 import java.io.File;
 import java.io.FileInputStream;

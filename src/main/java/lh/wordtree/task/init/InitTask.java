@@ -1,7 +1,6 @@
 package lh.wordtree.task.init;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.thread.ThreadUtil;
 import com.alibaba.fastjson2.JSON;
 import javafx.application.Platform;
 import lh.wordtree.comm.config.CodeLauncherConfig;
@@ -12,7 +11,7 @@ import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.task.ITask;
 import lh.wordtree.task.Task;
 import lh.wordtree.task.WTTask;
-import lh.wordtree.views.user.EditUserView;
+import lh.wordtree.model.user.EditUserView;
 
 import java.io.File;
 import java.io.IOException;

@@ -8,7 +8,7 @@ import lh.wordtree.plugin.bookshelf.ReaderTextBuilder;
 import lh.wordtree.service.plugin.WTPluginServiceImpl;
 import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.controls.WTOneWindow;
-import lh.wordtree.views.record.RecordView;
+import lh.wordtree.model.record.RecordView;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

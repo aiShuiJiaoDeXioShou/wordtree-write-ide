@@ -22,7 +22,7 @@ import lh.wordtree.plugin.WTPluginType
 import lh.wordtree.comm.BeanFactory
 import lh.wordtree.service.plugin.WTPluginService
 import lh.wordtree.ui.controls.WTNetwork
-import lh.wordtree.views.core.TabMenuBarView
+import lh.wordtree.model.core.TabMenuBarView
 import org.fxmisc.wellbehaved.event.EventPattern
 import org.fxmisc.wellbehaved.event.InputMap
 import org.fxmisc.wellbehaved.event.Nodes

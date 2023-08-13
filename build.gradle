@@ -82,7 +82,7 @@ javafx {
 }
 
 application {
-    mainClass = "lh.wordtree.Launcher"
+    mainClass = "lh.wordtree.Main"
     applicationName = 'wordtree'
 }
 

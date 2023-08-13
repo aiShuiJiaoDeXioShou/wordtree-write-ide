@@ -40,7 +40,7 @@ import lh.wordtree.service.language.WTWriterEditorService;
 import lh.wordtree.service.language.WTWriterEditorServiceImpl;
 import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
-import lh.wordtree.views.core.TabMenuBarView;
+import lh.wordtree.model.core.TabMenuBarView;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.event.MouseOverTextEvent;

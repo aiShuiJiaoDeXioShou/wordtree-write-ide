@@ -21,7 +21,7 @@ import lh.wordtree.archive.entity.Outline;
 import lh.wordtree.ui.controls.WTIcon;
 import lh.wordtree.ui.controls.WTInputPro;
 import lh.wordtree.ui.controls.WTLabel;
-import lh.wordtree.views.core.NoteCoreView;
+import lh.wordtree.model.core.NoteCoreView;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;

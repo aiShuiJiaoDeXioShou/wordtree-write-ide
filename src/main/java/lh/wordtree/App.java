@@ -16,9 +16,8 @@ import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.component.SystemMessage;
 import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
-import lh.wordtree.task.init.InitTask;
-import lh.wordtree.views.root.NoteBookScene;
-import lh.wordtree.views.tray.WtSystemTray;
+import lh.wordtree.model.root.NoteBookScene;
+import lh.wordtree.model.tray.WtSystemTray;
 
 public class App extends Application {
     public final static StackPane rootPane = new StackPane();

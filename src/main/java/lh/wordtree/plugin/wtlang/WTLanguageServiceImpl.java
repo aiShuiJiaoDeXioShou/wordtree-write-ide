@@ -16,7 +16,7 @@ import lh.wordtree.editor.LangEditor;
 import lh.wordtree.plugin.WTPlugLanguage;
 import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.plugin.WTPluginService;
-import lh.wordtree.views.core.TabMenuBarView;
+import lh.wordtree.model.core.TabMenuBarView;
 import netscape.javascript.JSObject;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;
