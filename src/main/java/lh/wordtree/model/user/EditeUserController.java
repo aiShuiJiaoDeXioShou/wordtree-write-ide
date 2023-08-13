@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class EditeUserController {
     private EditUserView userView;
-    private EditeUserModel userModel;
+    private EditeUserModel userModel = new EditeUserModel();
 
     public EditeUserController(EditUserView userView) {
         this.userView = userView;

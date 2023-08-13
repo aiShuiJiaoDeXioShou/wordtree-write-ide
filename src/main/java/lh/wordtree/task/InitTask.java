@@ -8,9 +8,6 @@ import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ClassLoaderUtils;
 import lh.wordtree.archive.entity.Author;
 import lh.wordtree.comm.BeanFactory;
-import lh.wordtree.task.ITask;
-import lh.wordtree.task.Task;
-import lh.wordtree.task.WTTask;
 import lh.wordtree.model.user.EditUserView;
 
 import java.io.File;
@@ -20,23 +17,31 @@ import java.nio.file.Path;
 
 @Task(name = "配置初始化任务", value = 3)
 public class InitTask implements WTTask {
+    // 在任务注册到系统的时候初始化文件目录，这样就不会造成与其他的任务相互冲突的场景
+    public InitTask() {
+        this.initDir();
+    }
 
     public void init() {
-        this.initConfig();
+        this.initUserConfig();
     }
 
     // 初始化配置对象
-    public void initConfig() {
+    public void initUserConfig() {
+        var user = new File(Config.USER_CONFIG_PATH);
+        // 如果不存在则打开初始化用户界面，要求填入用户信息
+        if (!user.exists()) {
+            Platform.runLater(() -> new EditUserView().show());
+        } else {
+            BeanFactory.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
+        }
+    }
+
+    // 初始化目录结构
+    public void initDir() {
         try {
             // 判断这个路径下面是否有.wordtree目录，没有进行创建操作
             var appConfigDirFile = new File(Config.APP_CONFIG_DIR);
-            var user = new File(Config.USER_CONFIG_PATH);
-            // 如果不存在则打开初始化用户界面，要求填入用户信息
-            if (!user.exists()) {
-                Platform.runLater(() -> new EditUserView().show());
-            } else {
-                BeanFactory.user.set(JSON.parseObject(FileUtil.readBytes(user), Author.class));
-            }
             if (appConfigDirFile.exists()) return;
             var countryLanguage = new File(Config.COUNTRY_LANGUAGE);
             var sqliteFile = new File(Config.SQLITE_PATH);
@@ -57,9 +62,7 @@ public class InitTask implements WTTask {
                 appConfigDirFile.mkdirs();
             }
             if (!sqliteFile.exists()) {
-
                 Files.copy(ClassLoaderUtils.load("static/library.db"), Path.of(Config.SQLITE_PATH));
-
             }
             if (!baseWorkspace.exists()) {
                 baseWorkspace.mkdirs();
@@ -86,8 +89,10 @@ public class InitTask implements WTTask {
                 init.createNewFile();
                 Files.writeString(Path.of(Config.INIT_PATH), Config.INIT_DATA);
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
