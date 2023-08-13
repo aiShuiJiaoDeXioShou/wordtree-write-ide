@@ -1,12 +1,6 @@
-<p align="center">
-
-[//]: # (    <a title="Hits" target="_blank" href="https://github.com/aiShuiJiaoDeXioShou"><img src="https://hits.b3log.org/Achuan-2/Achuan-2.svg" ></a>)
-    <a title="github" target="_blank" href="" ></a>
-    <a title="weibo" target="_blank" href="" ></a>
-    <a title="zhihu" target="_blank" href="" ></a>
-    <a title="bilibili" target="_blank" href="" ></a>
-    <a title="coolapk" target="_blank" href="" ></a>
-</p>
+[![Feature Requests](https://img.shields.io/github/issues/microsoft/vscode/feature-request.svg)](https://github.com/aiShuiJiaoDeXioShou/library-javafx-gui/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc)
+[![Bugs](https://img.shields.io/github/issues/microsoft/vscode/bug.svg)](https://github.com/aiShuiJiaoDeXioShou/library-javafx-gui/issues?utf8=✓&q=is%3Aissue+is%3Aopen+label%3Abug)
+[![Gitter](https://img.shields.io/badge/chat-on%20gitter-yellow.svg)](https://github.com/aiShuiJiaoDeXioShou/library-javafx-gui)
 
 WordTree核心功能预览:
 
