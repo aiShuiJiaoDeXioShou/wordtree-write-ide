@@ -19,6 +19,7 @@ import java.util.List;
 public class UserInfoListView extends VBox {
     public List<RecentFiles> recentFiles = WorkSpaceService.get();
     private ListView<Label> bookHistoryList = new ListView<>();
+    private MenuItem del,open,delAndDelFile,details;
 
     public UserInfoListView() {
         this.myLayout();
@@ -66,39 +67,40 @@ public class UserInfoListView extends VBox {
         });
     }
 
+    // 添加历史记录的右侧点击事件
     private void bookHistoryRightClick(Label label) {
+
         var contextMenu = new ContextMenu();
-        {
-            var open = new MenuItem("打开");
-            var del = new MenuItem("删除");
-            var delAndDelFile = new MenuItem("删除并且删除文件夹");
-            var details = new MenuItem("查看详情");
-            contextMenu.getItems().addAll(open, del, delAndDelFile);
-            contextMenu.show(label, Side.BOTTOM, 0, 0);
-            open.setOnAction(event -> {
-                this.jump(label);
+        open = new MenuItem("打开");
+        del = new MenuItem("删除");
+        delAndDelFile = new MenuItem("删除并且删除文件夹");
+        details = new MenuItem("查看详情");
+        contextMenu.getItems().addAll(open, del, delAndDelFile);
+        contextMenu.show(label, Side.BOTTOM, 0, 0);
+
+        open.setOnAction(event -> {
+            this.jump(label);
+        });
+        del.setOnAction(event -> {
+            var i = bookHistoryList.getItems().indexOf(label);
+            bookHistoryList.getItems().remove(label);
+            // 更新文件
+            recentFiles.remove(i);
+            WorkSpaceService.save(recentFiles);
+        });
+        delAndDelFile.setOnAction(event -> {
+            var i = bookHistoryList.getItems().indexOf(label);
+            bookHistoryList.getItems().remove(label);
+            recentFiles.remove(i);
+            // 更新文件
+            WorkSpaceService.save(recentFiles);
+            ThreadUtil.execAsync(() -> {
+                var file = new File(label.getId());
+                file.deleteOnExit();
             });
-            del.setOnAction(event -> {
-                var i = bookHistoryList.getItems().indexOf(label);
-                bookHistoryList.getItems().remove(label);
-                // 更新文件
-                recentFiles.remove(i);
-                WorkSpaceService.save(recentFiles);
-            });
-            delAndDelFile.setOnAction(event -> {
-                var i = bookHistoryList.getItems().indexOf(label);
-                bookHistoryList.getItems().remove(label);
-                recentFiles.remove(i);
-                // 更新文件
-                WorkSpaceService.save(recentFiles);
-                ThreadUtil.execAsync(() -> {
-                    var file = new File(label.getId());
-                    file.deleteOnExit();
-                });
-            });
-            details.setOnAction(e -> {
-            });
-        }
+        });
+        details.setOnAction(e -> {
+        });
     }
 
     // 跳转到IDE区域

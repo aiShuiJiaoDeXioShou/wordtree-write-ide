@@ -8,9 +8,9 @@ import javafx.scene.control.TreeView;
 import lh.wordtree.component.FileItemComponent;
 import lh.wordtree.archive.entity.RecentFiles;
 import lh.wordtree.comm.BeanFactory;
+import lh.wordtree.model.router.NavigationView;
 import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.record.WorkSpaceService;
-import lh.wordtree.model.root.NoteLeftButtonBarView;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -30,7 +30,7 @@ public class FileTreeView extends TreeView<Label> {
         BeanFactory.nowRootFile.set(file);
         this.nowFile = file;
         // 改变路由状态
-        NoteLeftButtonBarView.newInstance().listView.getSelectionModel().select(1);
+        NavigationView.newInstance().listView.getSelectionModel().select(1);
         // 执行垃圾回收机制
         ThreadUtil.execAsync(() -> {
             Platform.runLater(() -> {

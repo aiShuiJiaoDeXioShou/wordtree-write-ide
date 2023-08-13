@@ -16,7 +16,6 @@ import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.component.SystemMessage;
 import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
-import lh.wordtree.model.root.NoteBookScene;
 import lh.wordtree.model.tray.WtSystemTray;
 
 public class App extends Application {
@@ -28,7 +27,7 @@ public class App extends Application {
 
     public void start(Stage stage) throws Exception {
         TaskService.INSTANCE.start(ITask.INIT);
-        scene = NoteBookScene.newInstance();
+        scene = AppScene.newInstance();
         primaryStage = stage;
         this.style();
         primaryStage.setScene(scene);
