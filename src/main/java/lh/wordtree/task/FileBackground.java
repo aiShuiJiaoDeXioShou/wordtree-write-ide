@@ -1,9 +1,6 @@
-package lh.wordtree.task.file;
+package lh.wordtree.task;
 
 import lh.wordtree.comm.BeanFactory;
-import lh.wordtree.task.ITask;
-import lh.wordtree.task.Task;
-import lh.wordtree.task.WTTask;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.monitor.FileAlterationListenerAdaptor;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
@@ -16,11 +13,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * 注册后台检测系统服务,等待其他task初始化之后初始化该程序
  */
-@Task(iTask = ITask.INIT, name = "配置初始化任务", value = -999)
+@Task(name = "配置初始化任务", value = -999)
 public class FileBackground implements WTTask {
     public static final Logger logger = Logger.getLogger(FileBackground.class);
     @Override
-    public void apply() {
+    public void init() {
         // 监控目录
         String rootDir = BeanFactory.nowRootFile.get().getPath();
         logger.info("正在监听文件夹..."+rootDir);

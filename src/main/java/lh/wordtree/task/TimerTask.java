@@ -1,4 +1,4 @@
-package lh.wordtree.task.timer;
+package lh.wordtree.task;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;

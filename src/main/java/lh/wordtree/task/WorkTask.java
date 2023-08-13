@@ -1,4 +1,4 @@
-package lh.wordtree.task.init;
+package lh.wordtree.task;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.thread.ThreadUtil;
@@ -23,11 +23,11 @@ import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Objects;
 
-@Task(value = 1, name = "工作空间初始化任务", iTask = ITask.INIT)
+@Task(value = 1, name = "工作空间初始化任务")
 public class WorkTask implements WTTask {
 
-
-    public void apply() {
+    @Override
+    public void init() {
         // 对工作空间进行初始化操作
         fileInit();
         // 初始化成功之后读取WT任务

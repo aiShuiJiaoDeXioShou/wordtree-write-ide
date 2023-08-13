@@ -5,7 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
 import lh.wordtree.comm.utils.WTFileUtils;
 import lh.wordtree.task.TaskService;
-import lh.wordtree.task.TaskServiceImpl;
+import lh.wordtree.task.TaskAnnotationServiceImpl;
 import lh.wordtree.task.ITask;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +56,7 @@ public class Test3 {
 
     @Test
     public void test6() {
-        TaskService taskService = new TaskServiceImpl();
+        TaskService taskService = new TaskAnnotationServiceImpl();
         taskService.start(ITask.WRITE);
     }
 }

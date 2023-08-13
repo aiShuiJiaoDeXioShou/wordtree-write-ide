@@ -1,4 +1,4 @@
-package lh.wordtree.task.auto;
+package lh.wordtree.task;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;

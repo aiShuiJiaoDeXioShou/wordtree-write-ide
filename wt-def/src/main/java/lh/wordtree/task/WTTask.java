@@ -2,10 +2,6 @@ package lh.wordtree.task;
 
 public interface WTTask {
 
-    default void apply() {
-    }
-
-
     default void init() {
     }
 

@@ -1,4 +1,4 @@
-package lh.wordtree.task.init;
+package lh.wordtree.task;
 
 import cn.hutool.core.io.FileUtil;
 import com.alibaba.fastjson2.JSON;
@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-@Task(iTask = ITask.INIT, name = "配置初始化任务", value = 3)
+@Task(name = "配置初始化任务", value = 3)
 public class InitTask implements WTTask {
 
-    public void apply() {
+    public void init() {
         this.initConfig();
     }
 
