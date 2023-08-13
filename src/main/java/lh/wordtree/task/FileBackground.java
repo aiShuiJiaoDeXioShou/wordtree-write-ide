@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 注册后台检测系统服务,等待其他task初始化之后初始化该程序
  */
-@Task(name = "配置初始化任务", value = -999)
+@Task(name = "文件更改监听", value = -999)
 public class FileBackground implements WTTask {
     public static final Logger logger = Logger.getLogger(FileBackground.class);
     @Override
