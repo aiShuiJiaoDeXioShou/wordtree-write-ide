@@ -9,15 +9,12 @@ import java.util.List;
  * 手动注册的任务
  */
 public class TaskHandlerImpl implements TaskHandler {
-
-
-
     public TaskHandlerImpl() {
-        sign(new WorkTask());
         sign(new InitTask());
-        sign(new AutoTask());
+        sign(new WorkTask());
         sign(new TimerTask());
         sign(new FileBackground());
+        sign(new AutoTask());
         this.init();
     }
 

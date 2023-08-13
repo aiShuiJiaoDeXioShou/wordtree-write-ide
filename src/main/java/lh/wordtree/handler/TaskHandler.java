@@ -17,6 +17,7 @@ public interface TaskHandler {
     List<OrdinaryFunction> saveTasks = new LinkedList<>();
     List<OrdinaryFunction> initTasks = new LinkedList<>();
     List<OrdinaryFunction> endTasks = new LinkedList<>();
+    TaskHandler INSTANCE = new TaskHandlerImpl();
 
     String BASE_PACKAGE = "lh.wordtree.task";
     TaskHandler INSTANCE = new TaskHandlerImpl();
