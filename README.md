@@ -1,4 +1,4 @@
-WordTree核心功能预览:
+# WordTree核心功能预览:
 
 ![img.png](readme/wordtree效果演示.gif)
 
