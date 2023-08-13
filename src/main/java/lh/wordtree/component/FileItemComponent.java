@@ -23,7 +23,7 @@ import lh.wordtree.service.file.FileService;
 import lh.wordtree.service.file.MenuFileServiceImpl;
 import lh.wordtree.service.language.LanguageConstructorService;
 import lh.wordtree.service.language.LanguageConstructorServiceImpl;
-import lh.wordtree.task.TaskService;
+import lh.wordtree.handler.TaskHandler;
 import lh.wordtree.task.ITask;
 import lh.wordtree.ui.controls.WTFxInputAlert;
 import lh.wordtree.ui.utils.SvgUtils;
@@ -251,7 +251,7 @@ public class FileItemComponent extends TreeItem<Label> {
      */
     private void addTab() {
         LanguageConstructorService lsc = new LanguageConstructorServiceImpl(file);
-        ThreadUtil.execAsync(() -> TaskService.INSTANCE.start(ITask.TOGGLE_FILE));
+        ThreadUtil.execAsync(() -> TaskHandler.INSTANCE.start(ITask.TOGGLE_FILE));
         Node build = lsc.build();
         var tab = new TabComponent(tabMenuBar);
         {

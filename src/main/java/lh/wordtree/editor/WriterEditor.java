@@ -38,7 +38,7 @@ import lh.wordtree.comm.entity.Figure;
 import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.service.language.WTWriterEditorService;
 import lh.wordtree.service.language.WTWriterEditorServiceImpl;
-import lh.wordtree.task.TaskService;
+import lh.wordtree.handler.TaskHandler;
 import lh.wordtree.task.ITask;
 import lh.wordtree.model.core.TabMenuBarView;
 import org.fxmisc.richtext.CodeArea;
@@ -143,7 +143,7 @@ public class WriterEditor extends CodeArea {
     Consumer<List<PlainTextChange>> textChange = plainTextChanges -> {
         for (PlainTextChange plainTextChange : plainTextChanges) {
             var inserted = plainTextChange.getInserted();
-            TaskService.INSTANCE.start(ITask.WRITE, inserted);
+            TaskHandler.INSTANCE.start(ITask.WRITE, inserted);
         }
     };
 

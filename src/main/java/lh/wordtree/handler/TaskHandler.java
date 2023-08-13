@@ -1,14 +1,16 @@
-package lh.wordtree.task;
+package lh.wordtree.handler;
 
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction1;
+import lh.wordtree.task.ITask;
+import lh.wordtree.task.WTTask;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-public interface TaskService {
-    TaskService INSTANCE = new TaskServiceImpl();
+public interface TaskHandler {
+    TaskHandler INSTANCE = new TaskHandlerImpl();
     LinkedHashMap<String, WTTask> tasks = new LinkedHashMap<>();
     List<OrdinaryFunction1<String>> writeTasks = new LinkedList<>();
     List<OrdinaryFunction> toggleFileTasks = new LinkedList<>();

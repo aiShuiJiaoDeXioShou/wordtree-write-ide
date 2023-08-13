@@ -1,17 +1,18 @@
-package lh.wordtree.task;
+package lh.wordtree.handler;
 
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
+import lh.wordtree.task.*;
 
 import java.util.List;
 
 /**
  * 手动注册的任务
  */
-public class TaskServiceImpl implements TaskService {
+public class TaskHandlerImpl implements TaskHandler {
 
 
 
-    public TaskServiceImpl() {
+    public TaskHandlerImpl() {
         sign(new WorkTask());
         sign(new InitTask());
         sign(new AutoTask());

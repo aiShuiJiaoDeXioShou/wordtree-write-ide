@@ -4,8 +4,8 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.io.FileUtil;
 import javafx.scene.input.Clipboard;
 import lh.wordtree.comm.utils.WTFileUtils;
-import lh.wordtree.task.TaskService;
-import lh.wordtree.task.TaskAnnotationServiceImpl;
+import lh.wordtree.handler.TaskHandler;
+import lh.wordtree.handler.TaskAnnotationHandlerImpl;
 import lh.wordtree.task.ITask;
 import org.junit.jupiter.api.Test;
 
@@ -56,7 +56,7 @@ public class Test3 {
 
     @Test
     public void test6() {
-        TaskService taskService = new TaskAnnotationServiceImpl();
+        TaskHandler taskService = new TaskAnnotationHandlerImpl();
         taskService.start(ITask.WRITE);
     }
 }

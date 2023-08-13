@@ -15,7 +15,7 @@ import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.component.SystemMessage;
 import lh.wordtree.service.Subscriber;
-import lh.wordtree.task.TaskService;
+import lh.wordtree.handler.TaskHandler;
 import lh.wordtree.task.ITask;
 import lh.wordtree.model.tray.WtSystemTray;
 
@@ -27,7 +27,7 @@ public class App extends Application {
     private WtSystemTray systemTray = new WtSystemTray();
 
     public void start(Stage stage) throws Exception {
-        TaskService.INSTANCE.start(ITask.INIT);
+        TaskHandler.INSTANCE.start(ITask.INIT);
         scene = AppScene.newInstance();
         primaryStage = stage;
         this.style();
@@ -63,7 +63,7 @@ public class App extends Application {
     public void stop() throws Exception {
         // 关闭web服务器
         log.info("正在关闭窗口。");
-        TaskService.INSTANCE.start(ITask.END);
+        TaskHandler.INSTANCE.start(ITask.END);
         log.info("正在关闭web服务。");
         log.info("正在关闭系统托盘。");
         log.info("应用程序已退出。");

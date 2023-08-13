@@ -1,8 +1,10 @@
-package lh.wordtree.task;
+package lh.wordtree.handler;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.ReflectUtil;
 import lh.wordtree.comm.entity.fun.OrdinaryFunction;
+import lh.wordtree.task.Task;
+import lh.wordtree.task.WTTask;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,9 +12,9 @@ import java.util.Objects;
 /**
  * 利用java反射的方式进行了解析
  */
-public class TaskAnnotationServiceImpl implements TaskService {
+public class TaskAnnotationHandlerImpl implements TaskHandler {
 
-    public TaskAnnotationServiceImpl() {
+    public TaskAnnotationHandlerImpl() {
         annotationParse();
     }
 
