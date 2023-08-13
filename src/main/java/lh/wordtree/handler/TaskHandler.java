@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public interface TaskHandler {
-    TaskHandler INSTANCE = new TaskHandlerImpl();
     LinkedHashMap<String, WTTask> tasks = new LinkedHashMap<>();
     List<OrdinaryFunction1<String>> writeTasks = new LinkedList<>();
     List<OrdinaryFunction> toggleFileTasks = new LinkedList<>();
@@ -18,6 +17,7 @@ public interface TaskHandler {
     List<OrdinaryFunction> saveTasks = new LinkedList<>();
     List<OrdinaryFunction> initTasks = new LinkedList<>();
     List<OrdinaryFunction> endTasks = new LinkedList<>();
+    TaskHandler INSTANCE = new TaskHandlerImpl();
 
     String BASE_PACKAGE = "lh.wordtree.task";
 
