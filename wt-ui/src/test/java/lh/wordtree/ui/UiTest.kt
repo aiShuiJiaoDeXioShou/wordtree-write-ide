@@ -402,5 +402,5 @@ class UiTest9 : Application() {
 }
 
 fun main() {
-    Application.launch(UiTest9::class.java)
+    Application.launch(UiTest8::class.java)
 }
