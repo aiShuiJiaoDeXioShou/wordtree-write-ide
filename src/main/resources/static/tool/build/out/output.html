@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Document Website</title>
+    <link rel="stylesheet" href="./bulma.css">
+    <script src="./vue.js"></script>
+    <style>
+        :root {
+            --bg-color: #ffff;
+            --color: black;
+            --menu-color: #fafafa;
+        }
+
+         
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+         
+        ::-webkit-scrollbar-track {
+            background-color: #f5f5f5;
+        }
+
+         
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 10px;
+        }
+
+         
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--color);
+            min-height: 100vh;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .cur {
+            cursor: pointer;
+        }
+        .menu-label {
+            transition: all .5s;
+        }
+        .toggle-dark {
+            position: absolute;
+            top: 1vh;
+            right: 2vw;
+        }
+        .primary {
+            color: var(--color);
+        }
+        .menus {
+            background-color: var(--menu-color);
+            height: 100vh;
+        }
+        .content_txt {
+            height: 100vh;
+            overflow: scroll;
+        }
+        .primary-color {
+            color: #00c7a9 !important;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="columns">
+    <aside class="column is-2 menus">
+        <div class="container">
+            <p class="menu-label">
+                书籍名称：[77]
+            </p>
+            <img src="https://img.zcool.cn/community/0198c45cbcc0dca801214168264eae.jpg@2o.jpg" alt="Book Cover">
+            <p class="menu-label">
+                作者名称：[]
+            </p>
+        </div>
+        <ul class="menu-list">
+            <li><a class="nav-link" :class="{ 'is-active': active === '人物设定', 'primary-color': theme === 'dark' }" @click="setActive('人物设定')">人物设定</a></li>
+            <li><a class="nav-link" :class="{ 'is-active': active === '大纲', 'primary-color': theme === 'dark' }" @click="setActive('大纲')">大纲</a></li>
+            <li><a class="nav-link" :class="{ 'is-active': active === '个人中心', 'primary-color': theme === 'dark' }" @click="setActive('个人中心')">个人中心</a></li>
+        </ul>
+        <div v-for="chapter in book.Chapters">
+            <div v-if="chapter.IsPackage">
+                <p class="menu-label cur" @click="toggleSection(chapter.Name)" v-text="chapter.Name"></p>
+                <ul class="menu-list">
+                    <li v-for="cc in chapter.Chapters"><a class="nav-link" :class="{ 'is-active': active === cc,'primary-color': theme === 'dark' }" @click="setActive(cc)" v-text="cc.Name"></a></li>
+                </ul>
+            </div>
+            <div  v-if="!chapter.IsPackage">
+                <ul class="menu-list">
+                    <li><a class="nav-link" :class="{ 'is-active': active === chapter, 'primary-color': theme === 'dark' }" @click="setActive(chapter)" v-text="chapter.Name"></a></li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+    <div class="column">
+        <section class="section">
+            <div class="container">
+                <h1 class="title primary" v-text="active.Name?active.Name:''"></h1>
+                <h1 class="author primary" v-text="book.Author?book.Author:''"></h1>
+                <p class="subtitle primary content_txt" v-html="active.Content?format(active.Content):''"></p>
+            </div>
+        </section>
+    </div>
+    <div class="buttons has-addons toggle-dark">
+        <button class="button" @click="toggleTheme('light')" :class="{ 'is-info': theme === 'light', 'is-selected': theme === 'light' }">Light</button>
+        <button class="button" @click="toggleTheme('dark')" :class="{ 'is-info': theme === 'dark', 'is-selected': theme === 'dark' }">Dark</button>
+    </div>
+</div>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            active: {},
+            book: {},
+            theme: 'light'
+        },
+        methods: {
+            setActive(index) {
+                this.active = index;
+            },
+            toggleTheme(theme) {
+                this.theme = theme
+                if(this.theme === 'dark') {
+                    this.setDark()
+                } else {
+                    this.setLight()
+                }
+            },
+            color(key,color) {
+                document.documentElement.style.setProperty(key, color);
+            },
+            setDark() {
+                this.color('--bg-color', '#212529')
+                this.color('--color', '#ffff')
+                this.color('--menu-color', '#343a40')
+            },
+            setLight() {
+                this.color('--bg-color', '#ffff')
+                this.color('--color', 'black')
+                this.color('--menu-color', '#fafafa')
+            },
+            format(txt) {
+                let content = ""
+                let tArr = txt.split("\n")
+                tArr.forEach(t=> {
+                    content += `<div style="text-indent: 2rem;">${t}</div></br>`
+                })
+                return content
+            }
+        },
+        mounted() {
+            let book = {"Name":"77","Author":"","Introduction":"","Chapters":[{"Name":"代号：一","Content":"","IsPackage":true,"Chapters":[{"Name":"第一章.txt","Content":"","IsPackage":false,"Chapters":null}]},{"Name":"卷一：魔女","Content":"","IsPackage":true,"Chapters":[{"Name":"第一章：魔女.txt","Content":"       天还是那么的湛蓝，这是叶璇几个月来第一次认真地看向天空，叶璇听人说在草原上生活是最容易理解蓝天的，她累了，她很想现在就这么躺下去，永远的把目光望向蓝天，那是她的归属。\n    狼群不会让自己那么轻易死去，叶璇看向这青葱的大草原，满目所见全都是狼群，狼群一层又一层地将她包围，狼王站在最高的山坡，冷漠的看着叶璇。 \n        “奴隶你无处可逃。”\n    叶璇从来不觉得自己能够逃出去，但死亡也要好过做为奴隶的生活，自由与尊严永远比死亡尊贵。\n    白狼群是这遍草原执事，死亡的执事，他们的平均阶位都远超二阶的水平但又在三阶魔兽之下，他们的首领白狼王是三阶的魔兽，能发挥出远超正常三阶的水准，也因为白狼群等级总体水准比较低常常被不了解事实的人类所轻视，外地人总在这里栽跟头，最有名的一个跟斗莫属于乌晨国主，他当年率领大军为次子报仇远征草原，而途中遭遇白狼群惨败而归，这件事使得很多人笑话乌晨国主为最弱圣骑士。\n    狼王发出了进攻的号角，满山遍野的白狼像疯狗一样朝着那个衣衫褴褛的年轻女孩冲去，如果没有意外的话女孩会被撕成碎片，白狼群令敌人最心惊胆战的莫过于它那双牙齿，这也是它往往跨阶挑战的关键所在，它的牙齿无比锋利，那怕黑铁也顶不住它的撕咬，咬断铠甲那也是轻而易举的事情，但如果只是这样那也没有那么无解，最重要是它的牙齿内有无数小倒钩，倒钩在它嘴中呈一排又一排之状，只要它咬穿了外表的护甲，没有罡气护体的人类是能很轻易就被咬下肉的，而且是一小块一小块合成的一大块肉，这意味着在和白狼群战斗，只要被白狼咬一口就要忍受无数倍撕裂的疼痛，那个人又能够真正的忍受这样的疼痛呢？\n    此时少女没有铠甲，她只有一把剑，她只有一把剑、一个人。无数的白狼扑了上去，少女左手持剑右手粘着法球，“杀！”\n    叶璇一剑把越过来的一只狼砍成了两半，鲜血染红了叶璇乌黑秀长的头发，一只又一只的冲过来，叶璇挥舞着长剑，“剑.破式！”\n    只见那长剑像蛇一样，旋转向前，几十只白狼瞬间湮灭，瞬间又是几十只白狼冲向前，他们将叶璇包围的死死的，“剑*灭！”\n    叶璇将左手剑竖起，右手法球在剑上划过，瞬间剑气触发，巨大的冲击朝四周扩散，瞬间满山遍野都是狼尸，不过后续的狼群很快弥补了同伴死去留下的位置，他们似乎无穷无尽。\n    此时，已经连续逃亡三个月之久的叶璇已是精疲力尽，但狼群紧紧将她层层围住，不给她任何喘息的机会。\n    狼群发起了又一轮攻势，但叶璇的真气已经快要枯竭，叶璇回忆着她养父说过的话，体现一个人真正的勇敢时在白刃战，体现一个人真正剑术高明的时候，在短兵交接，她打算和狼群进行白刃战，以节约真气，但这需要付出极大的勇气，因为在白刃战中极其容易被狼群撕咬，战斗者需要承受莫大的痛苦。\n    她默吸了一口气，双手持剑，朝着包围过来的狼群冲去，脑海中飞过老师教过的剑招，一剑刺死冲在最前面的一只狼，随后又有几只狼从左右前后突击，叶璇一个滑铲躲过猛扑，一个回旋剑击杀这几只，一只狼趁着叶璇击杀他们这个瞬间，一只利爪向叶璇拍去，叶璇用肩膀强挡它的进攻，一剑刺进它的喉咙，狼血像喷泉一样泵出，鲜血染红了她的一身，她很快将剑拔起来，可这个速度对于狼群来说晚了，狼王趁着这个空档以四阶的实力向叶璇发起攻势，白狼王往往攻其不备，叶璇被一掌击倒在地，她快速的分析战局，以双手护住头部，几只在叶璇摔倒附近的狼很快补到她身上，叶璇不准备使用真气，她打算硬抗，撕裂传遍只有18岁少女的全身，她双眼血红，可她脑袋很清楚，现在不站起来可能就永远没有机会了，可她在等待着，那贪婪的狼群全部扑了上去，他们闻到了从未有的美味，狼王孤立在这之外看着，“剑*震！”\n    “啊啊啊啊啊啊！”\n    少女嘶叫着，在她身上扑着的狼群瞬间粉碎，大地突然抖动起来，整个狼群瞬间慌了神，在他们最放松的时候，突然大地的震动，令他们蒙了，少女抓住这个机会朝在这不远处的狼王扑去，她和狼王撕咬在了一起！在如此近的距离，手中的剑早已被狼王打断，她拿着断剑与狼王撕扯，用自己身体的一切去攻击狼王，牙齿手指它们附上了最后的真气，和狼王死战，不死不休！由于如此近的距离若狼群集体发起进攻很有可能伤到狼王，狼群不敢轻易跟进，这场战斗变成了两只野兽的撕咬，他们互相撕咬，看谁先被疼痛致死！\n    许久，没有了动静，狼王没有了动静，叶璇站了起来，此时她双手都被咬断，她将剑柄用嘴咬着，她那墨色的眼睛被鲜血染红，她望向狼群，那深血色的眼睛充满着杀孽之气，犹如死神降临。\n    那个恶魔一样的女人给狼群带来了极大的震撼，她的全身现在已经没有一块好肉，面容也已经被粉碎，血肉模糊，能看清的只有那双恶魔才能拥有的眼睛，少女犹如死神降临于世，她就站在那里，嘴上咬着一把残剑，但是没有一只白狼敢向前，没有狼王的狼群同时也没有了勇气与智慧，它们很快像乌云一样溃散。\n    偌大的草原之上只剩下了少女一个人，叶璇带着残破的身子躺在草原上，她已经再也没有力气行动，她望向那个熟悉的天空，带过乌云，今天依旧是个晴天，她这么想着，草原上的微风轻抚着她的身体，带来血腥的味道。","IsPackage":false,"Chapters":null},{"Name":"第三章：叶璇一.txt","Content":"        今天是一个美丽的晴天。叶璇","IsPackage":false,"Chapters":null}]},{"Name":"卷二：魔法帝国","Content":"","IsPackage":true,"Chapters":[{"Name":"第一章：无限的帝国.txt","Content":"","IsPackage":false,"Chapters":null}]},{"Name":"结尾.txt","Content":"        叶璇 ，光明之神，叶璇。\n        叶璇，叶璇，叶成，","IsPackage":false,"Chapters":null}],"Outline":{}}
+            this.book = book
+        }
+    });
+</script>
+</body>
+</html>
+

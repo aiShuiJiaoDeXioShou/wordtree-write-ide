@@ -23,6 +23,9 @@ WordTree核心功能预览:
 ## 编译功能  
 可将项目转化为html文件  
 ![img_5.png](readme/img_5.png)   
+
+
+
 版本迭代：  
 0.1 beta 实现基本的编辑功能，和一些功能的预览  
 0.2 beta 完善0.1beta的功能  
