@@ -5,7 +5,6 @@ package lh.wordtree.service;
  */
 public interface Subscribe {
 
-    void change(String topic);
-    void error(String message);
+    void change(String... message);
 
 }

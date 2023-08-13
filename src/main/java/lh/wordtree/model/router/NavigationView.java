@@ -23,7 +23,6 @@ public class NavigationView extends HBox {
     // 加载插件
     private Map<String, WTPluginExtended> wtPlugins = ps.extendedPlugin();
     public  ButtonItemComponent fliesItem, writeItem, setting, plugins;
-    private RootView rootView;
 
     public static NavigationView newInstance() {
         return NoteLeftButtonBarViewHolder.instance;
@@ -34,13 +33,12 @@ public class NavigationView extends HBox {
         writeItem = new ButtonItemComponent("\uE70F", "写作");
         plugins = new ButtonItemComponent("\uE74C", "插件");
         setting = new ButtonItemComponent("\uE713", "设置");
+
         listView = new ListView<>();
-        {
-            listView.getStyleClass().add("node-left");
-            listView.getItems().addAll(fliesItem, writeItem, plugins);
-            listView.setPrefWidth(45);
-            listView.setPadding(new Insets(10));
-        }
+        listView.getStyleClass().add("node-left");
+        listView.getItems().addAll(fliesItem, writeItem, plugins);
+        listView.setPrefWidth(45);
+        listView.setPadding(new Insets(10));
 
         wtPlugins.forEach((s, extended) -> {
             if (extended.config().type().equals(WTPluginType.menu)) {

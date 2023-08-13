@@ -14,6 +14,7 @@ import lh.wordtree.comm.BeanFactory;
 import lh.wordtree.comm.config.Config;
 import lh.wordtree.comm.utils.ConfigUtils;
 import lh.wordtree.component.SystemMessage;
+import lh.wordtree.service.Subscriber;
 import lh.wordtree.task.TaskService;
 import lh.wordtree.task.ITask;
 import lh.wordtree.model.tray.WtSystemTray;
@@ -41,6 +42,8 @@ public class App extends Application {
         primaryStage.show();
         BeanFactory.heigth.bind(primaryStage.heightProperty());
         log.info("应用程序启动成功...");
+
+        Subscriber.subscribe("init");
     }
 
     /**

@@ -3,6 +3,7 @@ package lh.wordtree;
 import javafx.scene.layout.BorderPane;
 import lh.wordtree.model.core.NoteCoreView;
 import lh.wordtree.model.router.NavigationView;
+import lh.wordtree.service.Subscriber;
 
 public class RootView extends BorderPane {
     public RootView() {
