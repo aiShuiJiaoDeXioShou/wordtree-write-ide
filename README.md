@@ -1,3 +1,13 @@
+<p style="text-align: center;margin: 0 auto;">
+    <img src="./readme/icon.png"> <br>
+    <a style="color: black;font-size: large">WordTree 集成写作工具</a>
+    <div style="display: flex;gap: 2px;width: 230px;margin: 0 auto">
+        <div style="margin: 0 auto;background-color: red;color: white;text-align: center;border-radius: 5px;padding: 1px;width: 90px;">v0.3.beta</div>
+        <div style="margin: 0 auto;background-color: skyblue;color: white;text-align: center;border-radius: 5px;padding: 1px;width: 90px;">林河 著</div>
+    </div>
+    
+</p>
+
 ## 项目意义：  
 我一直以来都有一个想当作家的梦想，在开始做这个软件的时候，我认真的调研了市场上面的几款写作软件，要么充斥着大量的广告，要么不够强大功能不够全面，要么不是中文或者说写作领域的软件。
 总之，这个市场太缺乏活力了，这个市场太死气沉沉了。  
