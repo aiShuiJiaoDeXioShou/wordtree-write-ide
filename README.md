@@ -5,7 +5,6 @@
         <div style="margin: 0 auto;background-color: red;color: white;text-align: center;border-radius: 5px;padding: 1px;width: 90px;">v0.3.beta</div>
         <div style="margin: 0 auto;background-color: skyblue;color: white;text-align: center;border-radius: 5px;padding: 1px;width: 90px;">林河 著</div>
     </div>
-    
 </p>
 
 ## 项目意义：  
